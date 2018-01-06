@@ -1,9 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.admin.skolonetapp.Activity.OtherActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/app_toolbar"></include>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtOtherOrganization"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Organization Name"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtOtherPartyName"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtOtherOrganization"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Party Name"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtOtherDesignation"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtOtherPartyName"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Designation"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtOtherContactNumber"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtOtherDesignation"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Contact Number"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtOtherAddress1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtOtherContactNumber"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Flat No,Colony Number/Society"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtOtherAddress2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtOtherAddress1"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Street Name"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtOtherCity"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtOtherAddress2"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter City Name"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtOtherState"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtOtherCity"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter State Name"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtOtherRemark"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtOtherState"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Remark"
+                android:padding="5dp"
+                android:singleLine="true" />
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

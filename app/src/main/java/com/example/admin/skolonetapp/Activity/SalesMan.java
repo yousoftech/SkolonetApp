@@ -18,7 +18,6 @@ public class SalesMan extends AppCompatActivity {
 
     FloatingActionButton fabButton;
     Spinner spinner;
-    Button btnOk;
     String from;
 
     @Override
@@ -38,7 +37,6 @@ public class SalesMan extends AppCompatActivity {
                 dialogBuilder.setView(dialogView);
                 final AlertDialog a = dialogBuilder.create();
                 spinner = (Spinner) dialogView.findViewById(R.id.spinnerForm);
-                btnOk = (Button) dialogView.findViewById(R.id.btnformOk);
 
                 ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(SalesMan.this,
                         R.array.type, android.R.layout.simple_spinner_item);
@@ -51,17 +49,7 @@ public class SalesMan extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         from = spinner.getSelectedItem().toString();
-                    }
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
-
-                btnOk.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
                         if (from.equalsIgnoreCase("School")) {
                             startActivity(new Intent(getApplicationContext(), School_ClassisActivity.class));
                         } else if (from.equalsIgnoreCase("Classes")) {
@@ -74,9 +62,12 @@ public class SalesMan extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(), OtherActivity.class));
                         }
                     }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
                 });
-
-
                 a.show();
             }
         });

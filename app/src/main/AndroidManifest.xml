@@ -12,11 +12,13 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".Activity.SplashActivity" />
         <activity android:name=".Activity.LoginActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".Activity.School_ClassisActivity" />
         <activity android:name=".Activity.SankulActivity" />
@@ -29,6 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.FullDetail"></activity>
     </application>
 
 </manifest>
