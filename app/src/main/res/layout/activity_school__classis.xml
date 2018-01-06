@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.admin.skolonetapp.Activity.School_ClassisActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtOrganization"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Organization Name"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtPartyName"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtOrganization"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Party Name"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtDesignation"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtPartyName"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Designation"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtContactNumber"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtDesignation"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Contact Number"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <Spinner
+                android:id="@+id/spinnerBoard"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@id/edtContactNumber"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:gravity="center"
+                android:spinnerMode="dialog"></Spinner>
+
+            <Spinner
+                android:id="@+id/spinnerMedium"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@id/spinnerBoard"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:gravity="center"
+                android:spinnerMode="dialog"></Spinner>
+
+            <Spinner
+                android:id="@+id/spinnerStandard"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@id/spinnerMedium"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:gravity="center"
+                android:spinnerMode="dialog"></Spinner>
+
+            <EditText
+                android:id="@+id/edtAverageStudent"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/spinnerStandard"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Average Student Of School"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtAddress1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/spinnerStandard"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Flat No,Colony Number/Society"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtAddress2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtAddress1"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Street Name"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtCity"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtAddress2"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter City Name"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtState"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtCity"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter State Name"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtRemark"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtState"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Remark"
+                android:padding="5dp"
+                android:singleLine="true" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
