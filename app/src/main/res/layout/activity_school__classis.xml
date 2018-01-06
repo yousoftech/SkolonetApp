@@ -14,7 +14,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/edtOrganization"
+                android:id="@+id/edtSchoolOrganization"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
@@ -24,10 +24,10 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/edtPartyName"
+                android:id="@+id/edtSchoolPartyName"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_below="@+id/edtOrganization"
+                android:layout_below="@+id/edtSchoolOrganization"
                 android:layout_margin="10dp"
                 android:background="@drawable/edt_border"
                 android:hint="Enter Party Name"
@@ -35,10 +35,10 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/edtDesignation"
+                android:id="@+id/edtSchoolDesignation"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_below="@+id/edtPartyName"
+                android:layout_below="@+id/edtSchoolPartyName"
                 android:layout_margin="10dp"
                 android:background="@drawable/edt_border"
                 android:hint="Enter Designation"
@@ -46,10 +46,10 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/edtContactNumber"
+                android:id="@+id/edtSchoolContactNumber"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_below="@+id/edtDesignation"
+                android:layout_below="@+id/edtSchoolDesignation"
                 android:layout_margin="10dp"
                 android:background="@drawable/edt_border"
                 android:hint="Enter Contact Number"
@@ -57,40 +57,40 @@
                 android:singleLine="true" />
 
             <Spinner
-                android:id="@+id/spinnerBoard"
+                android:id="@+id/spinnerSchoolBoard"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_below="@id/edtContactNumber"
+                android:layout_below="@id/edtSchoolContactNumber"
                 android:layout_margin="10dp"
                 android:background="@drawable/edt_border"
                 android:gravity="center"
                 android:spinnerMode="dialog"></Spinner>
 
             <Spinner
-                android:id="@+id/spinnerMedium"
+                android:id="@+id/spinnerSchoolMedium"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_below="@id/spinnerBoard"
+                android:layout_below="@id/spinnerSchoolBoard"
                 android:layout_margin="10dp"
                 android:background="@drawable/edt_border"
                 android:gravity="center"
                 android:spinnerMode="dialog"></Spinner>
 
             <Spinner
-                android:id="@+id/spinnerStandard"
+                android:id="@+id/spinnerSchoolStandard"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_below="@id/spinnerMedium"
+                android:layout_below="@id/spinnerSchoolMedium"
                 android:layout_margin="10dp"
                 android:background="@drawable/edt_border"
                 android:gravity="center"
                 android:spinnerMode="dialog"></Spinner>
 
             <EditText
-                android:id="@+id/edtAverageStudent"
+                android:id="@+id/edtSchoolAverageStudent"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_below="@+id/spinnerStandard"
+                android:layout_below="@+id/spinnerSchoolStandard"
                 android:layout_margin="10dp"
                 android:background="@drawable/edt_border"
                 android:hint="Enter Average Student Of School"
@@ -98,10 +98,10 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/edtAddress1"
+                android:id="@+id/edtSchoolAddress1"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_below="@+id/spinnerStandard"
+                android:layout_below="@+id/spinnerSchoolStandard"
                 android:layout_margin="10dp"
                 android:background="@drawable/edt_border"
                 android:hint="Enter Flat No,Colony Number/Society"
@@ -109,10 +109,10 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/edtAddress2"
+                android:id="@+id/edtSchoolAddress2"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_below="@+id/edtAddress1"
+                android:layout_below="@+id/edtSchoolAddress1"
                 android:layout_margin="10dp"
                 android:background="@drawable/edt_border"
                 android:hint="Enter Street Name"
@@ -120,10 +120,10 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/edtCity"
+                android:id="@+id/edtSchoolCity"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_below="@+id/edtAddress2"
+                android:layout_below="@+id/edtSchoolAddress2"
                 android:layout_margin="10dp"
                 android:background="@drawable/edt_border"
                 android:hint="Enter City Name"
@@ -131,10 +131,10 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/edtState"
+                android:id="@+id/edtSchoolState"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_below="@+id/edtCity"
+                android:layout_below="@+id/edtSchoolCity"
                 android:layout_margin="10dp"
                 android:background="@drawable/edt_border"
                 android:hint="Enter State Name"
@@ -142,10 +142,10 @@
                 android:singleLine="true" />
 
             <EditText
-                android:id="@+id/edtRemark"
+                android:id="@+id/edtSchoolRemark"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_below="@+id/edtState"
+                android:layout_below="@+id/edtSchoolState"
                 android:layout_margin="10dp"
                 android:background="@drawable/edt_border"
                 android:hint="Enter Remark"

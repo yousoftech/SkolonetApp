@@ -1,9 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.admin.skolonetapp.Activity.PartyActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtPartyShopName"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Shop Name"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+
+            <EditText
+                android:id="@+id/edtPartyDistributorName"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtPartyShopName"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Distributor Name"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtPartyType"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtSankulOrganization"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Type"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtSankulDesignation"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtSankulPartyName"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Designation"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtSankulContactNumber"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtSankulDesignation"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Contact Number"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <Spinner
+                android:id="@+id/spinnerSankulBoard"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@id/edtSankulContactNumber"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:gravity="center"
+                android:spinnerMode="dialog"></Spinner>
+
+            <Spinner
+                android:id="@+id/spinnerSankulMedium"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@id/spinnerSankulBoard"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:gravity="center"
+                android:spinnerMode="dialog"></Spinner>
+
+            <Spinner
+                android:id="@+id/spinnerSankulStandard"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@id/spinnerSankulMedium"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:gravity="center"
+                android:spinnerMode="dialog"></Spinner>
+
+            <EditText
+                android:id="@+id/edtSankulAverageStudent"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/spinnerSankulStandard"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Average Student Of School"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtSankulAddress1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/spinnerSankulStandard"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Flat No,Colony Number/Society"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtSankulAddress2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtSankulAddress1"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Street Name"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtSankulCity"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtSankulAddress2"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter City Name"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtSankulState"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtSankulCity"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter State Name"
+                android:padding="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edtSankulRemark"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/edtSankulState"
+                android:layout_margin="10dp"
+                android:background="@drawable/edt_border"
+                android:hint="Enter Remark"
+                android:padding="5dp"
+                android:singleLine="true" />
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>
