@@ -3,17 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="com.example.admin.skolonetapp.Activity.SalesMan">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/app_toolbar_sales"></include>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/roundshape"
+        android:layout_below="@+id/toolbar">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerSales"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar">
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp">
 
     </android.support.v7.widget.RecyclerView>
 
@@ -24,7 +33,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_margin="16dp"
         android:src="@drawable/ic_add_black_24dp" />
-
+    </RelativeLayout>
 </RelativeLayout>
