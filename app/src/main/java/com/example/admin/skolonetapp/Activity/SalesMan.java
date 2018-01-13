@@ -1,29 +1,49 @@
 package com.example.admin.skolonetapp.Activity;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.skolonetapp.R;
+
+import static com.example.admin.skolonetapp.Activity.LoginActivity.PREFS_NAME;
 
 public class SalesMan extends AppCompatActivity {
 
     FloatingActionButton fabButton;
     Spinner spinner;
+    TextView txtTitle;
+    Toolbar toolbar;
+    Button btnLogout;
     String from;
+    String firstName, lastName;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_man);
+        preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        txtTitle = (TextView) findViewById(R.id.txtTitle);
+        btnLogout = (Button) findViewById(R.id.btnLogout);
+        firstName = preferences.getString("firstName", null);
+        lastName = preferences.getString("lastName", null);
+        setupToolbar("" + firstName + " " + lastName);
+
 
         fabButton = (FloatingActionButton) findViewById(R.id.fabButton);
         fabButton.setOnClickListener(new View.OnClickListener() {
@@ -72,4 +92,46 @@ public class SalesMan extends AppCompatActivity {
             }
         });
     }
+
+    private void setupToolbar(String title) {
+        setSupportActionBar(toolbar);
+        txtTitle.setText(title);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(SalesMan.this);
+                LayoutInflater inflater = SalesMan.this.getLayoutInflater();
+                dialogBuilder.setMessage("Are you sure you want to logout ?");
+
+                dialogBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.remove("logged");
+                        editor.clear();
+                        editor.commit();
+                        finish();
+                        startActivity(new Intent(SalesMan.this, LoginActivity.class));
+                        Toast.makeText(getApplicationContext(), "Logout", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+
+                AlertDialog a = dialogBuilder.create();
+                a.show();
+            }
+        });
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("");
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setHomeButtonEnabled(false);
+        }
+    }
+
 }

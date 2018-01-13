@@ -160,9 +160,15 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("logged", "logged");
                                     editor.commit();
                                     Log.d("Login", "data" + obj);
-                                    int id = obj.getInt("iUserDetailsId");
+                                    int id = obj.getInt("iUserTypeId");
+                                    String firstName=obj.getString("strUserFirstName");
+                                    String lastName=obj.getString("strUserLastName");
                                     editor.putInt("LoggedUser", id);
+                                    editor.putString("firstName",firstName);
+                                    editor.putString("lastName",lastName);
                                     editor.commit();
+                                    startActivity(new Intent(LoginActivity.this, SalesMan.class));
+                                    finish();
 //                                    String firstName = obj.getString("strUserFirstName");
 //                                    String lastName = obj.getString("strUserLastName");
 //                                    String emailId = obj.getString("strUserEmailId");
