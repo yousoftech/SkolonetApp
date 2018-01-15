@@ -4,6 +4,7 @@
     <string name="title_activity_other">OtherActivity</string>
 
     <string-array name="type">
+        <item>Select Type</item>
         <item>School</item>
         <item>Classes</item>
         <item>Sankul</item>
