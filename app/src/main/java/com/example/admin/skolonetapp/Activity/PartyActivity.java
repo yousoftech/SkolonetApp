@@ -137,9 +137,9 @@ public class PartyActivity extends AppCompatActivity {
                                 String msg = response.getString("message");
                                 // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
                                 if (code == true) {
-                                    JSONObject obj = response.getJSONObject("data");
+                                   // JSONObject obj = response.getJSONObject("data");
                                     progressDialog.dismiss();
-
+                                    finish();
                                 } else if (code == false) {
                                     String msg1 = response.getString("message");
                                     progressDialog.dismiss();
