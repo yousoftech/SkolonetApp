@@ -78,7 +78,7 @@ public class SalesMan extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(), SankulActivity.class));
                         } else if (from.equalsIgnoreCase("Party")) {
                             startActivity(new Intent(getApplicationContext(), PartyActivity.class));
-                        } else if (from.equalsIgnoreCase("Other")) {
+                        } else if (from.equalsIgnoreCase("Others")) {
                             startActivity(new Intent(getApplicationContext(), OtherActivity.class));
                         }
                     }

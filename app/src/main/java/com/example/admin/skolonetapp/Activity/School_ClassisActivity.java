@@ -4,7 +4,10 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -27,6 +30,8 @@ public class School_ClassisActivity extends AppCompatActivity {
             edtSchoolAddress1, edtSchoolAddress2, edtSchoolCity, edtSchoolState, edtSchoolRemark;
     ProgressDialog progressDialog;
     ConnectionDetector detector;
+    TextView txtFormName;
+    Button btnSave,btnCancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,42 @@ public class School_ClassisActivity extends AppCompatActivity {
         edtSchoolCity = (EditText) findViewById(R.id.edtSchoolCity);
         edtSchoolState = (EditText) findViewById(R.id.edtSchoolState);
         edtSchoolRemark = (EditText) findViewById(R.id.edtSchoolRemark);
+        txtFormName=(TextView)findViewById(R.id.txtForm);
+        btnSave=(Button)findViewById(R.id.btnYes);
+        btnCancel=(Button)findViewById(R.id.btnCancel);
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (edtSchoolOrganization.getText().toString().equals("")){
+                    Toast.makeText(School_ClassisActivity.this, "Please Enter Organization", Toast.LENGTH_SHORT).show();
+                }else if (edtSchoolPartyName.getText().toString().equals("")){
+                    Toast.makeText(School_ClassisActivity.this, "Please Enter Party Name", Toast.LENGTH_SHORT).show();
+                }else if (edtSchoolDesignation.getText().toString().equals("")){
+                    Toast.makeText(School_ClassisActivity.this, "Please Enter Designation", Toast.LENGTH_SHORT).show();
+                }else if (edtSchoolContactNumber.getText().toString().equals("")){
+                    Toast.makeText(School_ClassisActivity.this, "Please Enter Contact Number", Toast.LENGTH_SHORT).show();
+                }else if (edtSchoolAddress1.getText().toString().equals("")){
+                    Toast.makeText(School_ClassisActivity.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
+                }else if (edtSchoolAddress2.getText().toString().equals("")){
+                    Toast.makeText(School_ClassisActivity.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
+                }else if (edtSchoolCity.getText().toString().equals("")){
+                    Toast.makeText(School_ClassisActivity.this, "Please Enter City", Toast.LENGTH_SHORT).show();
+                }else if (edtSchoolState.getText().toString().equals("")){
+                    Toast.makeText(School_ClassisActivity.this, "Please Enter State", Toast.LENGTH_SHORT).show();
+                }else if (edtSchoolRemark.getText().toString().equals("")){
+                    Toast.makeText(School_ClassisActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
+                }else {
+                    submitForm();
+                }
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void submitForm() {
@@ -58,21 +99,21 @@ public class School_ClassisActivity extends AppCompatActivity {
                 object.put("OrganisationName", edtSchoolOrganization.getText().toString());
                 object.put("PartyName", edtSchoolPartyName.getText().toString());
                 object.put("Designation", edtSchoolDesignation.getText().toString());
-                object.put("SankulName", "");
-                object.put("ShopName", "");
-                object.put("DistubitorName", "");
-                object.put("DistubitorType", "");
+//                object.put("SankulName", "");
+//                object.put("ShopName", "");
+//                object.put("DistubitorName", "");
+//                object.put("DistubitorType", "");
                 object.put("ContactNo", edtSchoolContactNumber.getText().toString());
-                object.put("Board", "");
-                object.put("Medium", "");
-                object.put("Std", "");
-                object.put("AvgStudent", "");
+                object.put("Board", "CBSC");
+                object.put("Medium", "English");
+                object.put("Std", "12");
+                object.put("AvgStudent", "100");
                 object.put("AddressLine1", edtSchoolAddress1.getText().toString());
                 object.put("AddressLine2", edtSchoolAddress2.getText().toString());
                 object.put("CityName", edtSchoolCity.getText().toString());
                 object.put("StateName", edtSchoolState.getText().toString());
                 object.put("Remark", edtSchoolRemark.getText().toString());
-                object.put("Location", "");
+                object.put("Location", "Haji nathi malyu");
             } catch (JSONException e) {
                 Toast.makeText(School_ClassisActivity.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
                 e.printStackTrace();
@@ -122,4 +163,5 @@ public class School_ClassisActivity extends AppCompatActivity {
             Toast.makeText(this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
         }
     }
+
 }

@@ -5,14 +5,48 @@
     android:layout_height="match_parent"
     tools:context="com.example.admin.skolonetapp.Activity.School_ClassisActivity">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/app_toolbar"></include>
+    <RelativeLayout
+        android:id="@+id/RelativeSchool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize">
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_close_black_24dp" />
+
+        <TextView
+            android:id="@+id/txtForm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:text="@string/app_name"
+            android:textColor="@color/colorText"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnYes"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_check_black_24dp" />
+
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/RelativeSchool">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -24,144 +58,144 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/roundshape">
 
-            <EditText
-                android:id="@+id/edtSchoolOrganization"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/edt_border"
-                android:hint="Enter Organization Name"
-                android:padding="5dp"
-                android:singleLine="true" />
+                <EditText
+                    android:id="@+id/edtSchoolOrganization"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edt_border"
+                    android:hint="Enter Organization Name"
+                    android:padding="5dp"
+                    android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/edtSchoolPartyName"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/edtSchoolOrganization"
-                android:layout_margin="10dp"
-                android:background="@drawable/edt_border"
-                android:hint="Enter Party Name"
-                android:padding="5dp"
-                android:singleLine="true" />
+                <EditText
+                    android:id="@+id/edtSchoolPartyName"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/edtSchoolOrganization"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edt_border"
+                    android:hint="Enter Party Name"
+                    android:padding="5dp"
+                    android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/edtSchoolDesignation"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/edtSchoolPartyName"
-                android:layout_margin="10dp"
-                android:background="@drawable/edt_border"
-                android:hint="Enter Designation"
-                android:padding="5dp"
-                android:singleLine="true" />
+                <EditText
+                    android:id="@+id/edtSchoolDesignation"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/edtSchoolPartyName"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edt_border"
+                    android:hint="Enter Designation"
+                    android:padding="5dp"
+                    android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/edtSchoolContactNumber"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/edtSchoolDesignation"
-                android:layout_margin="10dp"
-                android:background="@drawable/edt_border"
-                android:hint="Enter Contact Number"
-                android:padding="5dp"
-                android:singleLine="true" />
+                <EditText
+                    android:id="@+id/edtSchoolContactNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/edtSchoolDesignation"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edt_border"
+                    android:hint="Enter Contact Number"
+                    android:padding="5dp"
+                    android:singleLine="true" />
 
-            <Spinner
-                android:id="@+id/spinnerSchoolBoard"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_below="@id/edtSchoolContactNumber"
-                android:layout_margin="10dp"
-                android:background="@drawable/edt_border"
-                android:gravity="center"
-                android:spinnerMode="dialog"></Spinner>
+                <Spinner
+                    android:id="@+id/spinnerSchoolBoard"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_below="@id/edtSchoolContactNumber"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edt_border"
+                    android:gravity="center"
+                    android:spinnerMode="dialog"></Spinner>
 
-            <Spinner
-                android:id="@+id/spinnerSchoolMedium"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_below="@id/spinnerSchoolBoard"
-                android:layout_margin="10dp"
-                android:background="@drawable/edt_border"
-                android:gravity="center"
-                android:spinnerMode="dialog"></Spinner>
+                <Spinner
+                    android:id="@+id/spinnerSchoolMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_below="@id/spinnerSchoolBoard"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edt_border"
+                    android:gravity="center"
+                    android:spinnerMode="dialog"></Spinner>
 
-            <Spinner
-                android:id="@+id/spinnerSchoolStandard"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_below="@id/spinnerSchoolMedium"
-                android:layout_margin="10dp"
-                android:background="@drawable/edt_border"
-                android:gravity="center"
-                android:spinnerMode="dialog"></Spinner>
+                <Spinner
+                    android:id="@+id/spinnerSchoolStandard"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_below="@id/spinnerSchoolMedium"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edt_border"
+                    android:gravity="center"
+                    android:spinnerMode="dialog"></Spinner>
 
-            <EditText
-                android:id="@+id/edtSchoolAverageStudent"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/spinnerSchoolStandard"
-                android:layout_margin="10dp"
-                android:background="@drawable/edt_border"
-                android:hint="Enter Average Student Of School"
-                android:padding="5dp"
-                android:singleLine="true" />
+                <EditText
+                    android:id="@+id/edtSchoolAverageStudent"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/spinnerSchoolStandard"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edt_border"
+                    android:hint="Enter Average Student Of School"
+                    android:padding="5dp"
+                    android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/edtSchoolAddress1"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/spinnerSchoolStandard"
-                android:layout_margin="10dp"
-                android:background="@drawable/edt_border"
-                android:hint="Enter Flat No,Colony Number/Society"
-                android:padding="5dp"
-                android:singleLine="true" />
+                <EditText
+                    android:id="@+id/edtSchoolAddress1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/spinnerSchoolStandard"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edt_border"
+                    android:hint="Enter Flat No,Colony Number/Society"
+                    android:padding="5dp"
+                    android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/edtSchoolAddress2"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/edtSchoolAddress1"
-                android:layout_margin="10dp"
-                android:background="@drawable/edt_border"
-                android:hint="Enter Street Name"
-                android:padding="5dp"
-                android:singleLine="true" />
+                <EditText
+                    android:id="@+id/edtSchoolAddress2"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/edtSchoolAddress1"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edt_border"
+                    android:hint="Enter Street Name"
+                    android:padding="5dp"
+                    android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/edtSchoolCity"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/edtSchoolAddress2"
-                android:layout_margin="10dp"
-                android:background="@drawable/edt_border"
-                android:hint="Enter City Name"
-                android:padding="5dp"
-                android:singleLine="true" />
+                <EditText
+                    android:id="@+id/edtSchoolCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/edtSchoolAddress2"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edt_border"
+                    android:hint="Enter City Name"
+                    android:padding="5dp"
+                    android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/edtSchoolState"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/edtSchoolCity"
-                android:layout_margin="10dp"
-                android:background="@drawable/edt_border"
-                android:hint="Enter State Name"
-                android:padding="5dp"
-                android:singleLine="true" />
+                <EditText
+                    android:id="@+id/edtSchoolState"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/edtSchoolCity"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edt_border"
+                    android:hint="Enter State Name"
+                    android:padding="5dp"
+                    android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/edtSchoolRemark"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/edtSchoolState"
-                android:layout_margin="10dp"
-                android:background="@drawable/edt_border"
-                android:hint="Enter Remark"
-                android:padding="5dp"
-                android:singleLine="true" />
+                <EditText
+                    android:id="@+id/edtSchoolRemark"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/edtSchoolState"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/edt_border"
+                    android:hint="Enter Remark"
+                    android:padding="5dp"
+                    android:singleLine="true" />
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>

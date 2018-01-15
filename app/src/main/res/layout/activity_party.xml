@@ -5,15 +5,49 @@
     android:layout_height="match_parent"
     tools:context="com.example.admin.skolonetapp.Activity.PartyActivity">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/app_toolbar"></include>
+    <RelativeLayout
+        android:id="@+id/RelativeParty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize">
+
+        <Button
+            android:id="@+id/btnPartyCancel"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_close_black_24dp" />
+
+        <TextView
+            android:id="@+id/txtPartyForm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:text="@string/app_name"
+            android:textColor="@color/colorText"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnPartyYes"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_check_black_24dp" />
+
+    </RelativeLayout>
 
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/RelativeParty">
 
         <RelativeLayout
             android:layout_width="match_parent"
