@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SkolonetApp.iml" filepath="$PROJECT_DIR$/.idea/SkolonetApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SkolonetApp.iml" filepath="$PROJECT_DIR$/SkolonetApp.iml" />
+      <module fileurl="file://F:\Projects\Android App\Git Projects\SkolonetApp\.idea\SkolonetApp.iml" filepath="F:\Projects\Android App\Git Projects\SkolonetApp\.idea\SkolonetApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

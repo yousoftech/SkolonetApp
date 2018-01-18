@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
 
             final JSONObject object = new JSONObject();
             try {
-                object.put("strUserEmailId", edtUserName.getText().toString());
+                object.put("strUserName", edtUserName.getText().toString());
                 object.put("strUserPassword", edtPassword.getText().toString());
                 object.put("IMEINO", deviceid);
             } catch (JSONException e) {
