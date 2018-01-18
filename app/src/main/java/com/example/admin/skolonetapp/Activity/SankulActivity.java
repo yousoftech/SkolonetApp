@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,8 +51,8 @@ public class SankulActivity extends AppCompatActivity {
     stdList stdlist;
     MediumList mediumList;
     BoardList boardList;
-
-
+    String stdName,mediumName,boardName;
+    int stdId,mediumId,boardId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,46 @@ public class SankulActivity extends AppCompatActivity {
         spinnerStd = (Spinner) findViewById(R.id.spinnerSankulStandard);
         spinnerMedium = (Spinner) findViewById(R.id.spinnerSankulMedium);
         spinnerSchoolBoard = (Spinner) findViewById(R.id.spinnerSankulBoard);
+
+        spinnerStd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                stdName = spinnerStd.getSelectedItem().toString();
+                stdlist = arrayStd.get(i);
+                stdId = stdlist.getStdId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spinnerMedium.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                mediumName = spinnerMedium.getSelectedItem().toString();
+                mediumList = arrayMedium.get(i);
+                mediumId = mediumList.getMediumId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spinnerSchoolBoard.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                boardName = spinnerSchoolBoard.getSelectedItem().toString();
+                boardList = arrayBoard.get(i);
+                boardId = boardList.getBoardId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,9 +287,9 @@ public class SankulActivity extends AppCompatActivity {
 //                object.put("DistubitorName", "Kush");
 //                object.put("DistubitorType", "Sankul");
                 object.put("ContactNo", edtSankulContactNumber.getText().toString());
-                object.put("Board", "GHSC");
-                object.put("Medium", "GUJRATI");
-                object.put("Std", "12");
+                object.put("Board", boardName);
+                object.put("Medium", mediumName);
+                object.put("Std", stdId);
                 object.put("AvgStudent", "100");
                 object.put("AddressLine1", edtSankulAddress1.getText().toString());
                 object.put("AddressLine2", edtSankulAddress2.getText().toString());
