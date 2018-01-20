@@ -5,7 +5,7 @@ package com.example.admin.skolonetapp.Pojo;
  */
 
 public class Sales {
-    public String PartyInfoId;;
+    public String PartyInfoId;
 
 
     public String PartyName;

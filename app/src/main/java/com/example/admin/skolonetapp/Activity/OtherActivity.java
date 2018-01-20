@@ -1,6 +1,7 @@
 package com.example.admin.skolonetapp.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -31,12 +32,17 @@ public class OtherActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     ConnectionDetector detector;
     TextView txtFormName;
-    Button btnSave,btnCancel;
+    Button btnSave, btnCancel;
+    int fromId;
+    String fromName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other);
+        Intent intent = getIntent();
+        fromId = intent.getIntExtra("fromId", 0);
+        fromName = intent.getStringExtra("fromName");
         detector = new ConnectionDetector(this);
         edtOtherOrganization = (EditText) findViewById(R.id.edtOtherOrganization);
         edtOtherPartyName = (EditText) findViewById(R.id.edtOtherPartyName);
@@ -47,32 +53,33 @@ public class OtherActivity extends AppCompatActivity {
         edtOtherCity = (EditText) findViewById(R.id.edtOtherCity);
         edtOtherState = (EditText) findViewById(R.id.edtOtherState);
         edtOtherRemark = (EditText) findViewById(R.id.edtOtherRemark);
-        txtFormName=(TextView)findViewById(R.id.txtOtherForm);
-        btnSave=(Button)findViewById(R.id.btnOtherYes);
-        btnCancel=(Button)findViewById(R.id.btnOtherCancel);
+        txtFormName = (TextView) findViewById(R.id.txtOtherForm);
+        btnSave = (Button) findViewById(R.id.btnOtherYes);
+        btnCancel = (Button) findViewById(R.id.btnOtherCancel);
+        txtFormName.setText("" + fromName);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (edtOtherOrganization.getText().toString().equals("")){
+                if (edtOtherOrganization.getText().toString().equals("")) {
                     Toast.makeText(OtherActivity.this, "Please Enter Organization", Toast.LENGTH_SHORT).show();
-                }else if (edtOtherPartyName.getText().toString().equals("")){
+                } else if (edtOtherPartyName.getText().toString().equals("")) {
                     Toast.makeText(OtherActivity.this, "Please Enter Party Name", Toast.LENGTH_SHORT).show();
-                }else if (edtOtherDesignation.getText().toString().equals("")){
+                } else if (edtOtherDesignation.getText().toString().equals("")) {
                     Toast.makeText(OtherActivity.this, "Please Enter Designation", Toast.LENGTH_SHORT).show();
-                }else if (edtOtherContactNumber.getText().toString().equals("")){
+                } else if (edtOtherContactNumber.getText().toString().equals("")) {
                     Toast.makeText(OtherActivity.this, "Please Enter Contact Number", Toast.LENGTH_SHORT).show();
-                }else if (edtOtherAddress1.getText().toString().equals("")){
+                } else if (edtOtherAddress1.getText().toString().equals("")) {
                     Toast.makeText(OtherActivity.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
-                }else if (edtOtherAddress2.getText().toString().equals("")){
+                } else if (edtOtherAddress2.getText().toString().equals("")) {
                     Toast.makeText(OtherActivity.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
-                }else if (edtOtherCity.getText().toString().equals("")){
+                } else if (edtOtherCity.getText().toString().equals("")) {
                     Toast.makeText(OtherActivity.this, "Please Enter City", Toast.LENGTH_SHORT).show();
-                }else if (edtOtherState.getText().toString().equals("")){
+                } else if (edtOtherState.getText().toString().equals("")) {
                     Toast.makeText(OtherActivity.this, "Please Enter State", Toast.LENGTH_SHORT).show();
-                }else if (edtOtherRemark.getText().toString().equals("")){
+                } else if (edtOtherRemark.getText().toString().equals("")) {
                     Toast.makeText(OtherActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     submitForm();
                 }
             }
@@ -108,6 +115,7 @@ public class OtherActivity extends AppCompatActivity {
 //                object.put("Medium", "");
 //                object.put("Std", "");
 //                object.put("AvgStudent", "");
+                object.put("iPartyTypeId",fromId);
                 object.put("AddressLine1", edtOtherAddress1.getText().toString());
                 object.put("AddressLine2", edtOtherAddress2.getText().toString());
                 object.put("CityName", edtOtherCity.getText().toString());

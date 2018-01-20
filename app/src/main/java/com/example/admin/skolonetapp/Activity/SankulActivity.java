@@ -1,8 +1,9 @@
 package com.example.admin.skolonetapp.Activity;
 
 import android.app.ProgressDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,13 +36,13 @@ import java.util.ArrayList;
 
 public class SankulActivity extends AppCompatActivity {
 
-    EditText edtSankulName,edtSankulOrganization, edtSankulPartyName, edtSankulDesignation, edtSankulContactNumber,
+    EditText edtSankulName, edtSankulOrganization, edtSankulPartyName, edtSankulDesignation, edtSankulContactNumber,
             edtSankulAddress1, edtSankulAddress2, edtSankulCity, edtSankulState, edtSankulRemark;
     Spinner spinnerStd, spinnerSchoolBoard, spinnerMedium;
     ProgressDialog progressDialog;
     ConnectionDetector detector;
     TextView txtFormName;
-    Button btnSave,btnCancel;
+    Button btnSave, btnCancel;
     ArrayList<stdList> arrayStd;
     ArrayList<String> spotArr;
     ArrayList<MediumList> arrayMedium;
@@ -51,15 +52,20 @@ public class SankulActivity extends AppCompatActivity {
     stdList stdlist;
     MediumList mediumList;
     BoardList boardList;
-    String stdName,mediumName,boardName;
-    int stdId,mediumId,boardId;
+    String stdName, mediumName, boardName;
+    int stdId, mediumId, boardId;
+    int fromId;
+    String fromName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sankul);
         detector = new ConnectionDetector(this);
-        edtSankulName=(EditText)findViewById(R.id.edtSankulName);
+        Intent intent = getIntent();
+        fromId = intent.getIntExtra("fromId", 0);
+        fromName = intent.getStringExtra("fromName");
+        edtSankulName = (EditText) findViewById(R.id.edtSankulName);
         edtSankulOrganization = (EditText) findViewById(R.id.edtSankulOrganization);
         edtSankulPartyName = (EditText) findViewById(R.id.edtSankulPartyName);
         edtSankulDesignation = (EditText) findViewById(R.id.edtSankulDesignation);
@@ -69,12 +75,13 @@ public class SankulActivity extends AppCompatActivity {
         edtSankulCity = (EditText) findViewById(R.id.edtSankulCity);
         edtSankulState = (EditText) findViewById(R.id.edtSankulState);
         edtSankulRemark = (EditText) findViewById(R.id.edtSankulRemark);
-        txtFormName=(TextView)findViewById(R.id.txtSankulForm);
-        btnSave=(Button)findViewById(R.id.btnSankulYes);
-        btnCancel=(Button)findViewById(R.id.btnSankulCancel);
+        txtFormName = (TextView) findViewById(R.id.txtSankulForm);
+        btnSave = (Button) findViewById(R.id.btnSankulYes);
+        btnCancel = (Button) findViewById(R.id.btnSankulCancel);
         spinnerStd = (Spinner) findViewById(R.id.spinnerSankulStandard);
         spinnerMedium = (Spinner) findViewById(R.id.spinnerSankulMedium);
         spinnerSchoolBoard = (Spinner) findViewById(R.id.spinnerSankulBoard);
+        txtFormName.setText("" + fromName);
 
         spinnerStd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -119,27 +126,27 @@ public class SankulActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (edtSankulName.getText().toString().equals("")){
+                if (edtSankulName.getText().toString().equals("")) {
                     Toast.makeText(SankulActivity.this, "Please Enter Organization", Toast.LENGTH_SHORT).show();
-                }else if (edtSankulOrganization.getText().toString().equals("")){
+                } else if (edtSankulOrganization.getText().toString().equals("")) {
                     Toast.makeText(SankulActivity.this, "Please Enter Organization", Toast.LENGTH_SHORT).show();
-                }else if (edtSankulPartyName.getText().toString().equals("")){
+                } else if (edtSankulPartyName.getText().toString().equals("")) {
                     Toast.makeText(SankulActivity.this, "Please Enter Party Name", Toast.LENGTH_SHORT).show();
-                }else if (edtSankulDesignation.getText().toString().equals("")){
+                } else if (edtSankulDesignation.getText().toString().equals("")) {
                     Toast.makeText(SankulActivity.this, "Please Enter Designation", Toast.LENGTH_SHORT).show();
-                }else if (edtSankulContactNumber.getText().toString().equals("")){
+                } else if (edtSankulContactNumber.getText().toString().equals("")) {
                     Toast.makeText(SankulActivity.this, "Please Enter Contact Number", Toast.LENGTH_SHORT).show();
-                }else if (edtSankulAddress1.getText().toString().equals("")){
+                } else if (edtSankulAddress1.getText().toString().equals("")) {
                     Toast.makeText(SankulActivity.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
-                }else if (edtSankulAddress2.getText().toString().equals("")){
+                } else if (edtSankulAddress2.getText().toString().equals("")) {
                     Toast.makeText(SankulActivity.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
-                }else if (edtSankulCity.getText().toString().equals("")){
+                } else if (edtSankulCity.getText().toString().equals("")) {
                     Toast.makeText(SankulActivity.this, "Please Enter City", Toast.LENGTH_SHORT).show();
-                }else if (edtSankulState.getText().toString().equals("")){
+                } else if (edtSankulState.getText().toString().equals("")) {
                     Toast.makeText(SankulActivity.this, "Please Enter State", Toast.LENGTH_SHORT).show();
-                }else if (edtSankulRemark.getText().toString().equals("")){
+                } else if (edtSankulRemark.getText().toString().equals("")) {
                     Toast.makeText(SankulActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     submitForm();
                 }
 
@@ -182,8 +189,8 @@ public class SankulActivity extends AppCompatActivity {
                                     spotArr = new ArrayList<>();
                                     arrayMedium = new ArrayList<>();
                                     mediumArr = new ArrayList<>();
-                                    arrayBoard =new ArrayList<>();
-                                    boardArr=new ArrayList<>();
+                                    arrayBoard = new ArrayList<>();
+                                    boardArr = new ArrayList<>();
 
                                     progressDialog.dismiss();
                                     JSONObject obj = response.getJSONObject("data");
@@ -291,6 +298,7 @@ public class SankulActivity extends AppCompatActivity {
                 object.put("Medium", mediumName);
                 object.put("Std", stdId);
                 object.put("AvgStudent", "100");
+                object.put("iPartyTypeId",fromId);
                 object.put("AddressLine1", edtSankulAddress1.getText().toString());
                 object.put("AddressLine2", edtSankulAddress2.getText().toString());
                 object.put("CityName", edtSankulCity.getText().toString());
@@ -315,7 +323,7 @@ public class SankulActivity extends AppCompatActivity {
                                 String msg = response.getString("message");
                                 // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
                                 if (code == true) {
-                                   // JSONObject obj = response.getJSONObject("data");
+                                    // JSONObject obj = response.getJSONObject("data");
                                     progressDialog.dismiss();
                                     finish();
                                 } else if (code == false) {

@@ -1,6 +1,7 @@
 package com.example.admin.skolonetapp.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -32,12 +33,17 @@ public class PartyActivity extends AppCompatActivity {
     ConnectionDetector detector;
     TextView txtFormName;
     Button btnSave, btnCancel;
+    int fromId;
+    String fromName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party);
         detector = new ConnectionDetector(this);
+        Intent intent = getIntent();
+        fromId = intent.getIntExtra("fromId", 0);
+        fromName = intent.getStringExtra("fromName");
         edtPartyShopName = (EditText) findViewById(R.id.edtPartyShopName);
         edtPartyDistributorName = (EditText) findViewById(R.id.edtPartyDistributorName);
         edtPartyType = (EditText) findViewById(R.id.edtPartyType);
@@ -113,6 +119,7 @@ public class PartyActivity extends AppCompatActivity {
 //                object.put("Medium", "");
 //                object.put("Std", "");
 //                object.put("AvgStudent", "");
+                object.put("iPartyTypeId",fromId);
                 object.put("AddressLine1", edtPartyAddress1.getText().toString());
                 object.put("AddressLine2", edtPartyAddress2.getText().toString());
                 object.put("CityName", edtPartyCity.getText().toString());

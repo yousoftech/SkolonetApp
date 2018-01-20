@@ -27,7 +27,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.admin.skolonetapp.Pojo.SalesList;
 import com.example.admin.skolonetapp.R;
+import com.example.admin.skolonetapp.Util.ConnectionDetector;
+import com.example.admin.skolonetapp.Util.Constant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,12 +49,19 @@ public class SalesMan extends AppCompatActivity {
     Button btnLogout;
     String from;
     String firstName, lastName;
+    int salesId;
+    SalesList salesList;
     SharedPreferences preferences;
+    ProgressDialog progressDialog;
+    ConnectionDetector detector;
+    ArrayList<SalesList> arraySales;
+    ArrayList<String> salesArr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_man);
+        detector = new ConnectionDetector(this);
         preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         txtTitle = (TextView) findViewById(R.id.txtTitle);
         btnLogout = (Button) findViewById(R.id.btnLogout);
@@ -66,38 +76,48 @@ public class SalesMan extends AppCompatActivity {
             public void onClick(View view) {
 
 
+                std();
                 final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(SalesMan.this);
-                LayoutInflater inflater = (LayoutInflater) SalesMan.this.getSystemService(SalesMan.this.LAYOUT_INFLATER_SERVICE);
+                final LayoutInflater inflater = (LayoutInflater) SalesMan.this.getSystemService(SalesMan.this.LAYOUT_INFLATER_SERVICE);
                 final View dialogView = inflater.inflate(R.layout.app_choose, null);
                 dialogBuilder.setView(dialogView);
                 final AlertDialog a = dialogBuilder.create();
                 spinner = (Spinner) dialogView.findViewById(R.id.spinnerForm);
 
-                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(SalesMan.this,
-                        R.array.type, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-                spinner.setAdapter(adapter);
-
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         from = spinner.getSelectedItem().toString();
+                        salesList = arraySales.get(i);
+                        salesId = salesList.getSalesId();
 
                         if (from.equalsIgnoreCase("School")) {
-                            startActivity(new Intent(getApplicationContext(), School_ClassisActivity.class));
+                            Intent intent = new Intent(SalesMan.this, School_ClassisActivity.class);
+                            intent.putExtra("fromName", from);
+                            intent.putExtra("fromId",salesId);
+                            startActivity(intent);
                         } else if (from.equalsIgnoreCase("Classes")) {
-                            startActivity(new Intent(getApplicationContext(), School_ClassisActivity.class));
+                            Intent intent = new Intent(SalesMan.this, School_ClassisActivity.class);
+                            intent.putExtra("fromName", from);
+                            intent.putExtra("fromId",salesId);
+                            startActivity(intent);
                         } else if (from.equalsIgnoreCase("Sankul")) {
-                            startActivity(new Intent(getApplicationContext(), SankulActivity.class));
+                            Intent intent = new Intent(SalesMan.this, SankulActivity.class);
+                            intent.putExtra("fromName", from);
+                            intent.putExtra("fromId",salesId);
+                            startActivity(intent);
                         } else if (from.equalsIgnoreCase("Party")) {
-                            startActivity(new Intent(getApplicationContext(), PartyActivity.class));
+                            Intent intent = new Intent(SalesMan.this, PartyActivity.class);
+                            intent.putExtra("fromName", from);
+                            intent.putExtra("fromId",salesId);
+                            startActivity(intent);
                         } else if (from.equalsIgnoreCase("Others")) {
-                            startActivity(new Intent(getApplicationContext(), OtherActivity.class));
+                            Intent intent = new Intent(SalesMan.this, OtherActivity.class);
+                            intent.putExtra("fromName", from);
+                            intent.putExtra("fromId",salesId);
+                            startActivity(intent);
                         }
                     }
-
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -106,6 +126,7 @@ public class SalesMan extends AppCompatActivity {
                 a.show();
             }
         });
+
     }
 
     private void setupToolbar(String title) {
@@ -149,5 +170,87 @@ public class SalesMan extends AppCompatActivity {
         }
     }
 
+    public void std() {
 
+        if (detector.isConnectingToInternet()) {
+
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Loading...");
+            progressDialog.show();
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+
+            final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
+                    Constant.PATH + "User/GetPartyType", null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("RESPONSE", response.toString());
+
+                            try {
+                                boolean code = response.getBoolean("status");
+                                Log.d("Login", "" + code);
+                                String msg = response.getString("message");
+                                // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
+                                if (code == true) {
+                                    arraySales = new ArrayList<>();
+                                    salesArr = new ArrayList<>();
+
+                                    progressDialog.dismiss();
+                                    JSONArray objArray1 = response.getJSONArray("data");
+                                    for (int i = 0; i < objArray1.length(); i++) {
+                                        JSONObject jresponse = objArray1.getJSONObject(i);
+                                        int stdId = jresponse.getInt("iPartyTypeId");
+                                        String stdName = jresponse.getString("strPartyType");
+                                        salesList = new SalesList();
+                                        if (i == 0) {
+                                            salesList.setSalesId(0);
+                                            salesList.setSalesName("Select Type");
+                                            salesArr.add(salesList.getSalesName());
+                                            arraySales.add(salesList);
+                                        }
+                                        salesList.setSalesId(stdId);
+                                        salesList.setSalesName(stdName);
+                                        salesArr.add(salesList.getSalesName());
+                                        arraySales.add(salesList);
+                                        Log.d("nickname", "" + stdId + " " + stdName);
+                                    }
+
+                                    ArrayAdapter board = new ArrayAdapter(SalesMan.this, android.R.layout.simple_spinner_item, salesArr);
+                                    board.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                                    spinner.setAdapter(board);
+
+//                                    ArrayAdapter board = new ArrayAdapter(SalesMan.this, android.R.layout.simple_spinner_item, salesArr);
+//                                    board.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                                    //Setting the ArrayAdapter data on the Spinner
+//                                    spinner.setAdapter(board);
+
+                                } else {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(SalesMan.this, msg, Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(SalesMan.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    if (progressDialog != null)
+                        progressDialog.dismiss();
+                    Log.d("RESPONSE", "That didn't work!");
+                }
+            });
+            request.setRetryPolicy(new DefaultRetryPolicy(
+                    30000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(request);
+        } else {
+            Toast.makeText(this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
+        }
+    }
 }

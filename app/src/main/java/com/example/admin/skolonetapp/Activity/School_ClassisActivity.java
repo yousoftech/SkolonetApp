@@ -1,6 +1,7 @@
 package com.example.admin.skolonetapp.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -51,13 +52,19 @@ public class School_ClassisActivity extends AppCompatActivity {
     ArrayList<String> mediumArr;
     ArrayList<BoardList> arrayBoard;
     ArrayList<String> boardArr;
-    String stdName,mediumName,boardName;
-    int stdId,mediumId,boardId;
+    String stdName, mediumName, boardName;
+    int stdId, mediumId, boardId;
+    int fromId;
+    String fromName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_school__classis);
+        Intent intent = getIntent();
+        fromId = intent.getIntExtra("fromId", 0);
+        fromName = intent.getStringExtra("fromName");
+
         detector = new ConnectionDetector(this);
         edtSchoolOrganization = (EditText) findViewById(R.id.edtSchoolOrganization);
         edtSchoolPartyName = (EditText) findViewById(R.id.edtSchoolPartyName);
@@ -74,6 +81,8 @@ public class School_ClassisActivity extends AppCompatActivity {
         txtFormName = (TextView) findViewById(R.id.txtForm);
         btnSave = (Button) findViewById(R.id.btnYes);
         btnCancel = (Button) findViewById(R.id.btnCancel);
+
+        txtFormName.setText("" + fromName);
 
         spinnerStd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -114,6 +123,7 @@ public class School_ClassisActivity extends AppCompatActivity {
 
             }
         });
+
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,8 +189,8 @@ public class School_ClassisActivity extends AppCompatActivity {
                                     spotArr = new ArrayList<>();
                                     arrayMedium = new ArrayList<>();
                                     mediumArr = new ArrayList<>();
-                                    arrayBoard =new ArrayList<>();
-                                    boardArr=new ArrayList<>();
+                                    arrayBoard = new ArrayList<>();
+                                    boardArr = new ArrayList<>();
 
                                     progressDialog.dismiss();
                                     JSONObject obj = response.getJSONObject("data");
@@ -289,6 +299,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                 object.put("Medium", mediumName);
                 object.put("Std", stdId);
                 object.put("AvgStudent", "100");
+                object.put("iPartyTypeId", fromId);
                 object.put("AddressLine1", edtSchoolAddress1.getText().toString());
                 object.put("AddressLine2", edtSchoolAddress2.getText().toString());
                 object.put("CityName", edtSchoolCity.getText().toString());
