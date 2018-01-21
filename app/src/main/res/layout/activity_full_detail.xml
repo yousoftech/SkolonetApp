@@ -4,10 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.admin.skolonetapp.Activity.FullDetail">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/app_toolbar_detail"></include>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/RelativeSankul">
+        android:layout_below="@+id/toolbar">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -186,6 +191,8 @@
                     android:hint="Enter Remark"
                     android:padding="5dp"
                     android:singleLine="true" />
+
+
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

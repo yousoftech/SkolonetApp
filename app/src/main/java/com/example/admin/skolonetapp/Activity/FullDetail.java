@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -21,24 +23,40 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.admin.skolonetapp.Pojo.BoardList;
+import com.example.admin.skolonetapp.Pojo.MediumList;
 import com.example.admin.skolonetapp.Pojo.Sales;
+import com.example.admin.skolonetapp.Pojo.stdList;
 import com.example.admin.skolonetapp.R;
 import com.example.admin.skolonetapp.Util.ConnectionDetector;
 import com.example.admin.skolonetapp.Util.Constant;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class FullDetail extends AppCompatActivity {
 
     ProgressDialog progressDialog;
     ConnectionDetector detector;
-    String fromId;
+    String fromId,type;
     EditText edtSankulName, edtSankulOrganization, edtSankulPartyName, edtSankulDesignation, edtSankulContactNumber,
-            edtSankulAddress1, edtSankulAddress2, edtSankulCity, edtSankulState, edtSankulRemark,edtPartyShopName,edtPartyType,edtPartyDistributorName;
+            edtSankulAddress1,edtSankulAverageStudent, edtSankulAddress2, edtSankulCity, edtSankulState, edtSankulRemark,edtPartyShopName,edtPartyType,edtPartyDistributorName;
     Spinner spinnerStd, spinnerSchoolBoard, spinnerMedium;
     Sales sales;
-
+    stdList stdlist;
+    MediumList mediumList;
+    BoardList boardList;
+    ArrayList<stdList> arrayStd;
+    ArrayList<String> spotArr;
+    ArrayList<MediumList> arrayMedium;
+    ArrayList<String> mediumArr;
+    ArrayList<BoardList> arrayBoard;
+    ArrayList<String> boardArr;
+    String stdName, mediumName, boardName;
+    int stdId, mediumId, boardId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,9 +77,53 @@ public class FullDetail extends AppCompatActivity {
         edtPartyShopName = (EditText) findViewById(R.id.edtPartyShopName);
         edtPartyDistributorName = (EditText) findViewById(R.id.edtPartyDistributorName);
         edtPartyType = (EditText) findViewById(R.id.edtPartyType);
+        edtSankulAverageStudent = (EditText)findViewById(R.id.edtSankulAverageStudent);
         detector = new ConnectionDetector(this);
         Intent intent = getIntent();
         fromId = intent.getStringExtra("fromId");
+        type = intent.getStringExtra("Type");
+        Log.d("Typee",type + " ");
+
+
+        spinnerStd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                stdName = spinnerStd.getSelectedItem().toString();
+                stdlist = arrayStd.get(i);
+                stdId = stdlist.getStdId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spinnerMedium.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                mediumName = spinnerMedium.getSelectedItem().toString();
+                mediumList = arrayMedium.get(i);
+                mediumId = mediumList.getMediumId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spinnerSchoolBoard.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                boardName = spinnerSchoolBoard.getSelectedItem().toString();
+                boardList = arrayBoard.get(i);
+                boardId = boardList.getBoardId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         fullDetail();
     }
 
@@ -106,11 +168,13 @@ public class FullDetail extends AppCompatActivity {
                             String datetimeCreated=object.getString("datetimeCreated");
                             String iPartyTypeId=object.getString("iPartyTypeId");
                             String strPartyType=object.getString("strPartyType");
-                            Log.d("PartyTypee",strPartyType);
+                            Log.d("PartyTypee",strPartyType + "");
+                            std();
+
                             if(strPartyType.equals("Others"))
                             {
                                 edtSankulPartyName.setTextColor(Color.BLACK);
-
+                                edtSankulAverageStudent.setVisibility((View.GONE));
                                 edtSankulName.setVisibility(View.GONE);
                                 edtPartyShopName.setVisibility(View.GONE);
                                 edtPartyDistributorName.setVisibility(View.GONE);
@@ -119,36 +183,37 @@ public class FullDetail extends AppCompatActivity {
                                 spinnerSchoolBoard.setVisibility(View.GONE);
                                 spinnerStd.setVisibility(View.GONE);
                                 setColor();
-                                edtSankulOrganization.setText("Organisation Name : " + organisationName);
-                                edtSankulPartyName.setText("Party Name : " + partyName);
-                                        edtSankulDesignation.setText("Designation : " + designation); edtSankulContactNumber.setText("Contact No : "+ contactNo);
-                                        edtSankulAddress1.setText("Address Line 1 : "+addressLine1); edtSankulAddress2.setText("Address Line 2: " + addressLine2);
-                                        edtSankulCity.setText("City Name : "+ cityName); edtSankulState.setText("State : " + stateName); edtSankulRemark.setText("Remark : "+ remark);
+                                edtSankulOrganization.setText(organisationName);
+                                edtSankulPartyName.setText(partyName);
+                                        edtSankulDesignation.setText(designation); edtSankulContactNumber.setText(contactNo);
+                                        edtSankulAddress1.setText(addressLine1); edtSankulAddress2.setText(addressLine2);
+                                        edtSankulCity.setText( cityName); edtSankulState.setText(stateName); edtSankulRemark.setText(remark);
                              //   disabled();
 
 
 
 
                             }
-                             else if(strPartyType.equals("Classes") || strPartyType.equals(("School")))
+                            if(strPartyType.equals("Classes") || strPartyType.equals(("School")))
                             {
 
-
-
-                                setColor();
-                                edtSankulOrganization.setText("Organisation Name : " + organisationName);
-                                edtSankulPartyName.setText("Party Name : " + partyName);
-                                edtSankulDesignation.setText("Designation : " + designation); edtSankulContactNumber.setText("Contact No : "+ contactNo);
-                                edtSankulAddress1.setText("Address Line 1 : "+addressLine1); edtSankulAddress2.setText("Address Line 2: " + addressLine2);
-                                edtSankulCity.setText("City Name : "+ cityName); edtSankulState.setText("State : " + stateName); edtSankulRemark.setText("Remark : "+ remark);
-                                spinnerMedium.setId(medium);
-                                spinnerStd.setId(std);
-                                spinnerSchoolBoard.setId(board);
-
                                 edtSankulName.setVisibility(View.GONE);
-                                 edtPartyShopName.setVisibility(View.GONE);
-                                 edtPartyDistributorName.setVisibility(View.GONE);
+                               edtPartyShopName.setVisibility(View.GONE);
+                                edtPartyDistributorName.setVisibility(View.GONE);
                                 edtPartyType.setVisibility(View.GONE);
+                                spinnerMedium.setSelection(medium);
+                                spinnerStd.setSelection(std);
+                                spinnerSchoolBoard.setSelection(board);
+                                setColor();
+                                edtSankulOrganization.setText( organisationName);
+                                edtSankulPartyName.setText( partyName);
+                                edtSankulDesignation.setText( designation); edtSankulContactNumber.setText(contactNo);
+                                edtSankulAddress1.setText(addressLine1); edtSankulAddress2.setText( addressLine2);
+                                edtSankulCity.setText( cityName); edtSankulState.setText( stateName); edtSankulRemark.setText(remark);
+                                edtSankulAverageStudent.setText(avgStudent);
+
+
+
                                 //   disabled();
 
 
@@ -181,7 +246,142 @@ public class FullDetail extends AppCompatActivity {
             Toast.makeText(FullDetail.this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
         }
     }
-   // public void disabled()
+    public void std() {
+
+        if (detector.isConnectingToInternet()) {
+
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Loading...");
+           progressDialog.show();
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+
+            final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
+                    Constant.PATH + "master/getcollection", null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("RESPONSE", response.toString());
+
+                            try {
+                                boolean code = response.getBoolean("status");
+                                Log.d("Login", "" + code);
+                                String msg = response.getString("message");
+                                // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
+                                if (code == true) {
+                                    arrayStd = new ArrayList<>();
+                                    spotArr = new ArrayList<>();
+                                    arrayMedium = new ArrayList<>();
+                                    mediumArr = new ArrayList<>();
+                                    arrayBoard = new ArrayList<>();
+                                    boardArr = new ArrayList<>();
+
+                                    progressDialog.dismiss();
+                                    JSONObject obj = response.getJSONObject("data");
+                                    JSONArray objArray1 = obj.getJSONArray("stdList");
+                                    for (int i = 0; i < objArray1.length(); i++) {
+                                        JSONObject jresponse = objArray1.getJSONObject(i);
+                                        int stdId = jresponse.getInt("iStandardId");
+                                        String stdName = jresponse.getString("strStandardName");
+                                        stdlist = new stdList();
+                                    /*    if (i == 0) {
+                                            stdlist.setStdId(0);
+                                            stdlist.setStdName("Select Standard");
+                                            spotArr.add(stdlist.getStdName());
+                                            arrayStd.add(stdlist);
+                                        }*/
+                                        stdlist.setStdId(stdId);
+                                        stdlist.setStdName(stdName);
+                                        spotArr.add(stdlist.getStdName());
+                                        arrayStd.add(stdlist);
+                                        Log.d("nickname", "" + stdId + " " + stdName);
+                                    }
+                                    JSONArray objArray2 = obj.getJSONArray("mediumList");
+                                    for (int i = 0; i < objArray2.length(); i++) {
+                                        JSONObject jresponse = objArray2.getJSONObject(i);
+                                        int mediumId = jresponse.getInt("iMedium");
+                                        String mediumName = jresponse.getString("strMediumName");
+                                        mediumList = new MediumList();
+                                       /* if (i == 0) {
+                                            mediumList.setMediumId(0);
+                                            mediumList.setMediumName("Select Medium");
+                                            mediumArr.add(mediumList.getMediumName());
+                                            arrayMedium.add(mediumList);
+                                        }*/
+                                        mediumList.setMediumId(mediumId);
+                                        mediumList.setMediumName(mediumName);
+                                        mediumArr.add(mediumList.getMediumName());
+                                        arrayMedium.add(mediumList);
+                                        Log.d("nickname", "" + mediumId + " " + mediumName);
+                                    }
+                                    JSONArray objArray3 = obj.getJSONArray("boardList");
+                                    for (int i = 0; i < objArray3.length(); i++) {
+                                        JSONObject jresponse = objArray3.getJSONObject(i);
+                                        int mediumId = jresponse.getInt("iBoardId");
+                                        String mediumName = jresponse.getString("strBoardName");
+                                        boardList = new BoardList();
+                                       /* if (i == 0) {
+                                            boardList.setBoardId(0);
+                                            boardList.setBoardName("Select Board");
+                                            boardArr.add(boardList.getBoardName());
+                                            arrayBoard.add(boardList);
+                                        }*/
+                                        boardList.setBoardId(mediumId);
+                                        boardList.setBoardName(mediumName);
+                                        boardArr.add(boardList.getBoardName());
+                                        arrayBoard.add(boardList);
+                                        Log.d("nickname", "" + mediumId + " " + mediumName);
+                                    }
+
+                                    ArrayAdapter medium = new ArrayAdapter(FullDetail.this, android.R.layout.simple_spinner_item, mediumArr);
+                                    medium.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    //Setting the ArrayAdapter data on the Spinner
+                                    spinnerMedium.setAdapter(medium);
+
+                                    ArrayAdapter std = new ArrayAdapter(FullDetail.this, android.R.layout.simple_spinner_item, spotArr);
+                                    std.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    //Setting the ArrayAdapter data on the Spinner
+                                    spinnerStd.setAdapter(std);
+
+
+                                    ArrayAdapter board = new ArrayAdapter(FullDetail.this, android.R.layout.simple_spinner_item, boardArr);
+                                    board.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    //Setting the ArrayAdapter data on the Spinner
+                                    spinnerSchoolBoard.setAdapter(board);
+                                  //  progressDialog.dismiss();
+
+                                } else {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(FullDetail.this, msg, Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(FullDetail.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    if (progressDialog != null)
+                        progressDialog.dismiss();
+                    Log.d("RESPONSE", "That didn't work!");
+                }
+            });
+            request.setRetryPolicy(new DefaultRetryPolicy(
+                    30000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(request);
+        } else {
+            Toast.makeText(this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+
+    // public void disabled()
     //{
      //   edtSankulName.setEnabled(false); edtSankulOrganization.setEnabled(false); edtSankulPartyName.setEnabled(false); edtSankulDesignation.setEnabled(false); edtSankulContactNumber.setEnabled(false);
       //          edtSankulAddress1.setEnabled(false); edtSankulAddress2.setEnabled(false); edtSankulCity.setEnabled(false); edtSankulState.setEnabled(false); edtSankulRemark.setEnabled(false);edtPartyShopName.setEnabled(false);edtPartyType.setEnabled(false);edtPartyDistributorName.setEnabled(false);

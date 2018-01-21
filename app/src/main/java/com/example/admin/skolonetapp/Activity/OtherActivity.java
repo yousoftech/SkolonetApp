@@ -40,6 +40,7 @@ public class OtherActivity extends AppCompatActivity {
     String fromName,Userid;
     SharedPreferences preferences;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

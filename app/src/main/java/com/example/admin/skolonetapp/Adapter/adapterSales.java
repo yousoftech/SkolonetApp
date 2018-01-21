@@ -43,7 +43,7 @@ public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerView
     LayoutInflater inflater;
     ProgressDialog progressDialog;
     ConnectionDetector detector;
-    String Id,fId;
+    String Id,fId,type;
 
     public adapterSales(Context context, ArrayList<Sales> event) {
         this.event = event;
@@ -66,6 +66,7 @@ public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerView
         holder.txt_PartyLocation.setText("" + event.get(position).getLocation());
         holder.txt_PartyDateTime.setText("" + event.get(position).getDatetimeCreated());
         Id = event.get(position).getPartyInfoId();
+        type=event.get(position).getStrPartyType();
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +90,9 @@ public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerView
                         editDelete.cancel();
                         //clear sharedprefrece
                         Intent intent = new Intent(context, FullDetail.class);
-                        intent.putExtra("fromId", Id);
+                        intent.putExtra("fromId", fId);
+                        intent.putExtra("Type", type);
+
                         context.startActivity(intent);
                     }
                 });

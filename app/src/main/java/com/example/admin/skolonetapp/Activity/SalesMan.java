@@ -1,12 +1,20 @@
 package com.example.admin.skolonetapp.Activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,23 +43,27 @@ import com.example.admin.skolonetapp.Pojo.SalesList;
 import com.example.admin.skolonetapp.R;
 import com.example.admin.skolonetapp.Util.ConnectionDetector;
 import com.example.admin.skolonetapp.Util.Constant;
+import com.example.admin.skolonetapp.Util.LocationAddress;
+import com.example.admin.skolonetapp.Util.LocationResult;
+import com.example.admin.skolonetapp.Util.MyLocation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.Permissions;
 import java.util.ArrayList;
 
 import static com.example.admin.skolonetapp.Activity.LoginActivity.PREFS_NAME;
 
-public class SalesMan extends AppCompatActivity {
+public class SalesMan extends AppCompatActivity implements LocationResult {
 
     FloatingActionButton fabButton;
     Spinner spinner;
     TextView txtTitle;
     Toolbar toolbar;
     Button btnLogout;
-    String from;
+    String from,addtLocation,latlong;
     String firstName, lastName;
     int salesId;
     SalesList salesList;
@@ -64,6 +76,8 @@ public class SalesMan extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<Sales> event;
     adapterSales aSales;
+    private MyLocation myLocation = null;
+    private static final int INITIAL_REQUEST = 13;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +92,16 @@ public class SalesMan extends AppCompatActivity {
         setupToolbar("" + firstName + " " + lastName);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerSales);
         event = new ArrayList<Sales>();
-
+        myLocation = new MyLocation();
 
         fabButton = (FloatingActionButton) findViewById(R.id.fabButton);
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                boolean networkPresent = myLocation.getLocation(SalesMan.this, SalesMan.this);
+                if (!networkPresent) {
+                    showSettingsAlert();
+                }
                 std();
                 final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(SalesMan.this);
                 final LayoutInflater inflater = (LayoutInflater) SalesMan.this.getSystemService(SalesMan.this.LAYOUT_INFLATER_SERVICE);
@@ -338,4 +356,88 @@ public class SalesMan extends AppCompatActivity {
         }
     }
 
+//    private boolean canAccessLocation() {
+//        return (hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
+//    }
+//
+//    private boolean canAccessCoreLocation() {
+//        return (hasPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
+//    }
+//    private boolean hasPermission(String perm) {
+//
+//        return (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(SalesMan.this, perm));
+//    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case INITIAL_REQUEST:
+//                if (canAccessLocation() && canAccessCoreLocation()) {
+//                    boolean networkPresent = myLocation.getLocation(SalesMan.this, this);
+//                    if (!networkPresent) {
+//                        showSettingsAlert();
+//                    }
+//                }
+//                break;
+//        }
+          //  if (requestCode== )
+   }
+
+    public void showSettingsAlert() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                SalesMan.this);
+        alertDialog.setTitle("SETTINGS");
+        alertDialog.setMessage("Enable Location Provider! Go to settings menu?");
+        alertDialog.setPositiveButton("Settings",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(
+                                Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        SalesMan.this.startActivity(intent);
+                    }
+                });
+        alertDialog.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    @Override
+    public void gotLocation(Location location) {
+        final double latitude = location.getLatitude();
+        final double longitude = location.getLongitude();
+        latlong = "Latitude: " + location.getLatitude() +
+                " Longitude: " + location.getLongitude();
+
+        SalesMan.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LocationAddress locationAddress = new LocationAddress();
+                locationAddress.getAddressFromLocation(latitude, longitude,
+                        getApplicationContext(), new GeocoderHandler());
+            }
+        });
+
+    }
+
+    private class GeocoderHandler extends Handler {
+        @Override
+        public void handleMessage(Message message) {
+            String locationAddress;
+            switch (message.what) {
+                case 1:
+                    Bundle bundle = message.getData();
+                    locationAddress = bundle.getString("address");
+                    break;
+                default:
+                    locationAddress = null;
+            }
+            addtLocation=locationAddress;
+            Log.d("location",addtLocation);
+           // tvAddress.setText(locationAddress);
+        }
+    }
 }
