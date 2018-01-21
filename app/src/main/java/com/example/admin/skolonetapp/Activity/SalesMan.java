@@ -104,26 +104,31 @@ public class SalesMan extends AppCompatActivity {
                             intent.putExtra("fromName", from);
                             intent.putExtra("fromId", salesId);
                             startActivity(intent);
+                            finish();
                         } else if (from.equalsIgnoreCase("Classes")) {
                             Intent intent = new Intent(SalesMan.this, School_ClassisActivity.class);
                             intent.putExtra("fromName", from);
                             intent.putExtra("fromId", salesId);
                             startActivity(intent);
+                            finish();
                         } else if (from.equalsIgnoreCase("Sankul")) {
                             Intent intent = new Intent(SalesMan.this, SankulActivity.class);
                             intent.putExtra("fromName", from);
                             intent.putExtra("fromId", salesId);
                             startActivity(intent);
+                            finish();
                         } else if (from.equalsIgnoreCase("Party")) {
                             Intent intent = new Intent(SalesMan.this, PartyActivity.class);
                             intent.putExtra("fromName", from);
                             intent.putExtra("fromId", salesId);
                             startActivity(intent);
+                            finish();
                         } else if (from.equalsIgnoreCase("Others")) {
                             Intent intent = new Intent(SalesMan.this, OtherActivity.class);
                             intent.putExtra("fromName", from);
                             intent.putExtra("fromId", salesId);
                             startActivity(intent);
+                            finish();
                         }
                     }
 
@@ -262,7 +267,6 @@ public class SalesMan extends AppCompatActivity {
             Toast.makeText(this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
         }
     }
-    //c14c1a7f-c3e0-4449-9c8f-2fb4c755b8dd
 
     public void detailFrom() {
         if (detector.isConnectingToInternet()) {
@@ -304,7 +308,7 @@ public class SalesMan extends AppCompatActivity {
                                     aSales = new adapterSales(SalesMan.this, event);
                                     recyclerView.setAdapter(aSales);
                                     recyclerView.setLayoutManager(new LinearLayoutManager(SalesMan.this, LinearLayoutManager.VERTICAL, false));
-
+                                    aSales.notifyDataSetChanged();
                                 }
                                 progressDialog.dismiss();
                             }

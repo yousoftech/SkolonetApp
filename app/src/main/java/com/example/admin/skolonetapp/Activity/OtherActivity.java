@@ -81,6 +81,7 @@ public class OtherActivity extends AppCompatActivity {
                     Toast.makeText(OtherActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
                 } else {
                     submitForm();
+                    startActivity(new Intent(OtherActivity.this, SalesMan.class));
                 }
             }
         });
@@ -88,6 +89,7 @@ public class OtherActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+                startActivity(new Intent(OtherActivity.this, SalesMan.class));
             }
         });
     }
@@ -115,7 +117,7 @@ public class OtherActivity extends AppCompatActivity {
 //                object.put("Medium", "");
 //                object.put("Std", "");
 //                object.put("AvgStudent", "");
-                object.put("iPartyTypeId",fromId);
+                object.put("iPartyTypeId", fromId);
                 object.put("AddressLine1", edtOtherAddress1.getText().toString());
                 object.put("AddressLine2", edtOtherAddress2.getText().toString());
                 object.put("CityName", edtOtherCity.getText().toString());

@@ -147,8 +147,8 @@ public class School_ClassisActivity extends AppCompatActivity {
                 } else if (edtSchoolRemark.getText().toString().equals("")) {
                     Toast.makeText(School_ClassisActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
                 } else {
-
                     submitForm();
+                    startActivity(new Intent(School_ClassisActivity.this, SalesMan.class));
                 }
             }
         });
@@ -156,6 +156,7 @@ public class School_ClassisActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+                startActivity(new Intent(School_ClassisActivity.this, SalesMan.class));
             }
         });
         std();
@@ -200,8 +201,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                                         int stdId = jresponse.getInt("iStandardId");
                                         String stdName = jresponse.getString("strStandardName");
                                         stdlist = new stdList();
-                                        if(i==0)
-                                        {
+                                        if (i == 0) {
                                             stdlist.setStdId(0);
                                             stdlist.setStdName("Select Standard");
                                             spotArr.add(stdlist.getStdName());
@@ -219,8 +219,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                                         int mediumId = jresponse.getInt("iMedium");
                                         String mediumName = jresponse.getString("strMediumName");
                                         mediumList = new MediumList();
-                                        if(i==0)
-                                        {
+                                        if (i == 0) {
                                             mediumList.setMediumId(0);
                                             mediumList.setMediumName("Select Medium");
                                             mediumArr.add(mediumList.getMediumName());
@@ -238,8 +237,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                                         int mediumId = jresponse.getInt("iBoardId");
                                         String mediumName = jresponse.getString("strBoardName");
                                         boardList = new BoardList();
-                                        if(i==0)
-                                        {
+                                        if (i == 0) {
                                             boardList.setBoardId(0);
                                             boardList.setBoardName("Select Board");
                                             boardArr.add(boardList.getBoardName());

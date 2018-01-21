@@ -84,6 +84,7 @@ public class PartyActivity extends AppCompatActivity {
                     Toast.makeText(PartyActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
                 } else {
                     submitForm();
+                    startActivity(new Intent(PartyActivity.this, SalesMan.class));
                 }
 
             }
@@ -92,6 +93,7 @@ public class PartyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+                startActivity(new Intent(PartyActivity.this, SalesMan.class));
             }
         });
     }

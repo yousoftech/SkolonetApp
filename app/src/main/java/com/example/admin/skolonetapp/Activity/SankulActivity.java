@@ -148,6 +148,7 @@ public class SankulActivity extends AppCompatActivity {
                     Toast.makeText(SankulActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
                 } else {
                     submitForm();
+                    startActivity(new Intent(SankulActivity.this, SalesMan.class));
                 }
 
             }
@@ -156,6 +157,7 @@ public class SankulActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+                startActivity(new Intent(SankulActivity.this, SalesMan.class));
             }
         });
         std();

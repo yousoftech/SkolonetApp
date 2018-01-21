@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.admin.skolonetapp.Activity.FullDetail">
+
+    <TextView
+        android:id="@+id/txtPartyName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kush Shah" />
+
+    <TextView
+        android:id="@+id/txtorganisationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtPartyName"
+        android:text="Kush Shah" />
+
+    <TextView
+        android:id="@+id/txtdesignation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtorganisationName"
+        android:text="kush shah" />
+
 
 </RelativeLayout>
