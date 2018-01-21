@@ -68,10 +68,10 @@ public class School_ClassisActivity extends AppCompatActivity {
         detector = new ConnectionDetector(this);
         edtSchoolOrganization = (EditText) findViewById(R.id.edtSchoolOrganization);
         edtSchoolPartyName = (EditText) findViewById(R.id.edtSchoolPartyName);
-        edtSchoolDesignation = (EditText) findViewById(R.id.edtOtherDesignation);
+        edtSchoolDesignation = (EditText) findViewById(R.id.edtSchoolDesignation);
         edtSchoolContactNumber = (EditText) findViewById(R.id.edtSchoolContactNumber);
-        edtSchoolAddress1 = (EditText) findViewById(R.id.edtOtherAddress1);
-        edtSchoolAddress2 = (EditText) findViewById(R.id.edtOtherAddress2);
+        edtSchoolAddress1 = (EditText) findViewById(R.id.edtSchoolAddress1);
+        edtSchoolAddress2 = (EditText) findViewById(R.id.edtSchoolAddress2);
         edtSchoolCity = (EditText) findViewById(R.id.edtSchoolCity);
         edtSchoolState = (EditText) findViewById(R.id.edtSchoolState);
         edtSchoolRemark = (EditText) findViewById(R.id.edtSchoolRemark);
