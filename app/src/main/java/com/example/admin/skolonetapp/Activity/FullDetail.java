@@ -2,9 +2,16 @@ package com.example.admin.skolonetapp.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -27,12 +34,31 @@ public class FullDetail extends AppCompatActivity {
     ProgressDialog progressDialog;
     ConnectionDetector detector;
     String fromId;
+    EditText edtSankulName, edtSankulOrganization, edtSankulPartyName, edtSankulDesignation, edtSankulContactNumber,
+            edtSankulAddress1, edtSankulAddress2, edtSankulCity, edtSankulState, edtSankulRemark,edtPartyShopName,edtPartyType,edtPartyDistributorName;
+    Spinner spinnerStd, spinnerSchoolBoard, spinnerMedium;
     Sales sales;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_detail);
+        edtSankulName = (EditText) findViewById(R.id.edtSankulName);
+        edtSankulOrganization = (EditText) findViewById(R.id.edtSankulOrganization);
+        edtSankulPartyName = (EditText) findViewById(R.id.edtSankulPartyName);
+        edtSankulDesignation = (EditText) findViewById(R.id.edtSankulDesignation);
+        edtSankulContactNumber = (EditText) findViewById(R.id.edtSankulContactNumber);
+        edtSankulAddress1 = (EditText) findViewById(R.id.edtSankulAddress1);
+        edtSankulAddress2 = (EditText) findViewById(R.id.edtSankulAddress2);
+        edtSankulCity = (EditText) findViewById(R.id.edtSankulCity);
+        edtSankulState = (EditText) findViewById(R.id.edtSankulState);
+        edtSankulRemark = (EditText) findViewById(R.id.edtSankulRemark);
+        spinnerStd = (Spinner) findViewById(R.id.spinnerSankulStandard);
+        spinnerMedium = (Spinner) findViewById(R.id.spinnerSankulMedium);
+        spinnerSchoolBoard = (Spinner) findViewById(R.id.spinnerSankulBoard);
+        edtPartyShopName = (EditText) findViewById(R.id.edtPartyShopName);
+        edtPartyDistributorName = (EditText) findViewById(R.id.edtPartyDistributorName);
+        edtPartyType = (EditText) findViewById(R.id.edtPartyType);
         detector = new ConnectionDetector(this);
         Intent intent = getIntent();
         fromId = intent.getStringExtra("fromId");
@@ -67,9 +93,9 @@ public class FullDetail extends AppCompatActivity {
                             String distubitorType=object.getString("distubitorType");
                             String iUserTypeId=object.getString("iUserTypeId");
                             String contactNo=object.getString("contactNo");
-                            String board=object.getString("board");
-                            String medium=object.getString("medium");
-                            String std=object.getString("std");
+                            int board=object.getInt("board");
+                            int medium=object.getInt("medium");
+                            int std=object.getInt("std");
                             String avgStudent=object.getString("avgStudent");
                             String addressLine1=object.getString("addressLine1");
                             String addressLine2=object.getString("addressLine2");
@@ -79,6 +105,57 @@ public class FullDetail extends AppCompatActivity {
                             String location=object.getString("location");
                             String datetimeCreated=object.getString("datetimeCreated");
                             String iPartyTypeId=object.getString("iPartyTypeId");
+                            String strPartyType=object.getString("strPartyType");
+                            Log.d("PartyTypee",strPartyType);
+                            if(strPartyType.equals("Others"))
+                            {
+                                edtSankulPartyName.setTextColor(Color.BLACK);
+
+                                edtSankulName.setVisibility(View.GONE);
+                                edtPartyShopName.setVisibility(View.GONE);
+                                edtPartyDistributorName.setVisibility(View.GONE);
+                                edtPartyType.setVisibility(View.GONE);
+                                spinnerMedium.setVisibility(View.GONE);
+                                spinnerSchoolBoard.setVisibility(View.GONE);
+                                spinnerStd.setVisibility(View.GONE);
+                                setColor();
+                                edtSankulOrganization.setText("Organisation Name : " + organisationName);
+                                edtSankulPartyName.setText("Party Name : " + partyName);
+                                        edtSankulDesignation.setText("Designation : " + designation); edtSankulContactNumber.setText("Contact No : "+ contactNo);
+                                        edtSankulAddress1.setText("Address Line 1 : "+addressLine1); edtSankulAddress2.setText("Address Line 2: " + addressLine2);
+                                        edtSankulCity.setText("City Name : "+ cityName); edtSankulState.setText("State : " + stateName); edtSankulRemark.setText("Remark : "+ remark);
+                             //   disabled();
+
+
+
+
+                            }
+                             else if(strPartyType.equals("Classes") || strPartyType.equals(("School")))
+                            {
+
+
+
+                                setColor();
+                                edtSankulOrganization.setText("Organisation Name : " + organisationName);
+                                edtSankulPartyName.setText("Party Name : " + partyName);
+                                edtSankulDesignation.setText("Designation : " + designation); edtSankulContactNumber.setText("Contact No : "+ contactNo);
+                                edtSankulAddress1.setText("Address Line 1 : "+addressLine1); edtSankulAddress2.setText("Address Line 2: " + addressLine2);
+                                edtSankulCity.setText("City Name : "+ cityName); edtSankulState.setText("State : " + stateName); edtSankulRemark.setText("Remark : "+ remark);
+                                spinnerMedium.setId(medium);
+                                spinnerStd.setId(std);
+                                spinnerSchoolBoard.setId(board);
+
+                                edtSankulName.setVisibility(View.GONE);
+                                 edtPartyShopName.setVisibility(View.GONE);
+                                 edtPartyDistributorName.setVisibility(View.GONE);
+                                edtPartyType.setVisibility(View.GONE);
+                                //   disabled();
+
+
+
+
+                            }
+
                         }
 
                     } catch (JSONException e) {
@@ -104,5 +181,26 @@ public class FullDetail extends AppCompatActivity {
             Toast.makeText(FullDetail.this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
         }
     }
+   // public void disabled()
+    //{
+     //   edtSankulName.setEnabled(false); edtSankulOrganization.setEnabled(false); edtSankulPartyName.setEnabled(false); edtSankulDesignation.setEnabled(false); edtSankulContactNumber.setEnabled(false);
+      //          edtSankulAddress1.setEnabled(false); edtSankulAddress2.setEnabled(false); edtSankulCity.setEnabled(false); edtSankulState.setEnabled(false); edtSankulRemark.setEnabled(false);edtPartyShopName.setEnabled(false);edtPartyType.setEnabled(false);edtPartyDistributorName.setEnabled(false);
+   //spinnerMedium.setEnabled(false);
+  // spinnerSchoolBoard.setEnabled(false);
+  // spinnerStd.setEnabled(false);
+   
+ //   }
+
+   // public void enabled()
+   // {
+
+    //}
+    public void setColor()
+    {
+        edtSankulName.setTextColor(Color.BLACK); edtSankulOrganization.setTextColor(Color.BLACK); edtSankulPartyName.setTextColor(Color.BLACK); edtSankulDesignation.setTextColor(Color.BLACK); edtSankulContactNumber.setTextColor(Color.BLACK);
+        edtSankulAddress1.setTextColor(Color.BLACK); edtSankulAddress2.setTextColor(Color.BLACK); edtSankulCity.setTextColor(Color.BLACK); edtSankulState.setTextColor(Color.BLACK); edtSankulRemark.setTextColor(Color.BLACK);edtPartyShopName.setTextColor(Color.BLACK);edtPartyType.setTextColor(Color.BLACK);edtPartyDistributorName.setTextColor(Color.BLACK);
+
+    }
+
 
 }
