@@ -110,6 +110,7 @@
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Contact Number"
+                    android:inputType="number"
                     android:padding="5dp"
                     android:singleLine="true" />
 
@@ -158,7 +159,7 @@
                     android:id="@+id/edtSankulAddress1"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/spinnerSankulStandard"
+                    android:layout_below="@+id/edtSankulAverageStudent"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Flat No,Colony Number/Society"

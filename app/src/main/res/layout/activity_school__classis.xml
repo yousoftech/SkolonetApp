@@ -147,7 +147,7 @@
                     android:id="@+id/edtSchoolAddress1"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/spinnerSchoolStandard"
+                    android:layout_below="@+id/edtSchoolAverageStudent"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Flat No,Colony Number/Society"

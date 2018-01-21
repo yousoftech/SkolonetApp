@@ -37,7 +37,7 @@ import java.util.ArrayList;
 public class School_ClassisActivity extends AppCompatActivity {
 
     EditText edtSchoolOrganization, edtSchoolPartyName, edtSchoolDesignation, edtSchoolContactNumber,
-            edtSchoolAddress1, edtSchoolAddress2, edtSchoolCity, edtSchoolState, edtSchoolRemark;
+            edtSchoolAverageStudent, edtSchoolAddress1, edtSchoolAddress2, edtSchoolCity, edtSchoolState, edtSchoolRemark;
     Spinner spinnerStd, spinnerSchoolBoard, spinnerMedium;
     ProgressDialog progressDialog;
     ConnectionDetector detector;
@@ -70,6 +70,7 @@ public class School_ClassisActivity extends AppCompatActivity {
         edtSchoolPartyName = (EditText) findViewById(R.id.edtSchoolPartyName);
         edtSchoolDesignation = (EditText) findViewById(R.id.edtSchoolDesignation);
         edtSchoolContactNumber = (EditText) findViewById(R.id.edtSchoolContactNumber);
+        edtSchoolAverageStudent = (EditText) findViewById(R.id.edtSchoolAverageStudent);
         edtSchoolAddress1 = (EditText) findViewById(R.id.edtSchoolAddress1);
         edtSchoolAddress2 = (EditText) findViewById(R.id.edtSchoolAddress2);
         edtSchoolCity = (EditText) findViewById(R.id.edtSchoolCity);
@@ -146,6 +147,8 @@ public class School_ClassisActivity extends AppCompatActivity {
                     Toast.makeText(School_ClassisActivity.this, "Please Enter State", Toast.LENGTH_SHORT).show();
                 } else if (edtSchoolRemark.getText().toString().equals("")) {
                     Toast.makeText(School_ClassisActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
+                } else if (edtSchoolAverageStudent.getText().toString().equals("")) {
+                    Toast.makeText(School_ClassisActivity.this, "Please Enter AverageStudent", Toast.LENGTH_SHORT).show();
                 } else {
                     submitForm();
                     startActivity(new Intent(School_ClassisActivity.this, SalesMan.class));
@@ -317,7 +320,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                 object.put("Board", boardName);
                 object.put("Medium", mediumName);
                 object.put("Std", stdId);
-                object.put("AvgStudent", "100");
+                object.put("AvgStudent", edtSchoolAverageStudent.getText().toString());
                 object.put("iPartyTypeId", fromId);
                 object.put("AddressLine1", edtSchoolAddress1.getText().toString());
                 object.put("AddressLine2", edtSchoolAddress2.getText().toString());

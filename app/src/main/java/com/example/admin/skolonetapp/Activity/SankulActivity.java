@@ -37,7 +37,7 @@ import java.util.ArrayList;
 public class SankulActivity extends AppCompatActivity {
 
     EditText edtSankulName, edtSankulOrganization, edtSankulPartyName, edtSankulDesignation, edtSankulContactNumber,
-            edtSankulAddress1, edtSankulAddress2, edtSankulCity, edtSankulState, edtSankulRemark;
+            edtSankulAverageStudent, edtSankulAddress1, edtSankulAddress2, edtSankulCity, edtSankulState, edtSankulRemark;
     Spinner spinnerStd, spinnerSchoolBoard, spinnerMedium;
     ProgressDialog progressDialog;
     ConnectionDetector detector;
@@ -70,6 +70,7 @@ public class SankulActivity extends AppCompatActivity {
         edtSankulPartyName = (EditText) findViewById(R.id.edtSankulPartyName);
         edtSankulDesignation = (EditText) findViewById(R.id.edtSankulDesignation);
         edtSankulContactNumber = (EditText) findViewById(R.id.edtSankulContactNumber);
+        edtSankulAverageStudent = (EditText) findViewById(R.id.edtSankulAverageStudent);
         edtSankulAddress1 = (EditText) findViewById(R.id.edtSankulAddress1);
         edtSankulAddress2 = (EditText) findViewById(R.id.edtSankulAddress2);
         edtSankulCity = (EditText) findViewById(R.id.edtSankulCity);
@@ -146,6 +147,8 @@ public class SankulActivity extends AppCompatActivity {
                     Toast.makeText(SankulActivity.this, "Please Enter State", Toast.LENGTH_SHORT).show();
                 } else if (edtSankulRemark.getText().toString().equals("")) {
                     Toast.makeText(SankulActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
+                } else if (edtSankulAverageStudent.getText().toString().equals("")) {
+                    Toast.makeText(SankulActivity.this, "Please Enter AverageStudent", Toast.LENGTH_SHORT).show();
                 } else {
                     submitForm();
                     startActivity(new Intent(SankulActivity.this, SalesMan.class));
@@ -299,8 +302,8 @@ public class SankulActivity extends AppCompatActivity {
                 object.put("Board", boardName);
                 object.put("Medium", mediumName);
                 object.put("Std", stdId);
-                object.put("AvgStudent", "100");
-                object.put("iPartyTypeId",fromId);
+                object.put("AvgStudent", edtSankulAverageStudent.getText().toString());
+                object.put("iPartyTypeId", fromId);
                 object.put("AddressLine1", edtSankulAddress1.getText().toString());
                 object.put("AddressLine2", edtSankulAddress2.getText().toString());
                 object.put("CityName", edtSankulCity.getText().toString());

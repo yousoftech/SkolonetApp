@@ -110,6 +110,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/edt_border"
                 android:hint="Enter Contact Number"
+                android:inputType="number"
                 android:padding="5dp"
                 android:singleLine="true" />
 
