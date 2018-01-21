@@ -73,7 +73,7 @@ public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerView
 
                 fId = event.get(position).getPartyInfoId();
 
-
+                type=event.get(position).getStrPartyType();
                 final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
                 final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View dialogView = inflater.inflate(R.layout.app_edit, null);

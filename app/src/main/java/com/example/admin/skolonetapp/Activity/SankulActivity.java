@@ -163,7 +163,7 @@ public class SankulActivity extends AppCompatActivity {
 
             }
         });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
+        btnCancel .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();

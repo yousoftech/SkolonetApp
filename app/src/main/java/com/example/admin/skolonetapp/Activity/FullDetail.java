@@ -57,6 +57,7 @@ public class FullDetail extends AppCompatActivity {
     ArrayList<String> boardArr;
     String stdName, mediumName, boardName;
     int stdId, mediumId, boardId;
+    Button btnSave, btnCancel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,12 +79,47 @@ public class FullDetail extends AppCompatActivity {
         edtPartyDistributorName = (EditText) findViewById(R.id.edtPartyDistributorName);
         edtPartyType = (EditText) findViewById(R.id.edtPartyType);
         edtSankulAverageStudent = (EditText)findViewById(R.id.edtSankulAverageStudent);
+        btnSave = (Button) findViewById(R.id.btnYesUpdate);
+        btnCancel = (Button) findViewById(R.id.btnCancelUpdate);
         detector = new ConnectionDetector(this);
         Intent intent = getIntent();
         fromId = intent.getStringExtra("fromId");
         type = intent.getStringExtra("Type");
         Log.d("Typee",type + " ");
 
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(type.equals("Sankul")) {
+                    if (edtSankulName.getText().toString().equals("")) {
+                        Toast.makeText(FullDetail.this, "Please Enter Organization", Toast.LENGTH_SHORT).show();
+                    } else if (edtSankulOrganization.getText().toString().equals("")) {
+                        Toast.makeText(FullDetail.this, "Please Enter Organization", Toast.LENGTH_SHORT).show();
+                    } else if (edtSankulPartyName.getText().toString().equals("")) {
+                        Toast.makeText(FullDetail.this, "Please Enter Party Name", Toast.LENGTH_SHORT).show();
+                    } else if (edtSankulDesignation.getText().toString().equals("")) {
+                        Toast.makeText(FullDetail.this, "Please Enter Designation", Toast.LENGTH_SHORT).show();
+                    } else if (edtSankulContactNumber.getText().toString().equals("")) {
+                        Toast.makeText(FullDetail.this, "Please Enter Contact Number", Toast.LENGTH_SHORT).show();
+                    } else if (edtSankulAddress1.getText().toString().equals("")) {
+                        Toast.makeText(FullDetail.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
+                    } else if (edtSankulAddress2.getText().toString().equals("")) {
+                        Toast.makeText(FullDetail.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
+                    } else if (edtSankulCity.getText().toString().equals("")) {
+                        Toast.makeText(FullDetail.this, "Please Enter City", Toast.LENGTH_SHORT).show();
+                    } else if (edtSankulState.getText().toString().equals("")) {
+                        Toast.makeText(FullDetail.this, "Please Enter State", Toast.LENGTH_SHORT).show();
+                    } else if (edtSankulRemark.getText().toString().equals("")) {
+                        Toast.makeText(FullDetail.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
+                    } else if (edtSankulAverageStudent.getText().toString().equals("")) {
+                        Toast.makeText(FullDetail.this, "Please Enter AverageStudent", Toast.LENGTH_SHORT).show();
+                    } else {
+                        submitForm();
+                        startActivity(new Intent(FullDetail.this, SalesMan.class));
+                    }
+                }
+            }
+        });
 
         spinnerStd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -125,6 +161,102 @@ public class FullDetail extends AppCompatActivity {
             }
         });
         fullDetail();
+
+     /*   btnCancel .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                startActivity(new Intent(FullDetail.this, SalesMan.class));
+            }
+        });*/
+
+
+    }
+    public void submitForm() {
+        if (detector.isConnectingToInternet()) {
+
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Loading...");
+            progressDialog.show();
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+            final JSONObject object = new JSONObject();
+            try {
+               // Log.d("create object",type);
+                if(type.equals("Sankul")) {
+
+                    object.put("OrganisationName", edtSankulOrganization.getText().toString());
+
+                    object.put("PartyName", edtSankulPartyName.getText().toString());
+                    object.put("Designation", edtSankulDesignation.getText().toString());
+                    object.put("SankulName", edtSankulName.getText().toString());
+//                object.put("ShopName", "");
+//                object.put("DistubitorName", "Kush");
+//                object.put("DistubitorType", "Sankul");
+
+                    object.put("Board", boardId);
+                    object.put("Medium", mediumId);
+                    object.put("Std", stdId);
+                    object.put("AvgStudent", edtSankulAverageStudent.getText().toString());
+
+                }
+                object.put("ContactNo", edtSankulContactNumber.getText().toString());
+                object.put("AddressLine1", edtSankulAddress1.getText().toString());
+                object.put("AddressLine2", edtSankulAddress2.getText().toString());
+                object.put("CityName", edtSankulCity.getText().toString());
+                object.put("StateName", edtSankulState.getText().toString());
+                object.put("Remark", edtSankulRemark.getText().toString());
+                Log.d("updatevalue" , object.toString() + " ");
+            } catch (JSONException e) {
+                Toast.makeText(FullDetail.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+
+            final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
+                    Constant.PATH + "Sales/Update?id=" + fromId , object,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("RESPONSE", response.toString());
+
+                            try {
+                                boolean code = response.getBoolean("status");
+                                Log.d("Login", "" + code);
+                                String msg = response.getString("message");
+                                // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
+                                if (code == true) {
+                                    Toast.makeText(FullDetail.this, ""+msg, Toast.LENGTH_SHORT).show();
+                                    // JSONObject obj = response.getJSONObject("data");
+                                    progressDialog.dismiss();
+                                    finish();
+                                } else if (code == false) {
+                                    String msg1 = response.getString("message");
+                                    progressDialog.dismiss();
+                                    Toast.makeText(FullDetail.this, "" + msg1, Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(FullDetail.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    if (progressDialog != null)
+                        progressDialog.dismiss();
+                    Log.d("RESPONSE", "That didn't work!");
+                }
+            });
+            request.setRetryPolicy(new DefaultRetryPolicy(
+                    30000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(request);
+        } else {
+            Toast.makeText(this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void fullDetail() {
@@ -185,9 +317,7 @@ public class FullDetail extends AppCompatActivity {
                                 setColor();
                                 edtSankulOrganization.setText(organisationName);
                                 edtSankulPartyName.setText(partyName);
-                                        edtSankulDesignation.setText(designation); edtSankulContactNumber.setText(contactNo);
-                                        edtSankulAddress1.setText(addressLine1); edtSankulAddress2.setText(addressLine2);
-                                        edtSankulCity.setText( cityName); edtSankulState.setText(stateName); edtSankulRemark.setText(remark);
+
                              //   disabled();
 
 
@@ -207,9 +337,6 @@ public class FullDetail extends AppCompatActivity {
                                 setColor();
                                 edtSankulOrganization.setText( organisationName);
                                 edtSankulPartyName.setText( partyName);
-                                edtSankulDesignation.setText( designation); edtSankulContactNumber.setText(contactNo);
-                                edtSankulAddress1.setText(addressLine1); edtSankulAddress2.setText( addressLine2);
-                                edtSankulCity.setText( cityName); edtSankulState.setText( stateName); edtSankulRemark.setText(remark);
                                 edtSankulAverageStudent.setText(avgStudent);
 
 
@@ -220,6 +347,21 @@ public class FullDetail extends AppCompatActivity {
 
 
                             }
+                            if(strPartyType.equals("Sankul"))
+                            {
+                                edtSankulName.setText(sankulName);
+                                edtPartyShopName.setVisibility(View.GONE);edtPartyType.setVisibility(View.GONE);edtPartyDistributorName.setVisibility(View.GONE);
+                                edtSankulOrganization.setText( organisationName);
+                                edtSankulPartyName.setText( partyName);
+                                edtSankulAverageStudent.setText(avgStudent);
+                                spinnerMedium.setSelection(medium);
+                                spinnerStd.setSelection(std);
+                                spinnerSchoolBoard.setSelection(board);
+                            }
+
+                            edtSankulDesignation.setText( designation); edtSankulContactNumber.setText(contactNo);
+                            edtSankulAddress1.setText(addressLine1); edtSankulAddress2.setText( addressLine2);
+                            edtSankulCity.setText( cityName); edtSankulState.setText( stateName); edtSankulRemark.setText(remark);
 
                         }
 
@@ -246,6 +388,7 @@ public class FullDetail extends AppCompatActivity {
             Toast.makeText(FullDetail.this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
         }
     }
+    
     public void std() {
 
         if (detector.isConnectingToInternet()) {
