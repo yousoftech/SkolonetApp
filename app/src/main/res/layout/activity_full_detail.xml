@@ -14,10 +14,11 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundshape">
+                android:background="@drawable/roundshape"
+                android:orientation="vertical">
 
                 <EditText
                     android:id="@+id/edtSankulName"
@@ -34,7 +35,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_margin="10dp"
-                    android:layout_below="@+id/edtSankulName"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Shop Name"
                     android:padding="5dp"
@@ -44,7 +44,6 @@
                     android:id="@+id/edtPartyDistributorName"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtPartyShopName"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Distributor Name"
@@ -55,7 +54,6 @@
                     android:id="@+id/edtPartyType"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtPartyDistributorName"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Type"
@@ -66,7 +64,6 @@
                     android:id="@+id/edtSankulOrganization"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtPartyType"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Organization Name"
@@ -77,7 +74,6 @@
                     android:id="@+id/edtSankulPartyName"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtSankulOrganization"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Party Name"
@@ -88,7 +84,6 @@
                     android:id="@+id/edtSankulDesignation"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtSankulPartyName"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Designation"
@@ -99,7 +94,6 @@
                     android:id="@+id/edtSankulContactNumber"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtSankulDesignation"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Contact Number"
@@ -110,7 +104,6 @@
                     android:id="@+id/spinnerSankulBoard"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:layout_below="@id/edtSankulContactNumber"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:gravity="center"
@@ -120,7 +113,6 @@
                     android:id="@+id/spinnerSankulMedium"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:layout_below="@id/spinnerSankulBoard"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:gravity="center"
@@ -130,7 +122,6 @@
                     android:id="@+id/spinnerSankulStandard"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:layout_below="@id/spinnerSankulMedium"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:gravity="center"
@@ -140,7 +131,6 @@
                     android:id="@+id/edtSankulAverageStudent"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/spinnerSankulStandard"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Average Student Of School"
@@ -151,7 +141,6 @@
                     android:id="@+id/edtSankulAddress1"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/spinnerSankulStandard"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Flat No,Colony Number/Society"
@@ -162,7 +151,6 @@
                     android:id="@+id/edtSankulAddress2"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtSankulAddress1"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Street Name"
@@ -173,7 +161,6 @@
                     android:id="@+id/edtSankulCity"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtSankulAddress2"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter City Name"
@@ -184,7 +171,6 @@
                     android:id="@+id/edtSankulState"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtSankulCity"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter State Name"
@@ -195,35 +181,12 @@
                     android:id="@+id/edtSankulRemark"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtSankulState"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Remark"
                     android:padding="5dp"
                     android:singleLine="true" />
-            </RelativeLayout>
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
-
-    <TextView
-        android:id="@+id/txtPartyName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Kush Shah" />
-
-    <TextView
-        android:id="@+id/txtorganisationName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtPartyName"
-        android:text="Kush Shah" />
-
-    <TextView
-        android:id="@+id/txtdesignation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtorganisationName"
-        android:text="kush shah" />
-
-
 </RelativeLayout>
