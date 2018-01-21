@@ -299,8 +299,8 @@ public class SankulActivity extends AppCompatActivity {
 //                object.put("DistubitorName", "Kush");
 //                object.put("DistubitorType", "Sankul");
                 object.put("ContactNo", edtSankulContactNumber.getText().toString());
-                object.put("Board", boardName);
-                object.put("Medium", mediumName);
+                object.put("Board", boardId);
+                object.put("Medium", mediumId);
                 object.put("Std", stdId);
                 object.put("AvgStudent", edtSankulAverageStudent.getText().toString());
                 object.put("iPartyTypeId", fromId);
@@ -328,6 +328,7 @@ public class SankulActivity extends AppCompatActivity {
                                 String msg = response.getString("message");
                                 // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
                                 if (code == true) {
+                                    Toast.makeText(SankulActivity.this, ""+msg, Toast.LENGTH_SHORT).show();
                                     // JSONObject obj = response.getJSONObject("data");
                                     progressDialog.dismiss();
                                     finish();

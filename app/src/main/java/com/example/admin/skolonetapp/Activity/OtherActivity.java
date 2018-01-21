@@ -142,6 +142,7 @@ public class OtherActivity extends AppCompatActivity {
                                 String msg = response.getString("message");
                                 // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
                                 if (code == true) {
+                                    Toast.makeText(OtherActivity.this, ""+msg, Toast.LENGTH_SHORT).show();
 //                                    JSONObject obj = response.getJSONObject("data");
                                     progressDialog.dismiss();
                                     finish();

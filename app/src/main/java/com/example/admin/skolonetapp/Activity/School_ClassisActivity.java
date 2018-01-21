@@ -317,8 +317,8 @@ public class School_ClassisActivity extends AppCompatActivity {
 //                object.put("DistubitorName", "");
 //                object.put("DistubitorType", "");
                 object.put("ContactNo", edtSchoolContactNumber.getText().toString());
-                object.put("Board", boardName);
-                object.put("Medium", mediumName);
+                object.put("Board", boardId);
+                object.put("Medium", mediumId);
                 object.put("Std", stdId);
                 object.put("AvgStudent", edtSchoolAverageStudent.getText().toString());
                 object.put("iPartyTypeId", fromId);
@@ -346,7 +346,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                                 String msg = response.getString("message");
                                 // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
                                 if (code == true) {
-                                    JSONObject obj = response.getJSONObject("data");
+                                    Toast.makeText(School_ClassisActivity.this, ""+msg, Toast.LENGTH_SHORT).show();
                                     progressDialog.dismiss();
 
                                 } else if (code == false) {
