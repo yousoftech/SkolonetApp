@@ -323,6 +323,7 @@ public class School_ClassisActivity extends AppCompatActivity {
 //                object.put("DistubitorType", "");
                 object.put("CreatedBy",Userid);
                 object.put("UpdatedBy",Userid);
+
                 object.put("ContactNo", edtSchoolContactNumber.getText().toString());
                 object.put("Board", boardId);
                 object.put("Medium", mediumId);
