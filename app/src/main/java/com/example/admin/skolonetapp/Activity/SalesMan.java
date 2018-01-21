@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +29,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.admin.skolonetapp.Adapter.adapterSales;
+import com.example.admin.skolonetapp.Pojo.Sales;
 import com.example.admin.skolonetapp.Pojo.SalesList;
 import com.example.admin.skolonetapp.R;
 import com.example.admin.skolonetapp.Util.ConnectionDetector;
@@ -56,6 +60,10 @@ public class SalesMan extends AppCompatActivity {
     ConnectionDetector detector;
     ArrayList<SalesList> arraySales;
     ArrayList<String> salesArr;
+    Sales sales;
+    RecyclerView recyclerView;
+    ArrayList<Sales> event;
+    adapterSales aSales;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +76,8 @@ public class SalesMan extends AppCompatActivity {
         firstName = preferences.getString("firstName", null);
         lastName = preferences.getString("lastName", null);
         setupToolbar("" + firstName + " " + lastName);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerSales);
+        event = new ArrayList<Sales>();
 
 
         fabButton = (FloatingActionButton) findViewById(R.id.fabButton);
@@ -94,30 +104,31 @@ public class SalesMan extends AppCompatActivity {
                         if (from.equalsIgnoreCase("School")) {
                             Intent intent = new Intent(SalesMan.this, School_ClassisActivity.class);
                             intent.putExtra("fromName", from);
-                            intent.putExtra("fromId",salesId);
+                            intent.putExtra("fromId", salesId);
                             startActivity(intent);
                         } else if (from.equalsIgnoreCase("Classes")) {
                             Intent intent = new Intent(SalesMan.this, School_ClassisActivity.class);
                             intent.putExtra("fromName", from);
-                            intent.putExtra("fromId",salesId);
+                            intent.putExtra("fromId", salesId);
                             startActivity(intent);
                         } else if (from.equalsIgnoreCase("Sankul")) {
                             Intent intent = new Intent(SalesMan.this, SankulActivity.class);
                             intent.putExtra("fromName", from);
-                            intent.putExtra("fromId",salesId);
+                            intent.putExtra("fromId", salesId);
                             startActivity(intent);
                         } else if (from.equalsIgnoreCase("Party")) {
                             Intent intent = new Intent(SalesMan.this, PartyActivity.class);
                             intent.putExtra("fromName", from);
-                            intent.putExtra("fromId",salesId);
+                            intent.putExtra("fromId", salesId);
                             startActivity(intent);
                         } else if (from.equalsIgnoreCase("Others")) {
                             Intent intent = new Intent(SalesMan.this, OtherActivity.class);
                             intent.putExtra("fromName", from);
-                            intent.putExtra("fromId",salesId);
+                            intent.putExtra("fromId", salesId);
                             startActivity(intent);
                         }
                     }
+
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -126,7 +137,7 @@ public class SalesMan extends AppCompatActivity {
                 a.show();
             }
         });
-
+        detailFrom();
     }
 
     private void setupToolbar(String title) {
@@ -253,4 +264,76 @@ public class SalesMan extends AppCompatActivity {
             Toast.makeText(this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
         }
     }
+    //c14c1a7f-c3e0-4449-9c8f-2fb4c755b8dd
+
+    public void detailFrom() {
+        if (detector.isConnectingToInternet()) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Loading...");
+            progressDialog.show();
+
+            JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST,
+                    Constant.PATH + "Sales/GetSalesData", null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.d("yatra", response.toString());
+                    try {
+                        boolean code = response.getBoolean("status");
+                        if (code == true) {
+                            progressDialog.dismiss();
+                            JSONArray array = response.getJSONArray("data");
+                            Log.d("yatra", array.toString());
+                            for (int n = 0; n < array.length(); n++) {
+                                JSONObject obj = array.getJSONObject(n);
+                                sales = new Sales();
+
+                                String partyInfoId = obj.getString("partyInfoId");
+                                String partyName = obj.getString("partyName");
+                                String iPartyTypeName = obj.getString("strPartyType");
+                                String location = obj.getString("location");
+                                String partyDate = obj.getString("datetimeCreated");
+                                sales.setPartyName(partyName);
+                                sales.setPartyInfoId(partyInfoId);
+                                sales.setStrPartyType(iPartyTypeName);
+                                sales.setLocation(location);
+                                sales.setDatetimeCreated(partyDate);
+                                event.add(sales);
+
+
+                                int totalElements = event.size();
+                                if (totalElements > 0) {
+                                    aSales = new adapterSales(SalesMan.this, event);
+                                    recyclerView.setAdapter(aSales);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(SalesMan.this, LinearLayoutManager.VERTICAL, false));
+
+                                }
+                                progressDialog.dismiss();
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    if (progressDialog != null)
+                        progressDialog.dismiss();
+                }
+            });
+            objectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    30000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            RequestQueue requestQueue = Volley.newRequestQueue(SalesMan.this);
+            requestQueue.add(objectRequest);
+        } else {
+            Toast.makeText(SalesMan.this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
+        }
+    }
+
 }

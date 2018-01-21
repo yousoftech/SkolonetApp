@@ -39,6 +39,47 @@ public class Sales {
 
     public int AvgStudent;
 
+    public String strBoard;
+
+    public String strMedium;
+
+    public String strStandard;
+
+    public String strPartyType;
+
+    public String getStrBoard() {
+        return strBoard;
+    }
+
+    public void setStrBoard(String strBoard) {
+        this.strBoard = strBoard;
+    }
+
+    public String getStrMedium() {
+        return strMedium;
+    }
+
+    public void setStrMedium(String strMedium) {
+        this.strMedium = strMedium;
+    }
+
+    public String getStrStandard() {
+        return strStandard;
+    }
+
+    public void setStrStandard(String strStandard) {
+        this.strStandard = strStandard;
+    }
+
+    public String getStrPartyType() {
+        return strPartyType;
+    }
+
+    public void setStrPartyType(String strPartyType) {
+        this.strPartyType = strPartyType;
+    }
+
+
     public String getPartyInfoId() {
         return PartyInfoId;
     }
