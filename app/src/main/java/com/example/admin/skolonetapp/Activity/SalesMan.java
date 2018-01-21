@@ -84,8 +84,6 @@ public class SalesMan extends AppCompatActivity {
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 std();
                 final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(SalesMan.this);
                 final LayoutInflater inflater = (LayoutInflater) SalesMan.this.getSystemService(SalesMan.this.LAYOUT_INFLATER_SERVICE);
