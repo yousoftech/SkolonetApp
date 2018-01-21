@@ -160,10 +160,10 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("logged", "logged");
                                     editor.commit();
                                     Log.d("Login", "data" + obj);
-                                    int id = obj.getInt("iUserTypeId");
+                                    String id = obj.getString("userGuid");
                                     String firstName=obj.getString("strUserFirstName");
                                     String lastName=obj.getString("strUserLastName");
-                                    editor.putInt("LoggedUser", id);
+                                    editor.putString("LoggedUser", id);
                                     editor.putString("firstName",firstName);
                                     editor.putString("lastName",lastName);
                                     editor.commit();

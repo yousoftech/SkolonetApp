@@ -2,6 +2,7 @@ package com.example.admin.skolonetapp.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,6 +26,8 @@ import com.example.admin.skolonetapp.Util.Constant;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.example.admin.skolonetapp.Activity.LoginActivity.PREFS_NAME;
+
 public class OtherActivity extends AppCompatActivity {
 
     EditText edtOtherOrganization, edtOtherPartyName, edtOtherDesignation, edtOtherContactNumber,
@@ -34,7 +37,8 @@ public class OtherActivity extends AppCompatActivity {
     TextView txtFormName;
     Button btnSave, btnCancel;
     int fromId;
-    String fromName;
+    String fromName,Userid;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,8 @@ public class OtherActivity extends AppCompatActivity {
         Intent intent = getIntent();
         fromId = intent.getIntExtra("fromId", 0);
         fromName = intent.getStringExtra("fromName");
+        preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        Userid = preferences.getString("LoggedUser", null);
         detector = new ConnectionDetector(this);
         edtOtherOrganization = (EditText) findViewById(R.id.edtOtherOrganization);
         edtOtherPartyName = (EditText) findViewById(R.id.edtOtherPartyName);
@@ -117,6 +123,8 @@ public class OtherActivity extends AppCompatActivity {
 //                object.put("Medium", "");
 //                object.put("Std", "");
 //                object.put("AvgStudent", "");
+                object.put("CreatedBy",Userid);
+                object.put("UpdatedBy",Userid);
                 object.put("iPartyTypeId", fromId);
                 object.put("AddressLine1", edtOtherAddress1.getText().toString());
                 object.put("AddressLine2", edtOtherAddress2.getText().toString());

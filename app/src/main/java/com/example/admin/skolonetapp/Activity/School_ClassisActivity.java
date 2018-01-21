@@ -2,6 +2,7 @@ package com.example.admin.skolonetapp.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -34,6 +35,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static com.example.admin.skolonetapp.Activity.LoginActivity.PREFS_NAME;
+
 public class School_ClassisActivity extends AppCompatActivity {
 
     EditText edtSchoolOrganization, edtSchoolPartyName, edtSchoolDesignation, edtSchoolContactNumber,
@@ -55,7 +58,8 @@ public class School_ClassisActivity extends AppCompatActivity {
     String stdName, mediumName, boardName;
     int stdId, mediumId, boardId;
     int fromId;
-    String fromName;
+    String fromName,Userid;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +68,7 @@ public class School_ClassisActivity extends AppCompatActivity {
         Intent intent = getIntent();
         fromId = intent.getIntExtra("fromId", 0);
         fromName = intent.getStringExtra("fromName");
-
+        preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         detector = new ConnectionDetector(this);
         edtSchoolOrganization = (EditText) findViewById(R.id.edtSchoolOrganization);
         edtSchoolPartyName = (EditText) findViewById(R.id.edtSchoolPartyName);
@@ -82,6 +86,7 @@ public class School_ClassisActivity extends AppCompatActivity {
         txtFormName = (TextView) findViewById(R.id.txtForm);
         btnSave = (Button) findViewById(R.id.btnYes);
         btnCancel = (Button) findViewById(R.id.btnCancel);
+        Userid = preferences.getString("LoggedUser", null);
 
         txtFormName.setText("" + fromName);
 
@@ -316,6 +321,8 @@ public class School_ClassisActivity extends AppCompatActivity {
 //                object.put("ShopName", "");
 //                object.put("DistubitorName", "");
 //                object.put("DistubitorType", "");
+                object.put("CreatedBy",Userid);
+                object.put("UpdatedBy",Userid);
                 object.put("ContactNo", edtSchoolContactNumber.getText().toString());
                 object.put("Board", boardId);
                 object.put("Medium", mediumId);

@@ -2,6 +2,7 @@ package com.example.admin.skolonetapp.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -34,6 +35,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static com.example.admin.skolonetapp.Activity.LoginActivity.PREFS_NAME;
+
 public class SankulActivity extends AppCompatActivity {
 
     EditText edtSankulName, edtSankulOrganization, edtSankulPartyName, edtSankulDesignation, edtSankulContactNumber,
@@ -55,7 +58,9 @@ public class SankulActivity extends AppCompatActivity {
     String stdName, mediumName, boardName;
     int stdId, mediumId, boardId;
     int fromId;
-    String fromName;
+    String fromName,Userid;
+    SharedPreferences preferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,8 @@ public class SankulActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sankul);
         detector = new ConnectionDetector(this);
         Intent intent = getIntent();
+        preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        Userid = preferences.getString("LoggedUser", null);
         fromId = intent.getIntExtra("fromId", 0);
         fromName = intent.getStringExtra("fromName");
         edtSankulName = (EditText) findViewById(R.id.edtSankulName);
@@ -298,6 +305,8 @@ public class SankulActivity extends AppCompatActivity {
 //                object.put("ShopName", "");
 //                object.put("DistubitorName", "Kush");
 //                object.put("DistubitorType", "Sankul");
+                object.put("CreatedBy",Userid);
+                object.put("UpdatedBy",Userid);
                 object.put("ContactNo", edtSankulContactNumber.getText().toString());
                 object.put("Board", boardId);
                 object.put("Medium", mediumId);

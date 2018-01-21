@@ -2,6 +2,7 @@ package com.example.admin.skolonetapp.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,6 +26,8 @@ import com.example.admin.skolonetapp.Util.Constant;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.example.admin.skolonetapp.Activity.LoginActivity.PREFS_NAME;
+
 public class PartyActivity extends AppCompatActivity {
 
     EditText edtPartyShopName, edtPartyDistributorName, edtPartyType, edtPartyDesignation, edtPartyContactNumber,
@@ -34,7 +37,8 @@ public class PartyActivity extends AppCompatActivity {
     TextView txtFormName;
     Button btnSave, btnCancel;
     int fromId;
-    String fromName;
+    String fromName,Userid;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,8 @@ public class PartyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_party);
         detector = new ConnectionDetector(this);
         Intent intent = getIntent();
+        preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        Userid = preferences.getString("LoggedUser", null);
         fromId = intent.getIntExtra("fromId", 0);
         fromName = intent.getStringExtra("fromName");
         edtPartyShopName = (EditText) findViewById(R.id.edtPartyShopName);
@@ -121,6 +127,8 @@ public class PartyActivity extends AppCompatActivity {
 //                object.put("Medium", "");
 //                object.put("Std", "");
 //                object.put("AvgStudent", "");
+                object.put("CreatedBy",Userid);
+                object.put("UpdatedBy",Userid);
                 object.put("iPartyTypeId",fromId);
                 object.put("AddressLine1", edtPartyAddress1.getText().toString());
                 object.put("AddressLine2", edtPartyAddress2.getText().toString());
