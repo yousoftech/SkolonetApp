@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -77,7 +78,15 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
     ArrayList<Sales> event;
     adapterSales aSales;
     private MyLocation myLocation = null;
+
+
+    private static final String[] INITIAL_PERMS = {
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+    };
+
     private static final int INITIAL_REQUEST = 13;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,10 +107,22 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean networkPresent = myLocation.getLocation(SalesMan.this, SalesMan.this);
-                if (!networkPresent) {
-                    showSettingsAlert();
+                if (!canAccessLocation() || !canAccessCoreLocation()) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        requestPermissions(INITIAL_PERMS, INITIAL_REQUEST);
+                    }
+
+                } else {
+                    boolean networkPresent = myLocation.getLocation(SalesMan.this, SalesMan.this);
+                    if (!networkPresent) {
+                        showSettingsAlert();
+                    }
                 }
+                preferences = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("latlong",latlong);
+                editor.commit();
+
                 std();
                 final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(SalesMan.this);
                 final LayoutInflater inflater = (LayoutInflater) SalesMan.this.getSystemService(SalesMan.this.LAYOUT_INFLATER_SERVICE);
@@ -356,31 +377,31 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         }
     }
 
-//    private boolean canAccessLocation() {
-//        return (hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
-//    }
-//
-//    private boolean canAccessCoreLocation() {
-//        return (hasPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
-//    }
-//    private boolean hasPermission(String perm) {
-//
-//        return (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(SalesMan.this, perm));
-//    }
+    private boolean canAccessLocation() {
+        return (hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
+    }
+
+    private boolean canAccessCoreLocation() {
+        return (hasPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
+    }
+    private boolean hasPermission(String perm) {
+
+        return (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(SalesMan.this, perm));
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        switch (requestCode) {
-//            case INITIAL_REQUEST:
-//                if (canAccessLocation() && canAccessCoreLocation()) {
-//                    boolean networkPresent = myLocation.getLocation(SalesMan.this, this);
-//                    if (!networkPresent) {
-//                        showSettingsAlert();
-//                    }
-//                }
-//                break;
-//        }
-          //  if (requestCode== )
+        switch (requestCode) {
+            case INITIAL_REQUEST:
+                if (canAccessLocation() && canAccessCoreLocation()) {
+                    boolean networkPresent = myLocation.getLocation(SalesMan.this, this);
+                    if (!networkPresent) {
+                        showSettingsAlert();
+                    }
+                }
+                break;
+        }
+
    }
 
     public void showSettingsAlert() {

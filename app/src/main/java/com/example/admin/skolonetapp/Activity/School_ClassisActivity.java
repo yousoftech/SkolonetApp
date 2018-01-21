@@ -58,7 +58,7 @@ public class School_ClassisActivity extends AppCompatActivity {
     String stdName, mediumName, boardName;
     int stdId, mediumId, boardId;
     int fromId;
-    String fromName,Userid;
+    String fromName,Userid,latlong;
     SharedPreferences preferences;
 
     @Override
@@ -87,6 +87,7 @@ public class School_ClassisActivity extends AppCompatActivity {
         btnSave = (Button) findViewById(R.id.btnYes);
         btnCancel = (Button) findViewById(R.id.btnCancel);
         Userid = preferences.getString("LoggedUser", null);
+        latlong=preferences.getString("latlong",null);
 
         txtFormName.setText("" + fromName);
 
@@ -335,7 +336,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                 object.put("CityName", edtSchoolCity.getText().toString());
                 object.put("StateName", edtSchoolState.getText().toString());
                 object.put("Remark", edtSchoolRemark.getText().toString());
-                object.put("Location", "Haji nathi malyu");
+                object.put("Location", latlong);
             } catch (JSONException e) {
                 Toast.makeText(School_ClassisActivity.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
                 e.printStackTrace();
