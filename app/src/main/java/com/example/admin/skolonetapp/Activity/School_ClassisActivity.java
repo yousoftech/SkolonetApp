@@ -200,6 +200,13 @@ public class School_ClassisActivity extends AppCompatActivity {
                                         int stdId = jresponse.getInt("iStandardId");
                                         String stdName = jresponse.getString("strStandardName");
                                         stdlist = new stdList();
+                                        if(i==0)
+                                        {
+                                            stdlist.setStdId(0);
+                                            stdlist.setStdName("Select Standard");
+                                            spotArr.add(stdlist.getStdName());
+                                            arrayStd.add(stdlist);
+                                        }
                                         stdlist.setStdId(stdId);
                                         stdlist.setStdName(stdName);
                                         spotArr.add(stdlist.getStdName());
@@ -212,6 +219,13 @@ public class School_ClassisActivity extends AppCompatActivity {
                                         int mediumId = jresponse.getInt("iMedium");
                                         String mediumName = jresponse.getString("strMediumName");
                                         mediumList = new MediumList();
+                                        if(i==0)
+                                        {
+                                            mediumList.setMediumId(0);
+                                            mediumList.setMediumName("Select Medium");
+                                            mediumArr.add(mediumList.getMediumName());
+                                            arrayMedium.add(mediumList);
+                                        }
                                         mediumList.setMediumId(mediumId);
                                         mediumList.setMediumName(mediumName);
                                         mediumArr.add(mediumList.getMediumName());
@@ -224,6 +238,13 @@ public class School_ClassisActivity extends AppCompatActivity {
                                         int mediumId = jresponse.getInt("iBoardId");
                                         String mediumName = jresponse.getString("strBoardName");
                                         boardList = new BoardList();
+                                        if(i==0)
+                                        {
+                                            boardList.setBoardId(0);
+                                            boardList.setBoardName("Select Board");
+                                            boardArr.add(boardList.getBoardName());
+                                            arrayBoard.add(boardList);
+                                        }
                                         boardList.setBoardId(mediumId);
                                         boardList.setBoardName(mediumName);
                                         boardArr.add(boardList.getBoardName());
