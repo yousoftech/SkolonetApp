@@ -78,6 +78,8 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
     adapterSales aSales;
     private MyLocation myLocation = null;
     boolean doubleBackToExitPressedOnce = false;
+    TextView txtRecords;
+
 
 
     private static final String[] INITIAL_PERMS = {
@@ -101,6 +103,8 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         Userid = preferences.getString("LoggedUser", null);
         setupToolbar("" + firstName + " " + lastName);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerSales);
+        txtRecords = (TextView) findViewById(R.id.txtNoRecords);
+
         event = new ArrayList<Sales>();
         myLocation = new MyLocation();
 
@@ -264,6 +268,9 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                         salesList.setSalesName(stdName);
                                         salesArr.add(salesList.getSalesName());
                                         arraySales.add(salesList);
+
+
+                                        progressDialog.dismiss();
                                         Log.d("nickname", "" + stdId + " " + stdName);
                                     }
 
@@ -345,6 +352,8 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
 
                                 int totalElements = event.size();
                                 if (totalElements > 0) {
+                                    txtRecords.setVisibility(View.GONE);
+                                    recyclerView.setVisibility(View.VISIBLE);
                                     aSales = new adapterSales(SalesMan.this, event);
                                     recyclerView.setAdapter(aSales);
                                     recyclerView.setLayoutManager(new LinearLayoutManager(SalesMan.this, LinearLayoutManager.VERTICAL, false));
