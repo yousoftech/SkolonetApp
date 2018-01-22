@@ -66,7 +66,7 @@ public class PartyActivity extends AppCompatActivity {
         latitude=preferences.getString("latitude",null);
         longitude=preferences.getString("longitude",null);
         location=preferences.getString("location",null);
-
+        txtFormName.setText("" + fromName);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,5 +190,11 @@ public class PartyActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
         }
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(PartyActivity.this, SalesMan.class));
+        finish();
     }
 }

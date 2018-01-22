@@ -3,7 +3,6 @@ package com.example.admin.skolonetapp.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -26,7 +24,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.admin.skolonetapp.Pojo.BoardList;
 import com.example.admin.skolonetapp.Pojo.MediumList;
 import com.example.admin.skolonetapp.Pojo.Sales;
-import com.example.admin.skolonetapp.Pojo.SalesList;
 import com.example.admin.skolonetapp.Pojo.stdList;
 import com.example.admin.skolonetapp.R;
 import com.example.admin.skolonetapp.Util.ConnectionDetector;
@@ -42,9 +39,9 @@ public class FullDetail extends AppCompatActivity {
 
     ProgressDialog progressDialog;
     ConnectionDetector detector;
-    String fromId,type,itypeId;
+    String fromId, type, itypeId;
     EditText edtSankulName, edtSankulOrganization, edtSankulPartyName, edtSankulDesignation, edtSankulContactNumber,
-            edtSankulAddress1,edtSankulAverageStudent, edtSankulAddress2, edtSankulCity, edtSankulState, edtSankulRemark,edtPartyShopName,edtPartyType,edtPartyDistributorName;
+            edtSankulAddress1, edtSankulAverageStudent, edtSankulAddress2, edtSankulCity, edtSankulState, edtSankulRemark, edtPartyShopName, edtPartyType, edtPartyDistributorName;
     Spinner spinnerStd, spinnerSchoolBoard, spinnerMedium;
     Sales sales;
     stdList stdlist;
@@ -59,6 +56,7 @@ public class FullDetail extends AppCompatActivity {
     String stdName, mediumName, boardName;
     int stdId, mediumId, boardId;
     Button btnSave, btnCancel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,18 +77,26 @@ public class FullDetail extends AppCompatActivity {
         edtPartyShopName = (EditText) findViewById(R.id.edtPartyShopName);
         edtPartyDistributorName = (EditText) findViewById(R.id.edtPartyDistributorName);
         edtPartyType = (EditText) findViewById(R.id.edtPartyType);
-        edtSankulAverageStudent = (EditText)findViewById(R.id.edtSankulAverageStudent);
+        edtSankulAverageStudent = (EditText) findViewById(R.id.edtSankulAverageStudent);
         btnSave = (Button) findViewById(R.id.btnYesUpdate);
         btnCancel = (Button) findViewById(R.id.btnCancelUpdate);
         detector = new ConnectionDetector(this);
         Intent intent = getIntent();
         fromId = intent.getStringExtra("fromId");
-        Log.d("Typee",type + " ");
+        Log.d("Typee", type + " ");
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                startActivity(new Intent(FullDetail.this, SalesMan.class));
+            }
+        });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(type.equals("Sankul")) {
+                if (type.equals("Sankul")) {
                     if (edtSankulName.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter Sankul Name", Toast.LENGTH_SHORT).show();
                     } else if (edtSankulOrganization.getText().toString().equals("")) {
@@ -113,21 +119,18 @@ public class FullDetail extends AppCompatActivity {
                         Toast.makeText(FullDetail.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
                     } else if (edtSankulAverageStudent.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter AverageStudent", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    } else {
                         submitForm();
                         startActivity(new Intent(FullDetail.this, SalesMan.class));
                     }
-                }
-                else if(type.equals("Party")) {
+                } else if (type.equals("Party")) {
                     if (edtPartyShopName.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter Shop Name", Toast.LENGTH_SHORT).show();
                     } else if (edtPartyDistributorName.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter Distributor Name", Toast.LENGTH_SHORT).show();
                     } else if (edtPartyType.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter Party Type", Toast.LENGTH_SHORT).show();
-                    }
-                    else if (edtSankulDesignation.getText().toString().equals("")) {
+                    } else if (edtSankulDesignation.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter Designation", Toast.LENGTH_SHORT).show();
                     } else if (edtSankulContactNumber.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter Contact Number", Toast.LENGTH_SHORT).show();
@@ -145,15 +148,12 @@ public class FullDetail extends AppCompatActivity {
                         submitForm();
                         startActivity(new Intent(FullDetail.this, SalesMan.class));
                     }
-                }
-                else if(type.equals("Classes") || type.equals(("School")))
-                {
+                } else if (type.equals("Classes") || type.equals(("School"))) {
                     if (edtSankulOrganization.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter Organization", Toast.LENGTH_SHORT).show();
                     } else if (edtSankulPartyName.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter Party Name", Toast.LENGTH_SHORT).show();
-                    }
-                    else if (edtSankulDesignation.getText().toString().equals("")) {
+                    } else if (edtSankulDesignation.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter Designation", Toast.LENGTH_SHORT).show();
                     } else if (edtSankulContactNumber.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter Contact Number", Toast.LENGTH_SHORT).show();
@@ -167,21 +167,18 @@ public class FullDetail extends AppCompatActivity {
                         Toast.makeText(FullDetail.this, "Please Enter State", Toast.LENGTH_SHORT).show();
                     } else if (edtSankulRemark.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
-                    }else if (edtSankulAverageStudent.getText().toString().equals("")) {
+                    } else if (edtSankulAverageStudent.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter AverageStudent", Toast.LENGTH_SHORT).show();
                     } else {
                         submitForm();
                         startActivity(new Intent(FullDetail.this, SalesMan.class));
                     }
-                }
-                else if(type.equals("Others"))
-                {
+                } else if (type.equals("Others")) {
                     if (edtSankulOrganization.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter Organization", Toast.LENGTH_SHORT).show();
                     } else if (edtSankulPartyName.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter Party Name", Toast.LENGTH_SHORT).show();
-                    }
-                    else if (edtSankulDesignation.getText().toString().equals("")) {
+                    } else if (edtSankulDesignation.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter Designation", Toast.LENGTH_SHORT).show();
                     } else if (edtSankulContactNumber.getText().toString().equals("")) {
                         Toast.makeText(FullDetail.this, "Please Enter Contact Number", Toast.LENGTH_SHORT).show();
@@ -204,7 +201,7 @@ public class FullDetail extends AppCompatActivity {
 
             }
         });
-        btnCancel .setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -244,7 +241,7 @@ public class FullDetail extends AppCompatActivity {
                 boardName = spinnerSchoolBoard.getSelectedItem().toString();
                 boardList = arrayBoard.get(i);
                 boardId = boardList.getBoardId();
-                Log.d("Boarddd",boardId +"");
+                Log.d("Boarddd", boardId + "");
             }
 
             @Override
@@ -264,6 +261,7 @@ public class FullDetail extends AppCompatActivity {
 
 
     }
+
     public void submitForm() {
         if (detector.isConnectingToInternet()) {
 
@@ -275,9 +273,11 @@ public class FullDetail extends AppCompatActivity {
 
             final JSONObject object = new JSONObject();
             try {
-               // Log.d("create object",type);
-                if(type.equals("Sankul")) {
-                    edtPartyShopName.setVisibility(View.GONE);edtPartyType.setVisibility(View.GONE);edtPartyDistributorName.setVisibility(View.GONE);
+                // Log.d("create object",type);
+                if (type.equals("Sankul")) {
+                    edtPartyShopName.setVisibility(View.GONE);
+                    edtPartyType.setVisibility(View.GONE);
+                    edtPartyDistributorName.setVisibility(View.GONE);
 
                     object.put("OrganisationName", edtSankulOrganization.getText().toString());
 
@@ -286,9 +286,9 @@ public class FullDetail extends AppCompatActivity {
 //                object.put("ShopName", "");
 //                object.put("DistubitorName", "Kush");
 //                object.put("DistubitorType", "Sankul");
-                    Log.d("boarddid",boardId +"");
-                    Log.d("mediummid",mediumId +"");
-                    Log.d("stddid",stdId +"");
+                    Log.d("boarddid", boardId + "");
+                    Log.d("mediummid", mediumId + "");
+                    Log.d("stddid", stdId + "");
 
                     object.put("Board", boardId);
                     object.put("Medium", mediumId);
@@ -296,8 +296,7 @@ public class FullDetail extends AppCompatActivity {
                     object.put("AvgStudent", edtSankulAverageStudent.getText().toString());
 
                 }
-                if(type.equals("Party"))
-                {
+                if (type.equals("Party")) {
                     edtSankulName.setVisibility(View.GONE);
                     edtSankulOrganization.setVisibility(View.GONE);
                     edtSankulPartyName.setVisibility(View.GONE);
@@ -308,8 +307,7 @@ public class FullDetail extends AppCompatActivity {
                     object.put("DistubitorName", edtPartyDistributorName);
                     object.put("DistubitorType", edtPartyType);
                 }
-                if(type.equals("Classes") || type.equals(("School")))
-                {
+                if (type.equals("Classes") || type.equals(("School"))) {
                     edtSankulName.setVisibility(View.GONE);
                     edtPartyShopName.setVisibility(View.GONE);
                     edtPartyDistributorName.setVisibility(View.GONE);
@@ -322,8 +320,7 @@ public class FullDetail extends AppCompatActivity {
                     object.put("AvgStudent", edtSankulAverageStudent.getText().toString());
 
                 }
-                if(type.equals("Others"))
-                {
+                if (type.equals("Others")) {
                     object.put("OrganisationName", edtSankulOrganization.getText().toString());
                     object.put("PartyName", edtSankulPartyName.getText().toString());
                     edtSankulAverageStudent.setVisibility((View.GONE));
@@ -338,20 +335,20 @@ public class FullDetail extends AppCompatActivity {
                 }
                 object.put("Designation", edtSankulDesignation.getText().toString());
 
-                    object.put("ContactNo", edtSankulContactNumber.getText().toString());
+                object.put("ContactNo", edtSankulContactNumber.getText().toString());
                 object.put("AddressLine1", edtSankulAddress1.getText().toString());
                 object.put("AddressLine2", edtSankulAddress2.getText().toString());
                 object.put("CityName", edtSankulCity.getText().toString());
                 object.put("StateName", edtSankulState.getText().toString());
                 object.put("Remark", edtSankulRemark.getText().toString());
-                Log.d("updatevalue" , object.toString() + " ");
+                Log.d("updatevalue", object.toString() + " ");
             } catch (JSONException e) {
                 Toast.makeText(FullDetail.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
 
             final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
-                    Constant.PATH + "Sales/Update?id=" + fromId , object,
+                    Constant.PATH + "Sales/Update?id=" + fromId, object,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -363,7 +360,7 @@ public class FullDetail extends AppCompatActivity {
                                 String msg = response.getString("message");
                                 // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
                                 if (code == true) {
-                                    Toast.makeText(FullDetail.this, ""+msg, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FullDetail.this, "" + msg, Toast.LENGTH_SHORT).show();
                                     // JSONObject obj = response.getJSONObject("data");
                                     progressDialog.dismiss();
                                     finish();
@@ -410,44 +407,43 @@ public class FullDetail extends AppCompatActivity {
                     Log.d("fullDetail", response.toString());
                     try {
                         boolean code = response.getBoolean("status");
-                        Log.d("asdas" , code + "");
+                        Log.d("asdas", code + "");
                         if (code == true) {
                             progressDialog.dismiss();
                             JSONObject object = response.getJSONObject("data");
 //                            Log.d("yatra", object.toString());
-                            String partyInfoId=object.getString("partyInfoId");
-                            String partyName=object.getString("partyName");
-                            String organisationName=object.getString("organisationName");
-                            String designation=object.getString("designation");
-                            String sankulName=object.getString("sankulName");
-                            String shopName=object.getString("shopName");
-                            String distubitorName=object.getString("distubitorName");
-                            String distubitorType=object.getString("distubitorType");
-                            String iUserTypeId=object.getString("iUserTypeId");
-                            String contactNo=object.getString("contactNo");
-                            int boardId=object.getInt("board");
-                            int mediumId=object.getInt("medium");
-                            int stdId=object.getInt("std");
-                            String avgStudent=object.getString("avgStudent");
-                            String addressLine1=object.getString("addressLine1");
-                            String addressLine2=object.getString("addressLine2");
-                            String cityName=object.getString("cityName");
-                            String stateName=object.getString("stateName");
-                            String remark=object.getString("remark");
-                            String location=object.getString("location");
-                            String datetimeCreated=object.getString("datetimeCreated");
-                            String iPartyTypeId=object.getString("iPartyTypeId");
-                            String strPartyType=object.getString("strPartyType");
-                            Log.d("PartyTypee",strPartyType + "");
-                            type=strPartyType;
+                            String partyInfoId = object.getString("partyInfoId");
+                            String partyName = object.getString("partyName");
+                            String organisationName = object.getString("organisationName");
+                            String designation = object.getString("designation");
+                            String sankulName = object.getString("sankulName");
+                            String shopName = object.getString("shopName");
+                            String distubitorName = object.getString("distubitorName");
+                            String distubitorType = object.getString("distubitorType");
+                            String iUserTypeId = object.getString("iUserTypeId");
+                            String contactNo = object.getString("contactNo");
+                            int boardId = object.getInt("board");
+                            int mediumId = object.getInt("medium");
+                            int stdId = object.getInt("std");
+                            String avgStudent = object.getString("avgStudent");
+                            String addressLine1 = object.getString("addressLine1");
+                            String addressLine2 = object.getString("addressLine2");
+                            String cityName = object.getString("cityName");
+                            String stateName = object.getString("stateName");
+                            String remark = object.getString("remark");
+                            String location = object.getString("location");
+                            String datetimeCreated = object.getString("datetimeCreated");
+                            String iPartyTypeId = object.getString("iPartyTypeId");
+                            String strPartyType = object.getString("strPartyType");
+                            Log.d("PartyTypee", strPartyType + "");
+                            type = strPartyType;
                             itypeId = iPartyTypeId;
-                            BoardList boardList= new BoardList();
+                            BoardList boardList = new BoardList();
                             MediumList mediumList = new MediumList();
-                            stdList StdList= new stdList();
+                            stdList StdList = new stdList();
                             std();
 
-                            if(strPartyType.equals("Others"))
-                            {
+                            if (strPartyType.equals("Others")) {
                                 edtSankulAverageStudent.setVisibility((View.GONE));
                                 edtSankulName.setVisibility(View.GONE);
                                 edtPartyShopName.setVisibility(View.GONE);
@@ -460,14 +456,11 @@ public class FullDetail extends AppCompatActivity {
                                 edtSankulOrganization.setText(organisationName);
                                 edtSankulPartyName.setText(partyName);
 
-                             //   disabled();
-
-
+                                //   disabled();
 
 
                             }
-                            if(strPartyType.equals("Party"))
-                            {
+                            if (strPartyType.equals("Party")) {
                                 edtSankulName.setVisibility(View.GONE);
                                 edtSankulOrganization.setVisibility(View.GONE);
                                 edtSankulPartyName.setVisibility(View.GONE);
@@ -479,52 +472,53 @@ public class FullDetail extends AppCompatActivity {
                                 edtPartyType.setText(distubitorType);
 
                             }
-                            if(strPartyType.equals("Classes") || strPartyType.equals(("School")))
-                            {
+                            if (strPartyType.equals("Classes") || strPartyType.equals(("School"))) {
 
                                 edtSankulName.setVisibility(View.GONE);
-                               edtPartyShopName.setVisibility(View.GONE);
+                                edtPartyShopName.setVisibility(View.GONE);
                                 edtPartyDistributorName.setVisibility(View.GONE);
                                 edtPartyType.setVisibility(View.GONE);
                                 spinnerMedium.setSelection(mediumId);
                                 spinnerStd.setSelection(stdId);
                                 spinnerSchoolBoard.setSelection(boardId);
                                 setColor();
-                                edtSankulOrganization.setText( organisationName);
-                                edtSankulPartyName.setText( partyName);
+                                edtSankulOrganization.setText(organisationName);
+                                edtSankulPartyName.setText(partyName);
                                 edtSankulAverageStudent.setText(avgStudent);
-
 
 
                                 //   disabled();
 
 
-
-
                             }
-                            if(strPartyType.equals("Sankul"))
-                            {
+                            if (strPartyType.equals("Sankul")) {
                                 edtSankulName.setText(sankulName);
-                                edtPartyShopName.setVisibility(View.GONE);edtPartyType.setVisibility(View.GONE);edtPartyDistributorName.setVisibility(View.GONE);
-                                edtSankulOrganization.setText( organisationName);
-                                edtSankulPartyName.setText( partyName);
+                                edtPartyShopName.setVisibility(View.GONE);
+                                edtPartyType.setVisibility(View.GONE);
+                                edtPartyDistributorName.setVisibility(View.GONE);
+                                edtSankulOrganization.setText(organisationName);
+                                edtSankulPartyName.setText(partyName);
                                 edtSankulAverageStudent.setText(avgStudent);
                                 //Log.d("FetchMedium",medium+"");
-                               // Log.d("FetchStd",std+"");
-                               // Log.d("FetchBoard",board+"");
+                                // Log.d("FetchStd",std+"");
+                                // Log.d("FetchBoard",board+"");
                                 int spinnerBoardPos = boardList.getItemId(boardId);
-                               // int spinnerMediumPos = adapter.getPosition(compareValue);
-                               // int spinnerStdPos = adapter.getPosition(compareValue);
+                                // int spinnerMediumPos = adapter.getPosition(compareValue);
+                                // int spinnerStdPos = adapter.getPosition(compareValue);
 
-                              spinnerMedium.setSelection(spinnerBoardPos);
-                             //   Log.d("spinnerBoardPos",spinnerBoardPos+"");
-                               // spinnerStd.setSelection(std);
-                               // spinnerSchoolBoard.setSelection(board);
+                                spinnerMedium.setSelection(spinnerBoardPos);
+                                //   Log.d("spinnerBoardPos",spinnerBoardPos+"");
+                                // spinnerStd.setSelection(std);
+                                // spinnerSchoolBoard.setSelection(board);
                             }
 
-                            edtSankulDesignation.setText( designation); edtSankulContactNumber.setText(contactNo);
-                            edtSankulAddress1.setText(addressLine1); edtSankulAddress2.setText( addressLine2);
-                            edtSankulCity.setText( cityName); edtSankulState.setText( stateName); edtSankulRemark.setText(remark);
+                            edtSankulDesignation.setText(designation);
+                            edtSankulContactNumber.setText(contactNo);
+                            edtSankulAddress1.setText(addressLine1);
+                            edtSankulAddress2.setText(addressLine2);
+                            edtSankulCity.setText(cityName);
+                            edtSankulState.setText(stateName);
+                            edtSankulRemark.setText(remark);
 
                         }
 
@@ -551,7 +545,7 @@ public class FullDetail extends AppCompatActivity {
             Toast.makeText(FullDetail.this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
         }
     }
-    
+
     public void std() {
 
         if (detector.isConnectingToInternet()) {
@@ -559,7 +553,7 @@ public class FullDetail extends AppCompatActivity {
             progressDialog = new ProgressDialog(this);
             progressDialog.setCancelable(false);
             progressDialog.setMessage("Loading...");
-           progressDialog.show();
+            progressDialog.show();
             RequestQueue requestQueue = Volley.newRequestQueue(this);
 
 
@@ -655,7 +649,7 @@ public class FullDetail extends AppCompatActivity {
                                     board.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                     //Setting the ArrayAdapter data on the Spinner
                                     spinnerSchoolBoard.setAdapter(board);
-                                  //  progressDialog.dismiss();
+                                    //  progressDialog.dismiss();
 
                                 } else {
                                     progressDialog.dismiss();
@@ -686,27 +680,43 @@ public class FullDetail extends AppCompatActivity {
     }
 
 
-
     // public void disabled()
     //{
-     //   edtSankulName.setEnabled(false); edtSankulOrganization.setEnabled(false); edtSankulPartyName.setEnabled(false); edtSankulDesignation.setEnabled(false); edtSankulContactNumber.setEnabled(false);
-      //          edtSankulAddress1.setEnabled(false); edtSankulAddress2.setEnabled(false); edtSankulCity.setEnabled(false); edtSankulState.setEnabled(false); edtSankulRemark.setEnabled(false);edtPartyShopName.setEnabled(false);edtPartyType.setEnabled(false);edtPartyDistributorName.setEnabled(false);
-   //spinnerMedium.setEnabled(false);
-  // spinnerSchoolBoard.setEnabled(false);
-  // spinnerStd.setEnabled(false);
-   
- //   }
+    //   edtSankulName.setEnabled(false); edtSankulOrganization.setEnabled(false); edtSankulPartyName.setEnabled(false); edtSankulDesignation.setEnabled(false); edtSankulContactNumber.setEnabled(false);
+    //          edtSankulAddress1.setEnabled(false); edtSankulAddress2.setEnabled(false); edtSankulCity.setEnabled(false); edtSankulState.setEnabled(false); edtSankulRemark.setEnabled(false);edtPartyShopName.setEnabled(false);edtPartyType.setEnabled(false);edtPartyDistributorName.setEnabled(false);
+    //spinnerMedium.setEnabled(false);
+    // spinnerSchoolBoard.setEnabled(false);
+    // spinnerStd.setEnabled(false);
 
-   // public void enabled()
-   // {
+    //   }
+
+    // public void enabled()
+    // {
 
     //}
-    public void setColor()
-    {
-        edtSankulName.setTextColor(Color.BLACK); edtSankulOrganization.setTextColor(Color.BLACK); edtSankulPartyName.setTextColor(Color.BLACK); edtSankulDesignation.setTextColor(Color.BLACK); edtSankulContactNumber.setTextColor(Color.BLACK);
-        edtSankulAddress1.setTextColor(Color.BLACK); edtSankulAddress2.setTextColor(Color.BLACK); edtSankulCity.setTextColor(Color.BLACK); edtSankulState.setTextColor(Color.BLACK); edtSankulRemark.setTextColor(Color.BLACK);edtPartyShopName.setTextColor(Color.BLACK);edtPartyType.setTextColor(Color.BLACK);edtPartyDistributorName.setTextColor(Color.BLACK);
+    public void setColor() {
+        edtSankulName.setTextColor(Color.BLACK);
+        edtSankulOrganization.setTextColor(Color.BLACK);
+        edtSankulPartyName.setTextColor(Color.BLACK);
+        edtSankulDesignation.setTextColor(Color.BLACK);
+        edtSankulContactNumber.setTextColor(Color.BLACK);
+        edtSankulAddress1.setTextColor(Color.BLACK);
+        edtSankulAddress2.setTextColor(Color.BLACK);
+        edtSankulCity.setTextColor(Color.BLACK);
+        edtSankulState.setTextColor(Color.BLACK);
+        edtSankulRemark.setTextColor(Color.BLACK);
+        edtPartyShopName.setTextColor(Color.BLACK);
+        edtPartyType.setTextColor(Color.BLACK);
+        edtPartyDistributorName.setTextColor(Color.BLACK);
 
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(FullDetail.this, SalesMan.class));
+        finish();
+    }
 
 }

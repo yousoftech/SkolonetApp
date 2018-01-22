@@ -22,7 +22,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_10dp"
                 android:layout_marginRight="@dimen/margin_20dp"
-                android:src="@drawable/ic_visibility_black_24dp" />
+                android:src="@drawable/ic_create_black_24dp" />
 
             <TextView
                 android:id="@+id/txtEditNote"
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/imgEdit"
-                android:text="View"
+                android:text="Edit"
                 android:textSize="@dimen/text_15sp" />
         </RelativeLayout>
 

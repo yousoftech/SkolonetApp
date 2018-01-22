@@ -58,7 +58,7 @@ public class School_ClassisActivity extends AppCompatActivity {
     String stdName, mediumName, boardName;
     int stdId, mediumId, boardId;
     int fromId;
-    String fromName,Userid,latitude,longitude,location;
+    String fromName, Userid, latitude, longitude, location;
     SharedPreferences preferences;
 
     @Override
@@ -87,14 +87,14 @@ public class School_ClassisActivity extends AppCompatActivity {
         btnSave = (Button) findViewById(R.id.btnYes);
         btnCancel = (Button) findViewById(R.id.btnCancel);
         Userid = preferences.getString("LoggedUser", null);
-        latitude=preferences.getString("latitude",null);
-        longitude=preferences.getString("longitude",null);
-        location=preferences.getString("location",null);
+        latitude = preferences.getString("latitude", null);
+        longitude = preferences.getString("longitude", null);
+        location = preferences.getString("location", null);
 
 
-        Log.d("lat",latitude +"");
-        Log.d("lon",longitude +"");
-        Log.d("loc",location +"");
+        Log.d("lat", latitude + "");
+        Log.d("lon", longitude + "");
+        Log.d("loc", location + "");
 
         txtFormName.setText("" + fromName);
 
@@ -162,6 +162,12 @@ public class School_ClassisActivity extends AppCompatActivity {
                     Toast.makeText(School_ClassisActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
                 } else if (edtSchoolAverageStudent.getText().toString().equals("")) {
                     Toast.makeText(School_ClassisActivity.this, "Please Enter AverageStudent", Toast.LENGTH_SHORT).show();
+                }else if (boardName.equalsIgnoreCase("Select Board")) {
+                    Toast.makeText(School_ClassisActivity.this, "Please Select Board", Toast.LENGTH_SHORT).show();
+                } else if (stdName.equalsIgnoreCase("Select Standard")) {
+                    Toast.makeText(School_ClassisActivity.this, "Please Select Standard", Toast.LENGTH_SHORT).show();
+                } else if (mediumName.equalsIgnoreCase("Select Medium")) {
+                    Toast.makeText(School_ClassisActivity.this, "Please Select Medium", Toast.LENGTH_SHORT).show();
                 } else {
                     submitForm();
                     startActivity(new Intent(School_ClassisActivity.this, SalesMan.class));
@@ -329,8 +335,8 @@ public class School_ClassisActivity extends AppCompatActivity {
 //                object.put("ShopName", "");
 //                object.put("DistubitorName", "");
 //                object.put("DistubitorType", "");
-                object.put("CreatedBy",Userid);
-                object.put("UpdatedBy",Userid);
+                object.put("CreatedBy", Userid);
+                object.put("UpdatedBy", Userid);
 
                 object.put("ContactNo", edtSchoolContactNumber.getText().toString());
                 object.put("Board", boardId);
@@ -364,7 +370,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                                 String msg = response.getString("message");
                                 // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
                                 if (code == true) {
-                                    Toast.makeText(School_ClassisActivity.this, ""+msg, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(School_ClassisActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
                                     progressDialog.dismiss();
 
                                 } else if (code == false) {
@@ -394,6 +400,13 @@ public class School_ClassisActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(School_ClassisActivity.this, SalesMan.class));
+        finish();
     }
 
 }

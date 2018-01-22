@@ -37,7 +37,7 @@ public class OtherActivity extends AppCompatActivity {
     TextView txtFormName;
     Button btnSave, btnCancel;
     int fromId;
-    String fromName,Userid,latitude,longitude,location;
+    String fromName, Userid, latitude, longitude, location;
     SharedPreferences preferences;
 
 
@@ -64,9 +64,9 @@ public class OtherActivity extends AppCompatActivity {
         btnSave = (Button) findViewById(R.id.btnOtherYes);
         btnCancel = (Button) findViewById(R.id.btnOtherCancel);
         txtFormName.setText("" + fromName);
-        latitude=preferences.getString("latitude",null);
-        longitude=preferences.getString("longitude",null);
-        location=preferences.getString("location",null);
+        latitude = preferences.getString("latitude", null);
+        longitude = preferences.getString("longitude", null);
+        location = preferences.getString("location", null);
 
 
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -128,8 +128,8 @@ public class OtherActivity extends AppCompatActivity {
 //                object.put("Medium", "");
 //                object.put("Std", "");
 //                object.put("AvgStudent", "");
-                object.put("CreatedBy",Userid);
-                object.put("UpdatedBy",Userid);
+                object.put("CreatedBy", Userid);
+                object.put("UpdatedBy", Userid);
                 object.put("iPartyTypeId", fromId);
                 object.put("AddressLine1", edtOtherAddress1.getText().toString());
                 object.put("AddressLine2", edtOtherAddress2.getText().toString());
@@ -157,7 +157,7 @@ public class OtherActivity extends AppCompatActivity {
                                 String msg = response.getString("message");
                                 // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
                                 if (code == true) {
-                                    Toast.makeText(OtherActivity.this, ""+msg, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(OtherActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
 //                                    JSONObject obj = response.getJSONObject("data");
                                     progressDialog.dismiss();
                                     finish();
@@ -188,5 +188,12 @@ public class OtherActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(OtherActivity.this, SalesMan.class));
+        finish();
     }
 }

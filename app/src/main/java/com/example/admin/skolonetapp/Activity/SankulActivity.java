@@ -159,7 +159,13 @@ public class SankulActivity extends AppCompatActivity {
                     Toast.makeText(SankulActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
                 } else if (edtSankulAverageStudent.getText().toString().equals("")) {
                     Toast.makeText(SankulActivity.this, "Please Enter AverageStudent", Toast.LENGTH_SHORT).show();
-                } else {
+                } else if (boardName.equalsIgnoreCase("Select Board")) {
+                    Toast.makeText(SankulActivity.this, "Please Select Board", Toast.LENGTH_SHORT).show();
+                } else if (stdName.equalsIgnoreCase("Select Standard")) {
+                    Toast.makeText(SankulActivity.this, "Please Select Standard", Toast.LENGTH_SHORT).show();
+                } else if (mediumName.equalsIgnoreCase("Select Medium")) {
+                    Toast.makeText(SankulActivity.this, "Please Select Medium", Toast.LENGTH_SHORT).show();
+                }else {
                     submitForm();
                     startActivity(new Intent(SankulActivity.this, SalesMan.class));
                 }
@@ -215,6 +221,12 @@ public class SankulActivity extends AppCompatActivity {
                                         int stdId = jresponse.getInt("iStandardId");
                                         String stdName = jresponse.getString("strStandardName");
                                         stdlist = new stdList();
+                                        if (i == 0) {
+                                            stdlist.setStdId(0);
+                                            stdlist.setStdName("Select Standard");
+                                            spotArr.add(stdlist.getStdName());
+                                            arrayStd.add(stdlist);
+                                        }
                                         stdlist.setStdId(stdId);
                                         stdlist.setStdName(stdName);
                                         spotArr.add(stdlist.getStdName());
@@ -227,6 +239,12 @@ public class SankulActivity extends AppCompatActivity {
                                         int mediumId = jresponse.getInt("iMedium");
                                         String mediumName = jresponse.getString("strMediumName");
                                         mediumList = new MediumList();
+                                        if (i == 0) {
+                                            mediumList.setMediumId(0);
+                                            mediumList.setMediumName("Select Medium");
+                                            mediumArr.add(mediumList.getMediumName());
+                                            arrayMedium.add(mediumList);
+                                        }
                                         mediumList.setMediumId(mediumId);
                                         mediumList.setMediumName(mediumName);
                                         mediumArr.add(mediumList.getMediumName());
@@ -239,6 +257,12 @@ public class SankulActivity extends AppCompatActivity {
                                         int mediumId = jresponse.getInt("iBoardId");
                                         String mediumName = jresponse.getString("strBoardName");
                                         boardList = new BoardList();
+                                        if (i == 0) {
+                                            boardList.setBoardId(0);
+                                            boardList.setBoardName("Select Board");
+                                            boardArr.add(boardList.getBoardName());
+                                            arrayBoard.add(boardList);
+                                        }
                                         boardList.setBoardId(mediumId);
                                         boardList.setBoardName(mediumName);
                                         boardArr.add(boardList.getBoardName());
@@ -375,5 +399,11 @@ public class SankulActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
         }
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(SankulActivity.this, SalesMan.class));
+        finish();
     }
 }

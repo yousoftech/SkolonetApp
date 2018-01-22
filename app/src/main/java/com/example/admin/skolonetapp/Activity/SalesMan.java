@@ -78,6 +78,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
     ArrayList<Sales> event;
     adapterSales aSales;
     private MyLocation myLocation = null;
+    boolean doubleBackToExitPressedOnce = false;
 
 
     private static final String[] INITIAL_PERMS = {
@@ -476,4 +477,25 @@ Log.d("latlongggg",latlong);
             // tvAddress.setText(locationAddress);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+    }
+
 }
