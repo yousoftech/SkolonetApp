@@ -52,7 +52,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.Permissions;
 import java.util.ArrayList;
 
 import static com.example.admin.skolonetapp.Activity.LoginActivity.PREFS_NAME;
@@ -64,8 +63,8 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
     TextView txtTitle;
     Toolbar toolbar;
     Button btnLogout;
-    String from,addtLocation,latlong;
-    String firstName, lastName;
+    String from, addtLocation, latlong;
+    String firstName, lastName, Userid;
     int salesId;
     SalesList salesList;
     SharedPreferences preferences;
@@ -99,6 +98,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         btnLogout = (Button) findViewById(R.id.btnLogout);
         firstName = preferences.getString("firstName", null);
         lastName = preferences.getString("lastName", null);
+        Userid = preferences.getString("LoggedUser", null);
         setupToolbar("" + firstName + " " + lastName);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerSales);
         event = new ArrayList<Sales>();
@@ -312,7 +312,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
             progressDialog.show();
 
             JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST,
-                    Constant.PATH + "Sales/GetSalesData", null, new Response.Listener<JSONObject>() {
+                    Constant.PATH + "Sales/GetSalesData?id=" + Userid, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.d("yatra", response.toString());
@@ -385,6 +385,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
     private boolean canAccessCoreLocation() {
         return (hasPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
     }
+
     private boolean hasPermission(String perm) {
 
         return (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(SalesMan.this, perm));
@@ -403,7 +404,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                 break;
         }
 
-   }
+    }
 
     public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(
@@ -433,16 +434,16 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         final double longitude = location.getLongitude();
         latlong = "Latitude: " + location.getLatitude() +
                 " Longitude: " + location.getLongitude();
-Log.d("latlongggg",latlong);
+        Log.d("latlongggg", latlong);
 
         preferences = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = preferences.edit();
         String lat = location.getLatitude() + "";
-        String lon = location.getLongitude()+"";
-        editor.putString("latitude",lat);
-        editor.putString("longitude",lon);
+        String lon = location.getLongitude() + "";
+        editor.putString("latitude", lat);
+        editor.putString("longitude", lon);
         editor.commit();
-        Log.d("latlong",latlong+"");
+        Log.d("latlong", latlong + "");
         SalesMan.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -466,12 +467,12 @@ Log.d("latlongggg",latlong);
                 default:
                     locationAddress = null;
             }
-            addtLocation=locationAddress;
-            Log.d("location",addtLocation);
+            addtLocation = locationAddress;
+            Log.d("location", addtLocation);
 
             preferences = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("location",locationAddress);
+            editor.putString("location", locationAddress);
             editor.commit();
 
             // tvAddress.setText(locationAddress);
