@@ -29,6 +29,7 @@ import com.example.admin.skolonetapp.Util.Constant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -65,6 +66,9 @@ public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerView
         holder.txt_PartyType.setText("" + event.get(position).getStrPartyType());
         holder.txt_PartyLocation.setText("" + event.get(position).getLocation());
         holder.txt_PartyDateTime.setText("" + event.get(position).getDatetimeCreated());
+        holder.txt_Longitude.setText("" + event.get(position).getStrLatitude());
+        holder.txt_Latitude.setText("" + event.get(position).getStrLongitude());
+
         Id = event.get(position).getPartyInfoId();
         type=event.get(position).getStrPartyType();
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +143,7 @@ public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerView
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txt_PartyName, txt_PartyType, txt_PartyLocation, txt_PartyDateTime;
+        TextView txt_PartyName, txt_PartyType, txt_PartyLocation, txt_PartyDateTime,txt_Latitude,txt_Longitude;
 
 
         public RecyclerViewHolder(View itemView) {
@@ -149,6 +153,10 @@ public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerView
             txt_PartyType = (TextView) itemView.findViewById(R.id.txt_PartyType);
             txt_PartyLocation = (TextView) itemView.findViewById(R.id.txt_PartyLocation);
             txt_PartyDateTime = (TextView) itemView.findViewById(R.id.txt_PartyDateTime);
+            txt_Latitude = (TextView) itemView.findViewById(R.id.txt_Latitude);
+            txt_Longitude = (TextView) itemView.findViewById(R.id.txt_Longitude);
+
+
         }
     }
 

@@ -118,10 +118,6 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                         showSettingsAlert();
                     }
                 }
-                preferences = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("latlong",latlong);
-                editor.commit();
 
                 std();
                 final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(SalesMan.this);
@@ -334,11 +330,15 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                 String iPartyTypeName = obj.getString("strPartyType");
                                 String location = obj.getString("location");
                                 String partyDate = obj.getString("datetimeCreated");
+                                String latitude = obj.getString("latitude");
+                                String longitude = obj.getString("longitude");
                                 sales.setPartyName(partyName);
                                 sales.setPartyInfoId(partyInfoId);
                                 sales.setStrPartyType(iPartyTypeName);
-                                sales.setLocation(location);
+                                sales.setLocation("Address : " + location);
                                 sales.setDatetimeCreated(partyDate);
+                                sales.setStrLatitude("Latitude : " + latitude);
+                                sales.setStrLongitude("Longitude : " + longitude);
                                 event.add(sales);
 
 
@@ -432,7 +432,16 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         final double longitude = location.getLongitude();
         latlong = "Latitude: " + location.getLatitude() +
                 " Longitude: " + location.getLongitude();
+Log.d("latlongggg",latlong);
 
+        preferences = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        String lat = location.getLatitude() + "";
+        String lon = location.getLongitude()+"";
+        editor.putString("latitude",lat);
+        editor.putString("longitude",lon);
+        editor.commit();
+        Log.d("latlong",latlong+"");
         SalesMan.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -458,7 +467,13 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
             }
             addtLocation=locationAddress;
             Log.d("location",addtLocation);
-           // tvAddress.setText(locationAddress);
+
+            preferences = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("location",locationAddress);
+            editor.commit();
+
+            // tvAddress.setText(locationAddress);
         }
     }
 }

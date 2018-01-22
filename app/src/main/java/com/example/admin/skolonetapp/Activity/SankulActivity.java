@@ -338,6 +338,8 @@ public class SankulActivity extends AppCompatActivity {
                                 // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
                                 if (code == true) {
                                     Toast.makeText(SankulActivity.this, ""+msg, Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(SankulActivity.this, SalesMan.class));
+
                                     // JSONObject obj = response.getJSONObject("data");
                                     progressDialog.dismiss();
                                     finish();

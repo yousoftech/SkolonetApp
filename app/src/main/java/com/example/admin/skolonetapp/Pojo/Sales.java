@@ -41,6 +41,26 @@ public class Sales {
 
     public String strBoard;
 
+    public  String  strLatitude;
+
+    public String getStrLatitude() {
+        return strLatitude;
+    }
+
+    public void setStrLatitude(String strLatitude) {
+        this.strLatitude = strLatitude;
+    }
+
+    public String getStrLongitude() {
+        return strLongitude;
+    }
+
+    public void setStrLongitude(String strLongitude) {
+        this.strLongitude = strLongitude;
+    }
+
+    public String strLongitude;
+
     public String strMedium;
 
     public String strStandard;

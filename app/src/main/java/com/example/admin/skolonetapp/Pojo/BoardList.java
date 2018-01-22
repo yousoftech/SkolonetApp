@@ -12,6 +12,10 @@ public class BoardList {
         return boardId;
     }
 
+    public int getItemId(int position) {
+        return position;
+    }
+
     public void setBoardId(int boardId) {
         this.boardId = boardId;
     }
