@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.example.admin.skolonetapp"
         minSdkVersion 16
         targetSdkVersion 26

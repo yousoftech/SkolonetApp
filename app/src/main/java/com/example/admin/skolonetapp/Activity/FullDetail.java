@@ -304,8 +304,8 @@ public class FullDetail extends AppCompatActivity {
                     spinnerStd.setVisibility(View.GONE);
                     spinnerMedium.setVisibility(View.GONE);
                     object.put("ShopName", edtPartyShopName.getText().toString());
-                    object.put("DistubitorName", edtPartyDistributorName);
-                    object.put("DistubitorType", edtPartyType);
+                    object.put("DistubitorName", edtPartyDistributorName.getText().toString());
+                    object.put("DistubitorType", edtPartyType.getText().toString());
                 }
                 if (type.equals("Classes") || type.equals(("School"))) {
                     edtSankulName.setVisibility(View.GONE);
@@ -464,6 +464,7 @@ public class FullDetail extends AppCompatActivity {
                                 edtSankulName.setVisibility(View.GONE);
                                 edtSankulOrganization.setVisibility(View.GONE);
                                 edtSankulPartyName.setVisibility(View.GONE);
+                                edtSankulAverageStudent.setVisibility(View.GONE);
                                 spinnerSchoolBoard.setVisibility(View.GONE);
                                 spinnerStd.setVisibility(View.GONE);
                                 spinnerMedium.setVisibility(View.GONE);

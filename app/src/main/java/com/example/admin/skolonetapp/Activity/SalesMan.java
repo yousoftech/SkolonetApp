@@ -334,12 +334,17 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                 sales = new Sales();
 
                                 String partyInfoId = obj.getString("partyInfoId");
-                                String partyName = obj.getString("partyName");
                                 String iPartyTypeName = obj.getString("strPartyType");
+                                String shopName = obj.getString("shopName");
+                                String partyName = obj.getString("partyName");
+
+
                                 String location = obj.getString("location");
                                 String partyDate = obj.getString("datetimeCreated");
                                 String latitude = obj.getString("latitude");
                                 String longitude = obj.getString("longitude");
+
+                                sales.setShopName(shopName);
                                 sales.setPartyName(partyName);
                                 sales.setPartyInfoId(partyInfoId);
                                 sales.setStrPartyType(iPartyTypeName);

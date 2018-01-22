@@ -61,8 +61,20 @@ public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerView
 
     @Override
     public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
+       String Partytype=event.get(position).getStrPartyType();
+Log.d("adapterval",Partytype);
+        /*if(Partytype=="Party")
+        {
+            holder.txt_PartyName.setText(event.get(position).getShopName());
 
+        }
+        else
+        {
+            holder.txt_PartyName.setText(event.get(position).getPartyName());
+
+        }*/
         holder.txt_PartyName.setText(event.get(position).getPartyName());
+
         holder.txt_PartyType.setText("" + event.get(position).getStrPartyType());
         holder.txt_PartyLocation.setText("" + event.get(position).getLocation());
         holder.txt_PartyDateTime.setText("" + event.get(position).getDatetimeCreated());

@@ -68,6 +68,7 @@ public class PartyActivity extends AppCompatActivity {
         location=preferences.getString("location",null);
         txtFormName.setText("" + fromName);
 
+        Log.d("sad",Userid+"");
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,27 +122,33 @@ public class PartyActivity extends AppCompatActivity {
             try {
  //               object.put("OrganisationName", edtSchoolOrganization.getText().toString());
 //                object.put("PartyName", edtSchoolPartyName.getText().toString());
-                object.put("Designation", edtPartyDesignation.getText().toString());
 //                object.put("SankulName", "");
+                Log.d("Spp",edtPartyShopName.getText().toString());
                 object.put("ShopName", edtPartyShopName.getText().toString());
-                object.put("DistubitorName", edtPartyDistributorName);
-                object.put("DistubitorType", edtPartyType);
-                object.put("ContactNo", edtPartyContactNumber.getText().toString());
+                object.put("distubitorName", edtPartyDistributorName.getText().toString());
+                object.put("distubitorType", edtPartyType.getText().toString());
+                object.put("designation", edtPartyDesignation.getText().toString());
+                object.put("contactNo", edtPartyContactNumber.getText().toString());
 //                object.put("Board", "");
 //                object.put("Medium", "");
 //                object.put("Std", "");
 //                object.put("AvgStudent", "");
-                object.put("CreatedBy",Userid);
-                object.put("UpdatedBy",Userid);
-                object.put("iPartyTypeId",fromId);
-                object.put("AddressLine1", edtPartyAddress1.getText().toString());
-                object.put("AddressLine2", edtPartyAddress2.getText().toString());
-                object.put("CityName", edtPartyCity.getText().toString());
-                object.put("StateName", edtPartyState.getText().toString());
-                object.put("Remark", edtPartyRemark.getText().toString());
+
+                object.put("addressLine1", edtPartyAddress1.getText().toString());
+                object.put("addressLine2", edtPartyAddress2.getText().toString());
+                object.put("cityName", edtPartyCity.getText().toString());
+                object.put("stateName", edtPartyState.getText().toString());
+                object.put("remark", edtPartyRemark.getText().toString());
                 object.put("Latitude", latitude);
                 object.put("Longitude", longitude);
-                object.put("Location", location);
+               object.put("Location", location);
+                object.put("createdBy",Userid);
+                object.put("updatedBy",Userid);
+                object.put("iPartyTypeId",fromId);
+                object.put("Board", 1);
+                object.put("Medium", 1);
+                object.put("Std", 1);
+
 
             } catch (JSONException e) {
                 Toast.makeText(PartyActivity.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
@@ -167,6 +174,7 @@ public class PartyActivity extends AppCompatActivity {
                                     finish();
                                 } else if (code == false) {
                                     String msg1 = response.getString("message");
+                                    Log.d("messsafe",msg1);
                                     progressDialog.dismiss();
                                     Toast.makeText(PartyActivity.this, "" + msg1, Toast.LENGTH_SHORT).show();
                                 }

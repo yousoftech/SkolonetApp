@@ -131,6 +131,9 @@ public class OtherActivity extends AppCompatActivity {
                 object.put("CreatedBy", Userid);
                 object.put("UpdatedBy", Userid);
                 object.put("iPartyTypeId", fromId);
+                object.put("Board", 1);
+                object.put("Medium", 1);
+                object.put("Std", 1);
                 object.put("AddressLine1", edtOtherAddress1.getText().toString());
                 object.put("AddressLine2", edtOtherAddress2.getText().toString());
                 object.put("CityName", edtOtherCity.getText().toString());
