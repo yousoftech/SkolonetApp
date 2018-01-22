@@ -119,7 +119,7 @@ public class PartyActivity extends AppCompatActivity {
 
             final JSONObject object = new JSONObject();
             try {
-//                object.put("OrganisationName", edtSchoolOrganization.getText().toString());
+ //               object.put("OrganisationName", edtSchoolOrganization.getText().toString());
 //                object.put("PartyName", edtSchoolPartyName.getText().toString());
                 object.put("Designation", edtPartyDesignation.getText().toString());
 //                object.put("SankulName", "");
@@ -141,7 +141,9 @@ public class PartyActivity extends AppCompatActivity {
                 object.put("Remark", edtPartyRemark.getText().toString());
                 object.put("Latitude", latitude);
                 object.put("Longitude", longitude);
-                object.put("Location", location);            } catch (JSONException e) {
+                object.put("Location", location);
+
+            } catch (JSONException e) {
                 Toast.makeText(PartyActivity.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
@@ -159,8 +161,8 @@ public class PartyActivity extends AppCompatActivity {
                                 String msg = response.getString("message");
                                 // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
                                 if (code == true) {
-                                   // JSONObject obj = response.getJSONObject("data");
-                                    Toast.makeText(PartyActivity.this, ""+msg, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(PartyActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
+//                                    JSONObject obj = response.getJSONObject("data");
                                     progressDialog.dismiss();
                                     finish();
                                 } else if (code == false) {
