@@ -37,7 +37,7 @@ public class PartyActivity extends AppCompatActivity {
     TextView txtFormName;
     Button btnSave, btnCancel;
     int fromId;
-    String fromName,Userid;
+    String fromName,Userid,latitude,longitude,location;
     SharedPreferences preferences;
 
     @Override
@@ -63,6 +63,10 @@ public class PartyActivity extends AppCompatActivity {
         txtFormName = (TextView) findViewById(R.id.txtPartyForm);
         btnSave = (Button) findViewById(R.id.btnPartyYes);
         btnCancel = (Button) findViewById(R.id.btnPartyCancel);
+        latitude=preferences.getString("latitude",null);
+        longitude=preferences.getString("longitude",null);
+        location=preferences.getString("location",null);
+
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,8 +139,9 @@ public class PartyActivity extends AppCompatActivity {
                 object.put("CityName", edtPartyCity.getText().toString());
                 object.put("StateName", edtPartyState.getText().toString());
                 object.put("Remark", edtPartyRemark.getText().toString());
-                object.put("Location", "");
-            } catch (JSONException e) {
+                object.put("Latitude", latitude);
+                object.put("Longitude", longitude);
+                object.put("Location", location);            } catch (JSONException e) {
                 Toast.makeText(PartyActivity.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }

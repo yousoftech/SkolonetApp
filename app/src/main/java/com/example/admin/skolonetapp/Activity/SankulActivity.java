@@ -58,7 +58,7 @@ public class SankulActivity extends AppCompatActivity {
     String stdName, mediumName, boardName;
     int stdId, mediumId, boardId;
     int fromId;
-    String fromName,Userid;
+    String fromName,Userid,latitude,longitude,location;
     SharedPreferences preferences;
 
 
@@ -90,6 +90,9 @@ public class SankulActivity extends AppCompatActivity {
         spinnerMedium = (Spinner) findViewById(R.id.spinnerSankulMedium);
         spinnerSchoolBoard = (Spinner) findViewById(R.id.spinnerSankulBoard);
         txtFormName.setText("" + fromName);
+        latitude=preferences.getString("latitude",null);
+        longitude=preferences.getString("longitude",null);
+        location=preferences.getString("location",null);
 
         spinnerStd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -318,7 +321,9 @@ public class SankulActivity extends AppCompatActivity {
                 object.put("CityName", edtSankulCity.getText().toString());
                 object.put("StateName", edtSankulState.getText().toString());
                 object.put("Remark", edtSankulRemark.getText().toString());
-                object.put("Location", "Nae j male koe day");
+                object.put("Latitude", latitude);
+                object.put("Longitude", longitude);
+                object.put("Location", location);
             } catch (JSONException e) {
                 Toast.makeText(SankulActivity.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
                 e.printStackTrace();
