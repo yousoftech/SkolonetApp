@@ -124,11 +124,13 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                 from = spinnerFliter.getSelectedItem().toString();
                 salesList = arraySales.get(i);
                 salesId = salesList.getSalesId();
-                if (salesId == 0) {
-                    detailFrom(-1);
-                } else {
-                    detailFrom(salesId);
+                Log.d("asdassadasdasd",salesId+" " + from);
+
+                if(from=="Select Type")
+                {
+                    salesId =-1;
                 }
+                detailFrom(salesId);
 
             }
 
@@ -420,7 +422,6 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                     ArrayAdapter board1 = new ArrayAdapter(SalesMan.this, android.R.layout.simple_spinner_item, salesArr);
                                     board1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
                                     spinnerFliter.setAdapter(board1);
-
 //                                    ArrayAdapter board = new ArrayAdapter(SalesMan.this, android.R.layout.simple_spinner_item, salesArr);
 //                                    board.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //                                    //Setting the ArrayAdapter data on the Spinner
@@ -502,7 +503,17 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
 
                                     }
                                     event.add(sales);
-                                } else if (typeId == -1) {
+                                    Log.d("asazza", event.size() + " ");
+
+
+                                }
+                                else
+                                {
+                                    txtRecords.setVisibility(View.VISIBLE);
+                                    recyclerView.setVisibility(View.GONE);
+
+                                }
+                                if (typeId == -1) {
                                     sales.setPartyInfoId(partyInfoId);
                                     sales.setStrPartyType(iPartyTypeName);
                                     sales.setLocation("Address : " + location);
