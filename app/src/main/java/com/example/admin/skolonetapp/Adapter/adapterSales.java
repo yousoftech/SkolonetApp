@@ -29,7 +29,6 @@ import com.example.admin.skolonetapp.Util.Constant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -44,7 +43,7 @@ public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerView
     LayoutInflater inflater;
     ProgressDialog progressDialog;
     ConnectionDetector detector;
-    String Id,fId,type;
+    String Id, fId, type;
 
     public adapterSales(Context context, ArrayList<Sales> event) {
         this.event = event;
@@ -62,29 +61,23 @@ public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerView
     @Override
     public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
         String ParName = event.get(position).getPartyName();
-        Log.d("PArName",ParName + " ");
+        Log.d("PArName", ParName + " ");
+        String shopName=event.get(position).getShopName();
+        Log.d("PArName", shopName + " ");
 
-        if(ParName != "null") {
-            Log.d("adfgs",event.get(position).getPartyName() + " ");
-
+        if (ParName != null) {
+            Log.d("adfgs", event.get(position).getPartyName() + " ");
             holder.txt_ShoopName.setVisibility(View.GONE);
             holder.txt_PartyName.setVisibility(View.VISIBLE);
             holder.txt_PartyName.setText(event.get(position).getPartyName());
-
-
-        }
-        else if (ParName== null){
-            Log.d("adfg",event.get(position).getShopName()+" ");
-
+        } else if (ParName == null) {
+            Log.d("adfg", event.get(position).getShopName() + " ");
             holder.txt_PartyName.setVisibility(View.GONE);
             holder.txt_ShoopName.setText(event.get(position).getShopName());
-
             holder.txt_ShoopName.setVisibility(View.VISIBLE);
-
-
         }
-       String Partytype=event.get(position).getStrPartyType();
-Log.d("adapterval",Partytype);
+        String Partytype = event.get(position).getStrPartyType();
+        Log.d("adapterval", Partytype);
 
 
         holder.txt_PartyType.setText("" + event.get(position).getStrPartyType());
@@ -94,14 +87,14 @@ Log.d("adapterval",Partytype);
         holder.txt_Latitude.setText("" + event.get(position).getStrLongitude());
 
         Id = event.get(position).getPartyInfoId();
-        type=event.get(position).getStrPartyType();
+        type = event.get(position).getStrPartyType();
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 fId = event.get(position).getPartyInfoId();
 
-                type=event.get(position).getStrPartyType();
+                type = event.get(position).getStrPartyType();
                 final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
                 final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View dialogView = inflater.inflate(R.layout.app_edit, null);
@@ -168,7 +161,7 @@ Log.d("adapterval",Partytype);
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txt_PartyName, txt_PartyType, txt_PartyLocation, txt_PartyDateTime,txt_Latitude,txt_Longitude,txt_ShoopName;
+        TextView txt_PartyName, txt_PartyType, txt_PartyLocation, txt_PartyDateTime, txt_Latitude, txt_Longitude, txt_ShoopName;
 
 
         public RecyclerViewHolder(View itemView) {
@@ -198,7 +191,7 @@ Log.d("adapterval",Partytype);
                     Constant.PATH + "Sales/Delete?id=" + fId, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    Log.d("fullDetail", response.toString()+" ====>"+fId);
+                    Log.d("fullDetail", response.toString() + " ====>" + fId);
                     try {
                         boolean code = response.getBoolean("status");
                         if (code == true) {

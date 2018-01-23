@@ -62,7 +62,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
     Spinner spinner;
     TextView txtTitle;
     Toolbar toolbar;
-    Button btnLogout;
+    Button btnLogout,btnFilter;
     String from, addtLocation, latlong;
     String firstName, lastName, Userid;
     int salesId;
@@ -98,13 +98,14 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         txtTitle = (TextView) findViewById(R.id.txtTitle);
         btnLogout = (Button) findViewById(R.id.btnLogout);
+        btnFilter= (Button)findViewById(R.id.btnFilter);
         firstName = preferences.getString("firstName", null);
         lastName = preferences.getString("lastName", null);
         Userid = preferences.getString("LoggedUser", null);
         setupToolbar("" + firstName + " " + lastName);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerSales);
         txtRecords = (TextView) findViewById(R.id.txtNoRecords);
-
+        btnFilter = (Button)findViewById(R.id.btnFilter);
         event = new ArrayList<Sales>();
         myLocation = new MyLocation();
 
@@ -214,6 +215,12 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
 
                 AlertDialog a = dialogBuilder.create();
                 a.show();
+            }
+        });
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(SalesMan.this, "Filter", Toast.LENGTH_SHORT).show();
             }
         });
         final ActionBar actionBar = getSupportActionBar();

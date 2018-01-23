@@ -12,10 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <Button
-            android:id="@+id/btnCancelUpdate"
+            android:id="@+id/btnFilter"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_margin="10dp"
+            android:layout_toLeftOf="@+id/btnLogout"
             android:background="@drawable/ic_filter_list_white_24px" />
 
 
@@ -24,7 +25,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:textColor="#fff"
             android:text=""
@@ -39,12 +39,5 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"/>
-
-
-
-
-
     </RelativeLayout>
-
-
 </android.support.v7.widget.Toolbar>
