@@ -12,6 +12,17 @@
         android:src="@drawable/logo"
         android:layout_marginBottom="300dp"
         android:layout_centerHorizontal="true"/>
+   <!-- <TextView
+        android:id="@+id/txtNoRecords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="LOGIN"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        /> -->
     <RelativeLayout
         android:id="@+id/relativeLogin"
         android:layout_width="match_parent"
@@ -48,7 +59,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:textColorHint="#000">
+            android:textColorHint="#000"
+            >
 
             <EditText
                 android:id="@+id/EdtUserPassword"
@@ -58,7 +70,9 @@
                 android:hint="Enter Password"
                 android:singleLine="true"
                 android:textColor="#000"
-                android:textColorHint="#000" />
+                android:textColorHint="#000"
+                android:inputType="textPassword"
+                />
         </android.support.design.widget.TextInputLayout>
 
         <Button

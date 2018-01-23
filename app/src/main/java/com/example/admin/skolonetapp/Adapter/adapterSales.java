@@ -61,19 +61,31 @@ public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerView
 
     @Override
     public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
-       String Partytype=event.get(position).getStrPartyType();
-Log.d("adapterval",Partytype);
-        /*if(Partytype=="Party")
-        {
-            holder.txt_PartyName.setText(event.get(position).getShopName());
+        String ParName = event.get(position).getPartyName();
+        Log.d("PArName",ParName + " ");
 
-        }
-        else
-        {
+        if(ParName != "null") {
+            Log.d("adfgs",event.get(position).getPartyName() + " ");
+
+            holder.txt_ShoopName.setVisibility(View.GONE);
+            holder.txt_PartyName.setVisibility(View.VISIBLE);
             holder.txt_PartyName.setText(event.get(position).getPartyName());
 
-        }*/
-        holder.txt_PartyName.setText(event.get(position).getPartyName());
+
+        }
+        else if (ParName== null){
+            Log.d("adfg",event.get(position).getShopName()+" ");
+
+            holder.txt_PartyName.setVisibility(View.GONE);
+            holder.txt_ShoopName.setText(event.get(position).getShopName());
+
+            holder.txt_ShoopName.setVisibility(View.VISIBLE);
+
+
+        }
+       String Partytype=event.get(position).getStrPartyType();
+Log.d("adapterval",Partytype);
+
 
         holder.txt_PartyType.setText("" + event.get(position).getStrPartyType());
         holder.txt_PartyLocation.setText("" + event.get(position).getLocation());
@@ -116,7 +128,6 @@ Log.d("adapterval",Partytype);
                     @Override
                     public void onClick(View v) {
 
-
                         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
                         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         final View dialogView = inflater.inflate(R.layout.app_delete, null);
@@ -128,6 +139,8 @@ Log.d("adapterval",Partytype);
                             @Override
                             public void onClick(View v) {
                                 deleteDetail();
+                                event.remove(position);
+                                notifyItemRemoved(position);
                                 delete.cancel();
                                 notifyDataSetChanged();
                                 editDelete.cancel();
@@ -155,11 +168,12 @@ Log.d("adapterval",Partytype);
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txt_PartyName, txt_PartyType, txt_PartyLocation, txt_PartyDateTime,txt_Latitude,txt_Longitude;
+        TextView txt_PartyName, txt_PartyType, txt_PartyLocation, txt_PartyDateTime,txt_Latitude,txt_Longitude,txt_ShoopName;
 
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
+            txt_ShoopName = (TextView) itemView.findViewById(R.id.txt_Shop_Name);
 
             txt_PartyName = (TextView) itemView.findViewById(R.id.txt_PartyName);
             txt_PartyType = (TextView) itemView.findViewById(R.id.txt_PartyType);
@@ -189,6 +203,7 @@ Log.d("adapterval",Partytype);
                         boolean code = response.getBoolean("status");
                         if (code == true) {
                             Toast.makeText(context, "Data Delete SuccessFull", Toast.LENGTH_SHORT).show();
+
                             progressDialog.dismiss();
                         }
 

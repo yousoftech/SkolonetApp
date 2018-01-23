@@ -273,18 +273,18 @@ public class School_ClassisActivity extends AppCompatActivity {
                                     }
 
                                     ArrayAdapter medium = new ArrayAdapter(School_ClassisActivity.this, android.R.layout.simple_spinner_item, mediumArr);
-                                    medium.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    medium.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
                                     //Setting the ArrayAdapter data on the Spinner
                                     spinnerMedium.setAdapter(medium);
 
                                     ArrayAdapter std = new ArrayAdapter(School_ClassisActivity.this, android.R.layout.simple_spinner_item, spotArr);
-                                    std.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    std.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
                                     //Setting the ArrayAdapter data on the Spinner
                                     spinnerStd.setAdapter(std);
 
 
                                     ArrayAdapter board = new ArrayAdapter(School_ClassisActivity.this, android.R.layout.simple_spinner_item, boardArr);
-                                    board.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    board.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
                                     //Setting the ArrayAdapter data on the Spinner
                                     spinnerSchoolBoard.setAdapter(board);
 

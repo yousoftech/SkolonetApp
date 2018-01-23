@@ -17,8 +17,8 @@
 
             <ImageView
                 android:id="@+id/imgEdit"
-                android:layout_width="@dimen/margin_15dp"
-                android:layout_height="@dimen/margin_15dp"
+                android:layout_width="@dimen/margin_30dp"
+                android:layout_height="@dimen/margin_30dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_10dp"
                 android:layout_marginRight="@dimen/margin_20dp"
@@ -30,8 +30,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/imgEdit"
+                android:textColor="@color/colorPrimaryDark"
                 android:text="Edit"
-                android:textSize="@dimen/text_15sp" />
+                android:textSize="15dp" />
         </RelativeLayout>
 
 
@@ -52,8 +53,8 @@
 
             <ImageView
                 android:id="@+id/imgDelete"
-                android:layout_width="@dimen/margin_15dp"
-                android:layout_height="@dimen/margin_15dp"
+                android:layout_width="@dimen/margin_30dp"
+                android:layout_height="@dimen/margin_30dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_10dp"
                 android:layout_marginRight="@dimen/margin_20dp"
@@ -64,9 +65,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:textColor="@color/colorPrimaryDark"
+
                 android:layout_toRightOf="@+id/imgDelete"
                 android:text="Delete"
-                android:textSize="@dimen/text_15sp" />
+                android:textSize="15dp" />
 
 
         </RelativeLayout>

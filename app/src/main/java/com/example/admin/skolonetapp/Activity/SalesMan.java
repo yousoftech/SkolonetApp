@@ -275,7 +275,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                     }
 
                                     ArrayAdapter board = new ArrayAdapter(SalesMan.this, android.R.layout.simple_spinner_item, salesArr);
-                                    board.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                                    board.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
                                     spinner.setAdapter(board);
 
 //                                    ArrayAdapter board = new ArrayAdapter(SalesMan.this, android.R.layout.simple_spinner_item, salesArr);
@@ -344,14 +344,23 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                 String latitude = obj.getString("latitude");
                                 String longitude = obj.getString("longitude");
 
-                                sales.setShopName(shopName);
-                                sales.setPartyName(partyName);
                                 sales.setPartyInfoId(partyInfoId);
                                 sales.setStrPartyType(iPartyTypeName);
                                 sales.setLocation("Address : " + location);
                                 sales.setDatetimeCreated(partyDate);
                                 sales.setStrLatitude("Latitude : " + latitude);
                                 sales.setStrLongitude("Longitude : " + longitude);
+                                if(partyName!="null")
+                                {
+                                    sales.setPartyName(partyName);
+
+
+                                }
+                                else
+                                {
+                                    sales.setShopName(shopName);
+
+                                }
                                 event.add(sales);
 
 

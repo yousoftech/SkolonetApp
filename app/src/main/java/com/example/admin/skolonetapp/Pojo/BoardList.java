@@ -27,4 +27,6 @@ public class BoardList {
     public void setBoardName(String boardName) {
         this.boardName = boardName;
     }
+
+
 }

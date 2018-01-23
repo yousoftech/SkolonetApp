@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@drawable/roundshape"
     tools:context="com.example.admin.skolonetapp.Activity.SalesMan">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/app_toolbar_sales"></include>
+
 
 
     <android.support.v7.widget.RecyclerView
@@ -18,7 +19,9 @@
         android:layout_below="@+id/toolbar"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+
+        >
 
     </android.support.v7.widget.RecyclerView>
     <TextView
@@ -32,6 +35,7 @@
         android:textSize="20dp"
         android:textStyle="bold"
         />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabButton"
         android:layout_width="wrap_content"

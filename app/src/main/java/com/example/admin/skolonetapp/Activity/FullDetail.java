@@ -55,6 +55,7 @@ public class FullDetail extends AppCompatActivity {
     ArrayList<String> boardArr;
     String stdName, mediumName, boardName;
     int stdId, mediumId, boardId;
+    int selectedStdId,selectedBoard,selectedMedium;
     Button btnSave, btnCancel;
 
     @Override
@@ -422,9 +423,9 @@ public class FullDetail extends AppCompatActivity {
                             String distubitorType = object.getString("distubitorType");
                             String iUserTypeId = object.getString("iUserTypeId");
                             String contactNo = object.getString("contactNo");
-                            int boardId = object.getInt("board");
-                            int mediumId = object.getInt("medium");
-                            int stdId = object.getInt("std");
+                             selectedBoard = object.getInt("board");
+                             selectedMedium = object.getInt("medium");
+                             selectedStdId = object.getInt("std");
                             String avgStudent = object.getString("avgStudent");
                             String addressLine1 = object.getString("addressLine1");
                             String addressLine2 = object.getString("addressLine2");
@@ -441,7 +442,6 @@ public class FullDetail extends AppCompatActivity {
                             BoardList boardList = new BoardList();
                             MediumList mediumList = new MediumList();
                             stdList StdList = new stdList();
-                            std();
 
                             if (strPartyType.equals("Others")) {
                                 edtSankulAverageStudent.setVisibility((View.GONE));
@@ -500,14 +500,16 @@ public class FullDetail extends AppCompatActivity {
                                 edtSankulOrganization.setText(organisationName);
                                 edtSankulPartyName.setText(partyName);
                                 edtSankulAverageStudent.setText(avgStudent);
+                                Log.d("indexofboard",getIndex(spinnerSchoolBoard,boardId + " ") + " "+ boardId);
+                           //    spinnerSchoolBoard.setSelection(boardList.getItemId(boardId));
                                 //Log.d("FetchMedium",medium+"");
                                 // Log.d("FetchStd",std+"");
                                 // Log.d("FetchBoard",board+"");
-                                int spinnerBoardPos = boardList.getItemId(boardId);
+                           //     int spinnerBoardPos = boardList.getItemId(boardId);
                                 // int spinnerMediumPos = adapter.getPosition(compareValue);
                                 // int spinnerStdPos = adapter.getPosition(compareValue);
-
-                                spinnerMedium.setSelection(spinnerBoardPos);
+                             //   spinnerMedium.setSelection(1);
+                                //spinnerMedium.setSelection(spinnerBoardPos);
                                 //   Log.d("spinnerBoardPos",spinnerBoardPos+"");
                                 // spinnerStd.setSelection(std);
                                 // spinnerSchoolBoard.setSelection(board);
@@ -520,6 +522,7 @@ public class FullDetail extends AppCompatActivity {
                             edtSankulCity.setText(cityName);
                             edtSankulState.setText(stateName);
                             edtSankulRemark.setText(remark);
+                            std();
 
                         }
 
@@ -547,6 +550,25 @@ public class FullDetail extends AppCompatActivity {
         }
     }
 
+    //private method of your class
+    public int getIndex(Spinner spinner, String myString)
+    {
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).equals(myString)){
+                index = i;
+                Log.d("asdas",index + ""
+                );
+                break;
+            }
+            else{
+                Log.d("asdasdas",  "asdasd"
+                );
+            }
+        }
+        return index;
+    }
     public void std() {
 
         if (detector.isConnectingToInternet()) {
@@ -596,6 +618,7 @@ public class FullDetail extends AppCompatActivity {
                                         stdlist.setStdName(stdName);
                                         spotArr.add(stdlist.getStdName());
                                         arrayStd.add(stdlist);
+
                                         Log.d("nickname", "" + stdId + " " + stdName);
                                     }
                                     JSONArray objArray2 = obj.getJSONArray("mediumList");
@@ -628,6 +651,7 @@ public class FullDetail extends AppCompatActivity {
                                             boardArr.add(boardList.getBoardName());
                                             arrayBoard.add(boardList);
                                         }*/
+
                                         boardList.setBoardId(mediumId);
                                         boardList.setBoardName(mediumName);
                                         boardArr.add(boardList.getBoardName());
@@ -636,18 +660,24 @@ public class FullDetail extends AppCompatActivity {
                                     }
 
                                     ArrayAdapter medium = new ArrayAdapter(FullDetail.this, android.R.layout.simple_spinner_item, mediumArr);
-                                    medium.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    medium.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+                                    spinnerMedium.setSelection(2,true);
+                                    String a = selectedMedium+"";
+                                    Log.d("asdasasd",a);
+                                 int b=   getIndex(spinnerMedium, a);
                                     //Setting the ArrayAdapter data on the Spinner
-                                    spinnerMedium.setAdapter(medium);
+
+
+spinnerMedium.setAdapter(medium);
 
                                     ArrayAdapter std = new ArrayAdapter(FullDetail.this, android.R.layout.simple_spinner_item, spotArr);
-                                    std.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    std.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
                                     //Setting the ArrayAdapter data on the Spinner
                                     spinnerStd.setAdapter(std);
 
 
                                     ArrayAdapter board = new ArrayAdapter(FullDetail.this, android.R.layout.simple_spinner_item, boardArr);
-                                    board.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    board.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
                                     //Setting the ArrayAdapter data on the Spinner
                                     spinnerSchoolBoard.setAdapter(board);
                                     //  progressDialog.dismiss();
@@ -680,7 +710,13 @@ public class FullDetail extends AppCompatActivity {
         }
     }
 
+   public void d (AdapterView<?> parent,
+                         View view,
+                         int position,
+                         long id)
+    {
 
+    }
     // public void disabled()
     //{
     //   edtSankulName.setEnabled(false); edtSankulOrganization.setEnabled(false); edtSankulPartyName.setEnabled(false); edtSankulDesignation.setEnabled(false); edtSankulContactNumber.setEnabled(false);
