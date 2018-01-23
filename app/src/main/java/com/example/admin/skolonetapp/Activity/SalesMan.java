@@ -63,7 +63,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
     Spinner spinner;
     TextView txtTitle;
     Toolbar toolbar;
-    Button btnLogout,btnFilter;
+    Button btnLogout, btnFilter;
     String from, addtLocation, latlong;
     String firstName, lastName, Userid;
     int salesId;
@@ -86,7 +86,6 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
     Spinner spinnerFliter;
 
 
-
     private static final String[] INITIAL_PERMS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
@@ -103,18 +102,41 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         txtTitle = (TextView) findViewById(R.id.txtTitle);
         btnLogout = (Button) findViewById(R.id.btnLogout);
-        btnFilter= (Button)findViewById(R.id.btnFilter);
-        relativeFilter=(RelativeLayout)findViewById(R.id.RelativeFilter);
-        spinnerFliter=(Spinner)findViewById(R.id.spinnerFilter);
+        btnFilter = (Button) findViewById(R.id.btnFilter);
+        relativeFilter = (RelativeLayout) findViewById(R.id.RelativeFilter);
+        spinnerFliter = (Spinner) findViewById(R.id.spinnerFilter);
         firstName = preferences.getString("firstName", null);
         lastName = preferences.getString("lastName", null);
         Userid = preferences.getString("LoggedUser", null);
         setupToolbar("" + firstName + " " + lastName);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerSales);
         txtRecords = (TextView) findViewById(R.id.txtNoRecords);
-        btnFilter = (Button)findViewById(R.id.btnFilter);
+        btnFilter = (Button) findViewById(R.id.btnFilter);
         event = new ArrayList<Sales>();
         myLocation = new MyLocation();
+
+        spinnerFliter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                event.clear();
+                aSales.notifyDataSetChanged();
+                from = spinnerFliter.getSelectedItem().toString();
+                salesList = arraySales.get(i);
+                salesId = salesList.getSalesId();
+                if (salesId == 0) {
+                    detailFrom(-1);
+                } else {
+                    detailFrom(salesId);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         fabButton = (FloatingActionButton) findViewById(R.id.fabButton);
         fabButton.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +161,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                 dialogBuilder.setView(dialogView);
                 final AlertDialog a = dialogBuilder.create();
                 spinner = (Spinner) dialogView.findViewById(R.id.spinnerForm);
+
 
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -188,7 +211,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                 a.show();
             }
         });
-        detailFrom(6);
+        detailFrom(-1);
     }
 
     private void setupToolbar(String title) {
@@ -266,7 +289,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                     arraySales = new ArrayList<>();
                                     salesArr = new ArrayList<>();
 
-                                    arrayFilter= new ArrayList<>();
+                                    arrayFilter = new ArrayList<>();
                                     filterArr = new ArrayList<>();
 
                                     progressDialog.dismiss();
@@ -295,7 +318,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                         Log.d("nickname", "" + stdId + " " + stdName);
                                     }
 
-                                    Log.d("logg",salesArr+"");
+                                    Log.d("logg", salesArr + "");
 
 
                                     ArrayAdapter board1 = new ArrayAdapter(SalesMan.this, android.R.layout.simple_spinner_item, salesArr);
@@ -362,7 +385,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                     arraySales = new ArrayList<>();
                                     salesArr = new ArrayList<>();
 
-                                    arrayFilter= new ArrayList<>();
+                                    arrayFilter = new ArrayList<>();
                                     filterArr = new ArrayList<>();
 
                                     progressDialog.dismiss();
@@ -391,7 +414,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                         Log.d("nickname", "" + stdId + " " + stdName);
                                     }
 
-                                    Log.d("logg",salesArr+"");
+                                    Log.d("logg", salesArr + "");
 
 
                                     ArrayAdapter board1 = new ArrayAdapter(SalesMan.this, android.R.layout.simple_spinner_item, salesArr);
@@ -463,45 +486,37 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                 String partyDate = obj.getString("datetimeCreated");
                                 String latitude = obj.getString("latitude");
                                 String longitude = obj.getString("longitude");
-                                int ipartTypeId=obj.getInt("iPartyTypeId");
+                                int ipartTypeId = obj.getInt("iPartyTypeId");
 
-                                if (ipartTypeId==typeId){
+                                if (ipartTypeId == typeId) {
                                     sales.setPartyInfoId(partyInfoId);
                                     sales.setStrPartyType(iPartyTypeName);
                                     sales.setLocation("Address : " + location);
                                     sales.setDatetimeCreated(partyDate);
                                     sales.setStrLatitude("Latitude : " + latitude);
                                     sales.setStrLongitude("Longitude : " + longitude);
-                                    if(partyName!="null")
-                                    {
+                                    if (partyName != "null") {
                                         sales.setPartyName(partyName);
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         sales.setShopName(shopName);
 
                                     }
                                     event.add(sales);
-                                }else {
-                                sales.setPartyInfoId(partyInfoId);
-                                sales.setStrPartyType(iPartyTypeName);
-                                sales.setLocation("Address : " + location);
-                                sales.setDatetimeCreated(partyDate);
-                                sales.setStrLatitude("Latitude : " + latitude);
-                                sales.setStrLongitude("Longitude : " + longitude);
-                                if(partyName!="null")
-                                {
-                                    sales.setPartyName(partyName);
-                                }
-                                else
-                                {
-                                    sales.setShopName(shopName);
+                                } else if (typeId == -1) {
+                                    sales.setPartyInfoId(partyInfoId);
+                                    sales.setStrPartyType(iPartyTypeName);
+                                    sales.setLocation("Address : " + location);
+                                    sales.setDatetimeCreated(partyDate);
+                                    sales.setStrLatitude("Latitude : " + latitude);
+                                    sales.setStrLongitude("Longitude : " + longitude);
+                                    if (partyName != "null") {
+                                        sales.setPartyName(partyName);
+                                    } else {
+                                        sales.setShopName(shopName);
 
+                                    }
+                                    event.add(sales);
                                 }
-                                event.add(sales);
-                                }
-
-
 
 
                                 int totalElements = event.size();
