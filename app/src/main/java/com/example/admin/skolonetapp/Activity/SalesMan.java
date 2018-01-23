@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,6 +73,8 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
     ConnectionDetector detector;
     ArrayList<SalesList> arraySales;
     ArrayList<String> salesArr;
+    ArrayList<SalesList> arrayFilter;
+    ArrayList<String> filterArr;
     Sales sales;
     RecyclerView recyclerView;
     ArrayList<Sales> event;
@@ -79,6 +82,8 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
     private MyLocation myLocation = null;
     boolean doubleBackToExitPressedOnce = false;
     TextView txtRecords;
+    RelativeLayout relativeFilter;
+    Spinner spinnerFliter;
 
 
 
@@ -99,6 +104,8 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         txtTitle = (TextView) findViewById(R.id.txtTitle);
         btnLogout = (Button) findViewById(R.id.btnLogout);
         btnFilter= (Button)findViewById(R.id.btnFilter);
+        relativeFilter=(RelativeLayout)findViewById(R.id.RelativeFilter);
+        spinnerFliter=(Spinner)findViewById(R.id.spinnerFilter);
         firstName = preferences.getString("firstName", null);
         lastName = preferences.getString("lastName", null);
         Userid = preferences.getString("LoggedUser", null);
@@ -181,7 +188,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                 a.show();
             }
         });
-        detailFrom();
+        detailFrom(6);
     }
 
     private void setupToolbar(String title) {
@@ -220,7 +227,8 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(SalesMan.this, "Filter", Toast.LENGTH_SHORT).show();
+                relativeFilter.setVisibility(View.VISIBLE);
+                std1();
             }
         });
         final ActionBar actionBar = getSupportActionBar();
@@ -258,6 +266,9 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                     arraySales = new ArrayList<>();
                                     salesArr = new ArrayList<>();
 
+                                    arrayFilter= new ArrayList<>();
+                                    filterArr = new ArrayList<>();
+
                                     progressDialog.dismiss();
                                     JSONArray objArray1 = response.getJSONArray("data");
                                     for (int i = 0; i < objArray1.length(); i++) {
@@ -270,20 +281,26 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                             salesList.setSalesName("Select Type");
                                             salesArr.add(salesList.getSalesName());
                                             arraySales.add(salesList);
+                                            filterArr.add(salesList.getSalesName());
+                                            arrayFilter.add(salesList);
                                         }
                                         salesList.setSalesId(stdId);
                                         salesList.setSalesName(stdName);
                                         salesArr.add(salesList.getSalesName());
                                         arraySales.add(salesList);
-
+                                        filterArr.add(salesList.getSalesName());
+                                        arrayFilter.add(salesList);
 
                                         progressDialog.dismiss();
                                         Log.d("nickname", "" + stdId + " " + stdName);
                                     }
 
-                                    ArrayAdapter board = new ArrayAdapter(SalesMan.this, android.R.layout.simple_spinner_item, salesArr);
-                                    board.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-                                    spinner.setAdapter(board);
+                                    Log.d("logg",salesArr+"");
+
+
+                                    ArrayAdapter board1 = new ArrayAdapter(SalesMan.this, android.R.layout.simple_spinner_item, salesArr);
+                                    board1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+                                    spinner.setAdapter(board1);
 
 //                                    ArrayAdapter board = new ArrayAdapter(SalesMan.this, android.R.layout.simple_spinner_item, salesArr);
 //                                    board.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -318,7 +335,103 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         }
     }
 
-    public void detailFrom() {
+    public void std1() {
+
+        if (detector.isConnectingToInternet()) {
+
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Loading...");
+            progressDialog.show();
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+
+            final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
+                    Constant.PATH + "User/GetPartyType", null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("RESPONSE", response.toString());
+
+                            try {
+                                boolean code = response.getBoolean("status");
+                                Log.d("Login", "" + code);
+                                String msg = response.getString("message");
+                                // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
+                                if (code == true) {
+                                    arraySales = new ArrayList<>();
+                                    salesArr = new ArrayList<>();
+
+                                    arrayFilter= new ArrayList<>();
+                                    filterArr = new ArrayList<>();
+
+                                    progressDialog.dismiss();
+                                    JSONArray objArray1 = response.getJSONArray("data");
+                                    for (int i = 0; i < objArray1.length(); i++) {
+                                        JSONObject jresponse = objArray1.getJSONObject(i);
+                                        int stdId = jresponse.getInt("iPartyTypeId");
+                                        String stdName = jresponse.getString("strPartyType");
+                                        salesList = new SalesList();
+                                        if (i == 0) {
+                                            salesList.setSalesId(0);
+                                            salesList.setSalesName("Select Type");
+                                            salesArr.add(salesList.getSalesName());
+                                            arraySales.add(salesList);
+                                            filterArr.add(salesList.getSalesName());
+                                            arrayFilter.add(salesList);
+                                        }
+                                        salesList.setSalesId(stdId);
+                                        salesList.setSalesName(stdName);
+                                        salesArr.add(salesList.getSalesName());
+                                        arraySales.add(salesList);
+                                        filterArr.add(salesList.getSalesName());
+                                        arrayFilter.add(salesList);
+
+                                        progressDialog.dismiss();
+                                        Log.d("nickname", "" + stdId + " " + stdName);
+                                    }
+
+                                    Log.d("logg",salesArr+"");
+
+
+                                    ArrayAdapter board1 = new ArrayAdapter(SalesMan.this, android.R.layout.simple_spinner_item, salesArr);
+                                    board1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+                                    spinnerFliter.setAdapter(board1);
+
+//                                    ArrayAdapter board = new ArrayAdapter(SalesMan.this, android.R.layout.simple_spinner_item, salesArr);
+//                                    board.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                                    //Setting the ArrayAdapter data on the Spinner
+//                                    spinner.setAdapter(board);
+
+                                } else {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(SalesMan.this, msg, Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(SalesMan.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    if (progressDialog != null)
+                        progressDialog.dismiss();
+                    Log.d("RESPONSE", "That didn't work!");
+                }
+            });
+            request.setRetryPolicy(new DefaultRetryPolicy(
+                    30000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(request);
+        } else {
+            Toast.makeText(this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void detailFrom(final int typeId) {
         if (detector.isConnectingToInternet()) {
             progressDialog = new ProgressDialog(this);
             progressDialog.setCancelable(false);
@@ -350,7 +463,26 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                 String partyDate = obj.getString("datetimeCreated");
                                 String latitude = obj.getString("latitude");
                                 String longitude = obj.getString("longitude");
+                                int ipartTypeId=obj.getInt("iPartyTypeId");
 
+                                if (ipartTypeId==typeId){
+                                    sales.setPartyInfoId(partyInfoId);
+                                    sales.setStrPartyType(iPartyTypeName);
+                                    sales.setLocation("Address : " + location);
+                                    sales.setDatetimeCreated(partyDate);
+                                    sales.setStrLatitude("Latitude : " + latitude);
+                                    sales.setStrLongitude("Longitude : " + longitude);
+                                    if(partyName!="null")
+                                    {
+                                        sales.setPartyName(partyName);
+                                    }
+                                    else
+                                    {
+                                        sales.setShopName(shopName);
+
+                                    }
+                                    event.add(sales);
+                                }else {
                                 sales.setPartyInfoId(partyInfoId);
                                 sales.setStrPartyType(iPartyTypeName);
                                 sales.setLocation("Address : " + location);
@@ -360,8 +492,6 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                 if(partyName!="null")
                                 {
                                     sales.setPartyName(partyName);
-
-
                                 }
                                 else
                                 {
@@ -369,6 +499,9 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
 
                                 }
                                 event.add(sales);
+                                }
+
+
 
 
                                 int totalElements = event.size();

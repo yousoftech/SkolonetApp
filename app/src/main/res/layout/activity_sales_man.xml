@@ -11,12 +11,26 @@
         layout="@layout/app_toolbar_sales"></include>
 
 
+    <RelativeLayout
+        android:id="@+id/RelativeFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:visibility="gone">
+
+        <Spinner
+            android:id="@+id/spinnerFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10dp"></Spinner>
+
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerSales"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/RelativeFilter"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
@@ -24,6 +38,7 @@
         >
 
     </android.support.v7.widget.RecyclerView>
+
     <TextView
         android:id="@+id/txtNoRecords"
         android:layout_width="wrap_content"
@@ -31,10 +46,10 @@
         android:layout_centerInParent="true"
         android:text="No Records Found"
         android:textAllCaps="true"
+        android:visibility="gone"
         android:textColor="@color/colorPrimary"
         android:textSize="20dp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabButton"
