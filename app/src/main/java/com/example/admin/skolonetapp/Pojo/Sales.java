@@ -6,6 +6,26 @@ package com.example.admin.skolonetapp.Pojo;
 
 public class Sales {
     public String PartyInfoId;
+    public String reminderDate;
+
+    public double getPriority() {
+        return Priority;
+    }
+
+    public void setPriority(double priority) {
+        Priority = priority;
+    }
+
+    public double Priority;
+
+
+    public String getReminderDate() {
+        return reminderDate;
+    }
+
+    public void setReminderDate(String reminderDate) {
+        this.reminderDate = reminderDate;
+    }
 
 
     public String PartyName;

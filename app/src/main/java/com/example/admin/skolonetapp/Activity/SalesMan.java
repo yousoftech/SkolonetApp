@@ -2,11 +2,13 @@ package com.example.admin.skolonetapp.Activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,7 +33,10 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.app.NotificationManager;
+import android.app.Notification;
+import android.app.TaskStackBuilder;
+import android.support.v4.app.NotificationCompat;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -48,12 +53,14 @@ import com.example.admin.skolonetapp.Util.Constant;
 import com.example.admin.skolonetapp.Util.LocationAddress;
 import com.example.admin.skolonetapp.Util.LocationResult;
 import com.example.admin.skolonetapp.Util.MyLocation;
-
+import java.text.SimpleDateFormat;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.util.Calendar;
 import java.util.ArrayList;
+import  android.net.Uri;
+import android.media.RingtoneManager;
 
 import static com.example.admin.skolonetapp.Activity.LoginActivity.PREFS_NAME;
 
@@ -91,6 +98,8 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
             Manifest.permission.ACCESS_COARSE_LOCATION
     };
 
+
+
     private static final int INITIAL_REQUEST = 13;
 
 
@@ -114,6 +123,12 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         btnFilter = (Button) findViewById(R.id.btnFilter);
         event = new ArrayList<Sales>();
         myLocation = new MyLocation();
+        NotificationManager manager;
+        Notification myNotication;
+
+        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+
 
         spinnerFliter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -482,11 +497,57 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                 String shopName = obj.getString("shopName");
                                 String partyName = obj.getString("partyName");
 
+                               String reminderDate = obj.getString("reminderDate");
 
+                          /*      Calendar c = Calendar.getInstance();
+                                SimpleDateFormat df = new SimpleDateFormat("dd/M/yyyy");
+                                String formattedDate = df.format(c.getTime());
+                                Toast.makeText(SalesMan.this,"Reminder Date :" + reminderDate + ", Current Date :" + formattedDate ,Toast.LENGTH_LONG).show();
+                                if(reminderDate.equals(formattedDate))
+                              {
+                                  Log.d("asd","equals");
+                                  NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getBaseContext());
+                                  mBuilder.setSmallIcon(R.drawable.logo);
+                                  mBuilder.setContentTitle("Reminder Alert");
+                                  //Vibration
+                                  mBuilder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
+
+                                  //LED
+                                  mBuilder.setLights( Color.RED, 3000, 3000);
+
+                                  //Ton
+                                  Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+                                  mBuilder.setSound(alarmSound);
+                                  mBuilder.setContentText(iPartyTypeName + " "+ reminderDate );
+
+
+                                  //  Intent notificationIntent = new Intent("SalesMan");
+                                  // PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent,
+                                  //        PendingIntent.FLAG_UPDATE_CURRENT);
+                                  //  mBuilder.setContentIntent(contentIntent);
+
+                                  Intent resultIntent= new Intent(SalesMan.this, SalesMan.class);
+                                  TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+                                  stackBuilder.addParentStack(SalesMan.class);
+
+// Adds the Intent that starts the Activity to the top of the stack
+                                  stackBuilder.addNextIntent(resultIntent);
+                                  PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+                                  mBuilder.setContentIntent(resultPendingIntent);
+
+                                  NotificationManager mNotificationManager = (NotificationManager) getSystemService(getApplicationContext().NOTIFICATION_SERVICE);
+
+// notificationID allows you to update the notification later on.
+                                  mNotificationManager.notify(1, mBuilder.build());
+
+                              }
+*/
                                 String location = obj.getString("location");
                                 String partyDate = obj.getString("datetimeCreated");
                                 String latitude = obj.getString("latitude");
                                 String longitude = obj.getString("longitude");
+                                double priority = obj.getDouble( "priority" );
                                 int ipartTypeId = obj.getInt("iPartyTypeId");
 
                                 if (ipartTypeId == typeId) {
@@ -496,6 +557,8 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                     sales.setDatetimeCreated(partyDate);
                                     sales.setStrLatitude("Latitude : " + latitude);
                                     sales.setStrLongitude("Longitude : " + longitude);
+                                    sales.setReminderDate( reminderDate );
+                                    sales.setPriority(priority);
                                     if (partyName != "null") {
                                         sales.setPartyName(partyName);
                                     } else {
@@ -520,6 +583,33 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                     sales.setDatetimeCreated(partyDate);
                                     sales.setStrLatitude("Latitude : " + latitude);
                                     sales.setStrLongitude("Longitude : " + longitude);
+                                    sales.setPriority(priority);
+                                    String reminderDate1 = obj.getString("reminderDate");
+                                    sales.setReminderDate( reminderDate1 );
+
+                                    Calendar c1 = Calendar.getInstance();
+                                    SimpleDateFormat df1 = new SimpleDateFormat("dd/M/yyyy");
+                                    String formattedDate1 = df1.format(c1.getTime());
+
+                                    if(reminderDate1.equals(formattedDate1))
+                                    {
+                                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getBaseContext());
+                                        mBuilder.setSmallIcon(R.drawable.logo);
+                                        mBuilder.setContentTitle("Reminder Alert For" + partyName + " "  );
+                                        mBuilder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
+                                        mBuilder.setLights( Color.RED, 3000, 3000);
+                                        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                                        mBuilder.setSound(alarmSound);
+                                        mBuilder.setContentText(iPartyTypeName + " "+ reminderDate1 );
+                                        Intent resultIntent= new Intent(SalesMan.this, SalesMan.class);
+                                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+                                        stackBuilder.addParentStack(SalesMan.class);
+                                        stackBuilder.addNextIntent(resultIntent);
+                                        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+                                        mBuilder.setContentIntent(resultPendingIntent);
+                                        NotificationManager mNotificationManager = (NotificationManager) getSystemService(getApplicationContext().NOTIFICATION_SERVICE);
+                                        mNotificationManager.notify(1, mBuilder.build());
+                                    }
                                     if (partyName != "null") {
                                         sales.setPartyName(partyName);
                                     } else {

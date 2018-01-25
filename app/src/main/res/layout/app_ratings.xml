@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/relativeDelete"
+        android:id="@+id/relativePriority"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_30dp"
         android:background="#fb5c5c">
@@ -14,10 +14,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_20dp"
             android:layout_centerVertical="true"
-            android:text="Close Lead"
+            android:text="Priority"
             android:textColor="#FFF"
             android:textSize="@dimen/text_15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:id="@+id/txtHead"
+            />
 
         <Button
             android:id="@+id/btnClose"
@@ -28,38 +30,45 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/margin_10dp"
             android:background="@drawable/ic_close_black_24dp" />
-
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/imgDelete"
-        android:layout_width="@dimen/margin_80dp"
-        android:layout_height="@dimen/margin_80dp"
-        android:layout_below="@+id/relativeDelete"
+    <RatingBar
+        android:id="@+id/Priority"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativePriority"
+android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/margin_30dp"
-        android:layout_marginTop="@dimen/margin_30dp"
-        android:src="@drawable/delete" />
+        android:paddingTop="25dp"
+
+         />
 
     <TextView
-        android:id="@+id/txtDelete"
+        android:id="@+id/txtRating"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Are you sure want to close this lead.?"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/imgDelete"
-        android:textColor="#fb5c5c"/>
-
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/Priority"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="17dp"
+        android:layout_marginRight="17dp"
+        android:paddingTop="5dp"
+        android:text="1.5/5"
+        android:textSize="20dp" />
     <Button
 
-        android:id="@+id/btnDelete"
+        android:id="@+id/btnPriority"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_30dp"
-        android:text="DELETE"
-        android:layout_below="@+id/txtDelete"
+        android:text="Add Priority"
+        android:layout_below="@+id/Priority"
         android:textColor="#FFF"
         android:layout_margin="@dimen/margin_20dp"
         android:background="@drawable/button_round"/>
 
 
+
 </RelativeLayout>
+
+
+

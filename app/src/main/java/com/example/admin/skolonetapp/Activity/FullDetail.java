@@ -45,10 +45,13 @@ public class FullDetail extends AppCompatActivity {
     Spinner spinnerStd, spinnerSchoolBoard, spinnerMedium;
     Sales sales;
     stdList stdlist;
+    stdList stdSelectedList;
     MediumList mediumList;
     BoardList boardList;
     ArrayList<stdList> arrayStd;
-    ArrayList<String> spotArr;
+
+    ArrayList<stdList> arraySelectedStd;
+    ArrayList<String> spotArr,spotArrSelected;
     ArrayList<MediumList> arrayMedium;
     ArrayList<String> mediumArr;
     ArrayList<BoardList> arrayBoard;
@@ -426,6 +429,9 @@ public class FullDetail extends AppCompatActivity {
                              selectedBoard = object.getInt("board");
                              selectedMedium = object.getInt("medium");
                              selectedStdId = object.getInt("std");
+                            String strBoard = object.getString("strBoard");
+                            String strMedium = object.getString("strMedium");
+                            String strStandard = object.getString("strStandard");
                             String avgStudent = object.getString("avgStudent");
                             String addressLine1 = object.getString("addressLine1");
                             String addressLine2 = object.getString("addressLine2");
@@ -501,7 +507,20 @@ public class FullDetail extends AppCompatActivity {
                                 edtSankulPartyName.setText(partyName);
                                 edtSankulAverageStudent.setText(avgStudent);
                                 Log.d("indexofboard",getIndex(spinnerSchoolBoard,boardId + " ") + " "+ boardId);
-                           //    spinnerSchoolBoard.setSelection(boardList.getItemId(boardId));
+                                arraySelectedStd = new ArrayList<>();
+                                spotArrSelected = new ArrayList<>();
+
+                                int stdSelectedId = selectedBoard;
+                                String stdSelectedName = strBoard;
+                                stdSelectedList = new stdList();
+                                stdSelectedList.setStdId(stdSelectedId);
+                                stdSelectedList.setStdName(stdSelectedName);
+                                spotArrSelected.add(stdSelectedList.getStdName());
+                                arraySelectedStd.add(stdSelectedList);
+
+
+
+                                //    spinnerSchoolBoard.setSelection(boardList.getItemId(boardId));
                                 //Log.d("FetchMedium",medium+"");
                                 // Log.d("FetchStd",std+"");
                                 // Log.d("FetchBoard",board+"");
@@ -608,12 +627,7 @@ public class FullDetail extends AppCompatActivity {
                                         int stdId = jresponse.getInt("iStandardId");
                                         String stdName = jresponse.getString("strStandardName");
                                         stdlist = new stdList();
-                                    /*    if (i == 0) {
-                                            stdlist.setStdId(0);
-                                            stdlist.setStdName("Select Standard");
-                                            spotArr.add(stdlist.getStdName());
-                                            arrayStd.add(stdlist);
-                                        }*/
+
                                         stdlist.setStdId(stdId);
                                         stdlist.setStdName(stdName);
                                         spotArr.add(stdlist.getStdName());
@@ -670,10 +684,15 @@ public class FullDetail extends AppCompatActivity {
 
 spinnerMedium.setAdapter(medium);
 
-                                    ArrayAdapter std = new ArrayAdapter(FullDetail.this, android.R.layout.simple_spinner_item, spotArr);
+                                 /*  ArrayAdapter std = new ArrayAdapter(FullDetail.this, android.R.layout.simple_spinner_item,spotArrSelected);
                                     std.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
                                     //Setting the ArrayAdapter data on the Spinner
-                                    spinnerStd.setAdapter(std);
+                                    spinnerStd.setAdapter(std);*/
+
+                                    ArrayAdapter stdArr = new ArrayAdapter(FullDetail.this, android.R.layout.simple_spinner_item,spotArr);
+                                    stdArr.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+                                    //Setting the ArrayAdapter data on the Spinner
+                                    spinnerStd.setAdapter(stdArr);
 
 
                                     ArrayAdapter board = new ArrayAdapter(FullDetail.this, android.R.layout.simple_spinner_item, boardArr);
