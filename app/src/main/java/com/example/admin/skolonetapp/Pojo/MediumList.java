@@ -1,10 +1,12 @@
 package com.example.admin.skolonetapp.Pojo;
 
+import com.androidbuts.multispinnerfilter.KeyPairBoolData;
+
 /**
  * Created by DELL on 1/18/2018.
  */
 
-public class MediumList {
+public class MediumList extends KeyPairBoolData {
 
     int mediumId;
     String mediumName;

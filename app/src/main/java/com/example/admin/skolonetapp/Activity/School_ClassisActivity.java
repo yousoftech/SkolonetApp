@@ -22,6 +22,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.androidbuts.multispinnerfilter.KeyPairBoolData;
+import com.androidbuts.multispinnerfilter.MultiSpinnerSearch;
+import com.androidbuts.multispinnerfilter.SingleSpinner;
+import com.androidbuts.multispinnerfilter.SpinnerListener;
 import com.example.admin.skolonetapp.Pojo.BoardList;
 import com.example.admin.skolonetapp.Pojo.MediumList;
 import com.example.admin.skolonetapp.Pojo.stdList;
@@ -33,29 +37,36 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import static com.example.admin.skolonetapp.Activity.LoginActivity.PREFS_NAME;
 
 public class School_ClassisActivity extends AppCompatActivity {
 
     EditText edtSchoolOrganization, edtSchoolPartyName, edtSchoolDesignation, edtSchoolContactNumber,
-            edtSchoolAverageStudent, edtSchoolAddress1, edtSchoolAddress2, edtSchoolCity, edtSchoolState, edtSchoolRemark;
-    Spinner spinnerStd, spinnerSchoolBoard, spinnerMedium;
+            edtSankulAverageStudentEnglish,edtSankulAverageStudentHindi,edtSankulAverageStudentGujarati, edtSchoolAddress1, edtSchoolAddress2, edtSchoolCity, edtSchoolState, edtSchoolRemark;
+    MultiSpinnerSearch spinnerStdEnglish, spinnerStdHindi,spinnerStdGujarati,  spinnerMedium;
+    SingleSpinner spinnerSchoolBoardEnglish, spinnerSchoolBoardHindi,spinnerSchoolBoardGujarati;
     ProgressDialog progressDialog;
     ConnectionDetector detector;
     TextView txtFormName;
     Button btnSave, btnCancel;
-    stdList stdlist;
-    MediumList mediumList;
-    BoardList boardList;
-    ArrayList<stdList> arrayStd;
-    ArrayList<String> spotArr;
-    ArrayList<MediumList> arrayMedium;
-    ArrayList<String> mediumArr;
-    ArrayList<BoardList> arrayBoard;
-    ArrayList<String> boardArr;
-    String stdName, mediumName, boardName;
+
+    final List<KeyPairBoolData> listArrayStd = new ArrayList<>();
+    final List<KeyPairBoolData> listArrayMedium = new ArrayList<>();
+    final List<KeyPairBoolData> listArrayBoard = new ArrayList<>();
+    final List<KeyPairBoolData> selectedlistArrayStd = new ArrayList<>();
+    final List<KeyPairBoolData> selectedlistArrayMedium = new ArrayList<>();
+    final List<KeyPairBoolData> selectedlistArrayBoard = new ArrayList<>();
+
+
+
+    String stdName="", mediumName="", boardName="";
+    String selectedMediumName="", selectedBoardNameEnglish="",selectedStdNameEnglish="",selectedBoardNameHindi="",selectedStdNameHindi="",selectedBoardNameGujarati="",selectedStdNameGujarati="" ;
+
     int stdId, mediumId, boardId;
     int fromId;
     String fromName, Userid, latitude, longitude, location;
@@ -74,15 +85,27 @@ public class School_ClassisActivity extends AppCompatActivity {
         edtSchoolPartyName = (EditText) findViewById(R.id.edtSchoolPartyName);
         edtSchoolDesignation = (EditText) findViewById(R.id.edtSchoolDesignation);
         edtSchoolContactNumber = (EditText) findViewById(R.id.edtSchoolContactNumber);
-        edtSchoolAverageStudent = (EditText) findViewById(R.id.edtSchoolAverageStudent);
         edtSchoolAddress1 = (EditText) findViewById(R.id.edtSchoolAddress1);
         edtSchoolAddress2 = (EditText) findViewById(R.id.edtSchoolAddress2);
         edtSchoolCity = (EditText) findViewById(R.id.edtSchoolCity);
         edtSchoolState = (EditText) findViewById(R.id.edtSchoolState);
         edtSchoolRemark = (EditText) findViewById(R.id.edtSchoolRemark);
-        spinnerStd = (Spinner) findViewById(R.id.spinnerSchoolStandard);
-        spinnerMedium = (Spinner) findViewById(R.id.spinnerSchoolMedium);
-        spinnerSchoolBoard = (Spinner) findViewById(R.id.spinnerSchoolBoard);
+
+        spinnerMedium = (MultiSpinnerSearch) findViewById(R.id.spinnerSchoolMedium);
+        spinnerStdEnglish = (MultiSpinnerSearch) findViewById(R.id.spinnerSchoolStandardEnglish);
+        spinnerSchoolBoardEnglish = (SingleSpinner) findViewById(R.id.spinnerSchoolBoardEnglish);
+        edtSankulAverageStudentEnglish = (EditText) findViewById(R.id.edtSchoolAverageStudentEnglish);
+
+        spinnerStdHindi = (MultiSpinnerSearch) findViewById(R.id.spinnerSchoolStandardHindi );
+        spinnerSchoolBoardHindi  = (SingleSpinner) findViewById(R.id.spinnerSchoolBoardHindi );
+        edtSankulAverageStudentHindi  = (EditText) findViewById(R.id.edtSchoolAverageStudentHindi );
+
+        spinnerStdGujarati = (MultiSpinnerSearch) findViewById(R.id.spinnerSchoolStandardGujarati );
+        spinnerSchoolBoardGujarati  = (SingleSpinner) findViewById(R.id.spinnerSchoolBoardGujarati );
+        edtSankulAverageStudentGujarati  = (EditText) findViewById(R.id.edtSchoolAverageStudentGujarati);
+
+
+
         txtFormName = (TextView) findViewById(R.id.txtForm);
         btnSave = (Button) findViewById(R.id.btnYes);
         btnCancel = (Button) findViewById(R.id.btnCancel);
@@ -90,6 +113,7 @@ public class School_ClassisActivity extends AppCompatActivity {
         latitude = preferences.getString("latitude", null);
         longitude = preferences.getString("longitude", null);
         location = preferences.getString("location", null);
+        std();
 
 
         Log.d("lat", latitude + "");
@@ -98,45 +122,10 @@ public class School_ClassisActivity extends AppCompatActivity {
 
         txtFormName.setText("" + fromName);
 
-        spinnerStd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                stdName = spinnerStd.getSelectedItem().toString();
-                stdlist = arrayStd.get(i);
-                stdId = stdlist.getStdId();
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+        Log.d( "checkedevalstd",listArrayStd + "" );
 
-            }
-        });
-        spinnerMedium.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                mediumName = spinnerMedium.getSelectedItem().toString();
-                mediumList = arrayMedium.get(i);
-                mediumId = mediumList.getMediumId();
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-        spinnerSchoolBoard.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                boardName = spinnerSchoolBoard.getSelectedItem().toString();
-                boardList = arrayBoard.get(i);
-                boardId = boardList.getBoardId();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
 
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +149,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                     Toast.makeText(School_ClassisActivity.this, "Please Enter State", Toast.LENGTH_SHORT).show();
                 } else if (edtSchoolRemark.getText().toString().equals("")) {
                     Toast.makeText(School_ClassisActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
-                } else if (edtSchoolAverageStudent.getText().toString().equals("")) {
+                } else if (edtSankulAverageStudentEnglish.getText().toString().equals("")) {
                     Toast.makeText(School_ClassisActivity.this, "Please Enter AverageStudent", Toast.LENGTH_SHORT).show();
                 }else if (boardName.equalsIgnoreCase("Select Board")) {
                     Toast.makeText(School_ClassisActivity.this, "Please Select Board", Toast.LENGTH_SHORT).show();
@@ -181,7 +170,6 @@ public class School_ClassisActivity extends AppCompatActivity {
                 startActivity(new Intent(School_ClassisActivity.this, SalesMan.class));
             }
         });
-        std();
     }
 
     public void std() {
@@ -208,12 +196,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                                 String msg = response.getString("message");
                                 // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
                                 if (code == true) {
-                                    arrayStd = new ArrayList<>();
-                                    spotArr = new ArrayList<>();
-                                    arrayMedium = new ArrayList<>();
-                                    mediumArr = new ArrayList<>();
-                                    arrayBoard = new ArrayList<>();
-                                    boardArr = new ArrayList<>();
+
 
                                     progressDialog.dismiss();
                                     JSONObject obj = response.getJSONObject("data");
@@ -222,71 +205,243 @@ public class School_ClassisActivity extends AppCompatActivity {
                                         JSONObject jresponse = objArray1.getJSONObject(i);
                                         int stdId = jresponse.getInt("iStandardId");
                                         String stdName = jresponse.getString("strStandardName");
-                                        stdlist = new stdList();
-                                        if (i == 0) {
-                                            stdlist.setStdId(0);
-                                            stdlist.setStdName("Select Standard");
-                                            spotArr.add(stdlist.getStdName());
-                                            arrayStd.add(stdlist);
-                                        }
-                                        stdlist.setStdId(stdId);
-                                        stdlist.setStdName(stdName);
-                                        spotArr.add(stdlist.getStdName());
-                                        arrayStd.add(stdlist);
-                                        Log.d("nickname", "" + stdId + " " + stdName);
+                                        KeyPairBoolData stddata = new KeyPairBoolData();
+
+                                        /*if (i == 0) {
+                                            stddata.setId(0);
+                                            stddata.setName("Select Standard");
+                                            stddata.setSelected(false );
+                                            listArrayStd.add(stddata);
+
+                                        }*/
+                                        stddata.setId(stdId);
+                                        stddata.setName(stdName);
+                                        stddata.setSelected(false );
+                                        Log.d("ArrayStd",stddata + "");
+
+                                        listArrayStd.add(stddata);
+
+                                        Log.d("nickname", "" + stdId + " " + stddata.getName());
                                     }
+                                    Log.d("nicknameaas", "" + listArrayStd);
+
+                                    spinnerStdEnglish.setItems(listArrayStd, -1, new SpinnerListener() {
+
+                                        @Override
+                                        public void onItemsSelected(List<KeyPairBoolData> items) {
+
+                                            for (int i = 0; i < items.size(); i++) {
+                                                if (items.get(i).isSelected()) {
+                                                    KeyPairBoolData stdkey = new KeyPairBoolData();
+                                                    stdkey.setId(items.get( i ).getId() );
+                                                    stdkey.setName( items.get( i ).getName() );
+                                                    stdkey.setSelected( true );
+                                                    selectedStdNameEnglish += items.get( i ).getId() + ",";
+                                                    selectedlistArrayStd.add( stdkey );
+                                                    Log.i("adcs", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
+                                                }
+                                            }
+                                        }
+                                    });
+                                    spinnerStdHindi.setItems(listArrayStd, -1, new SpinnerListener() {
+
+                                        @Override
+                                        public void onItemsSelected(List<KeyPairBoolData> items) {
+
+                                            for (int i = 0; i < items.size(); i++) {
+                                                if (items.get(i).isSelected()) {
+                                                    KeyPairBoolData stdkey = new KeyPairBoolData();
+                                                    stdkey.setId(items.get( i ).getId() );
+                                                    stdkey.setName( items.get( i ).getName() );
+                                                    stdkey.setSelected( true );
+                                                    selectedStdNameHindi += items.get( i ).getId() + ",";
+                                                    selectedlistArrayStd.add( stdkey );
+                                                    Log.i("adcs", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
+                                                }
+                                            }
+                                        }
+                                    }); spinnerStdGujarati.setItems(listArrayStd, -1, new SpinnerListener() {
+
+                                        @Override
+                                        public void onItemsSelected(List<KeyPairBoolData> items) {
+
+                                            for (int i = 0; i < items.size(); i++) {
+                                                if (items.get(i).isSelected()) {
+                                                    KeyPairBoolData stdkey = new KeyPairBoolData();
+                                                    stdkey.setId(items.get( i ).getId() );
+                                                    stdkey.setName( items.get( i ).getName() );
+                                                    stdkey.setSelected( true );
+                                                    selectedStdNameGujarati += items.get( i ).getId() + ",";
+                                                    selectedlistArrayStd.add( stdkey );
+                                                    Log.i("adcs", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
+                                                }
+                                            }
+                                        }
+                                    });
                                     JSONArray objArray2 = obj.getJSONArray("mediumList");
                                     for (int i = 0; i < objArray2.length(); i++) {
                                         JSONObject jresponse = objArray2.getJSONObject(i);
                                         int mediumId = jresponse.getInt("iMedium");
                                         String mediumName = jresponse.getString("strMediumName");
-                                        mediumList = new MediumList();
-                                        if (i == 0) {
-                                            mediumList.setMediumId(0);
-                                            mediumList.setMediumName("Select Medium");
-                                            mediumArr.add(mediumList.getMediumName());
-                                            arrayMedium.add(mediumList);
-                                        }
-                                        mediumList.setMediumId(mediumId);
-                                        mediumList.setMediumName(mediumName);
-                                        mediumArr.add(mediumList.getMediumName());
-                                        arrayMedium.add(mediumList);
+                                        KeyPairBoolData mediumdata = new KeyPairBoolData();
+                                       /* if (i == 0) {
+                                            mediumdata.setId(0);
+                                            mediumdata.setName("Select Medium");
+                                            mediumdata.setSelected(false);
+                                            listArrayMedium.add( mediumdata );
+
+                                        }*/
+                                        mediumdata.setId(mediumId);
+                                        mediumdata.setName(mediumName);
+                                        mediumdata.setSelected(false);
+
+                                        listArrayMedium.add( mediumdata );
+
+                                        Log.d("ArrayMedium",mediumdata+"");
+
                                         Log.d("nickname", "" + mediumId + " " + mediumName);
                                     }
                                     JSONArray objArray3 = obj.getJSONArray("boardList");
                                     for (int i = 0; i < objArray3.length(); i++) {
                                         JSONObject jresponse = objArray3.getJSONObject(i);
-                                        int mediumId = jresponse.getInt("iBoardId");
-                                        String mediumName = jresponse.getString("strBoardName");
-                                        boardList = new BoardList();
-                                        if (i == 0) {
-                                            boardList.setBoardId(0);
-                                            boardList.setBoardName("Select Board");
-                                            boardArr.add(boardList.getBoardName());
-                                            arrayBoard.add(boardList);
-                                        }
-                                        boardList.setBoardId(mediumId);
-                                        boardList.setBoardName(mediumName);
-                                        boardArr.add(boardList.getBoardName());
-                                        arrayBoard.add(boardList);
-                                        Log.d("nickname", "" + mediumId + " " + mediumName);
+                                        int boardId = jresponse.getInt("iBoardId");
+                                        String boardName = jresponse.getString("strBoardName");
+                                        KeyPairBoolData boarddata = new KeyPairBoolData();
+
+                                       /* if (i == 0) {
+                                            boarddata.setId(0);
+                                            boarddata.setName("Select Board");
+                                            boarddata.setSelected( false );
+
+                                            listArrayBoard.add( boarddata );
+
+                                        }*/
+                                        boarddata.setId(boardId);
+                                        boarddata.setName(boardName);
+                                        boarddata.setSelected( false );
+                                        listArrayBoard.add(boarddata);
+
+
+
                                     }
 
-                                    ArrayAdapter medium = new ArrayAdapter(School_ClassisActivity.this, android.R.layout.simple_spinner_item, mediumArr);
-                                    medium.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-                                    //Setting the ArrayAdapter data on the Spinner
-                                    spinnerMedium.setAdapter(medium);
-
-                                    ArrayAdapter std = new ArrayAdapter(School_ClassisActivity.this, android.R.layout.simple_spinner_item, spotArr);
-                                    std.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-                                    //Setting the ArrayAdapter data on the Spinner
-                                    spinnerStd.setAdapter(std);
 
 
-                                    ArrayAdapter board = new ArrayAdapter(School_ClassisActivity.this, android.R.layout.simple_spinner_item, boardArr);
-                                    board.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+                                    Log.d( "checkedevalmedium",listArrayMedium + "" );
+
+                                    spinnerMedium.setItems(listArrayMedium, -1, new SpinnerListener() {
+
+                                        @Override
+                                        public void onItemsSelected(List<KeyPairBoolData> items) {
+
+                                            for (int i = 0; i < items.size(); i++) {
+                                                if (items.get(i).isSelected()) {
+                                                    KeyPairBoolData stdkey = new KeyPairBoolData();
+                                                    stdkey.setId(items.get( i ).getId() );
+                                                    stdkey.setName( items.get( i ).getName() );
+                                                    stdkey.setSelected( true );
+                                                    selectedMediumName += items.get( i ).getId() + "";
+                                                    if(items.get(i).getName().equals("Hindi"))
+                                                    {
+                                                        spinnerStdHindi.setVisibility(View.VISIBLE);
+
+                                                        spinnerSchoolBoardHindi.setVisibility(View.VISIBLE);
+                                                        edtSankulAverageStudentHindi.setVisibility( View.VISIBLE );
+
+                                                    }
+                                                    if(items.get(i).getName().equals("Gujarati"))
+                                                    {
+                                                        spinnerStdGujarati.setVisibility(View.VISIBLE);
+
+                                                        spinnerSchoolBoardGujarati.setVisibility(View.VISIBLE);
+                                                        edtSankulAverageStudentGujarati.setVisibility( View.VISIBLE );
+                                                    }
+                                                    if(items.get(i).getName().equals("English"))
+                                                    {
+                                                        spinnerStdEnglish.setVisibility(View.VISIBLE);
+
+                                                        spinnerSchoolBoardEnglish.setVisibility(View.VISIBLE);
+                                                        edtSankulAverageStudentEnglish.setVisibility( View.VISIBLE );
+                                                    }
+                                                    selectedlistArrayMedium.add( stdkey );
+                                                    Log.i("", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
+                                                }
+                                            }
+                                        }
+                                    });
+                                    Log.d( "checkedevalboard",listArrayBoard + "" );
+
+                                    spinnerSchoolBoardEnglish.setItems(listArrayBoard, -1, new SpinnerListener() {
+
+                                        @Override
+                                        public void onItemsSelected(List<KeyPairBoolData> items) {
+
+                                            for (int i = 0; i < items.size(); i++) {
+                                                if (items.get(i).isSelected()) {
+                                                    KeyPairBoolData stdkey = new KeyPairBoolData();
+                                                    stdkey.setId(items.get( i ).getId() );
+                                                    stdkey.setName( items.get( i ).getName() );
+                                                    stdkey.setSelected( true );
+                                                    selectedBoardNameEnglish = items.get( i ).getId()+"";
+                                                    selectedlistArrayBoard.add( stdkey );
+                                                    Log.i("", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
+                                                }
+                                            }
+                                        }
+                                    });
+
+                                    spinnerSchoolBoardHindi.setItems(listArrayBoard, -1, new SpinnerListener() {
+
+                                        @Override
+                                        public void onItemsSelected(List<KeyPairBoolData> items) {
+
+                                            for (int i = 0; i < items.size(); i++) {
+                                                if (items.get(i).isSelected()) {
+                                                    KeyPairBoolData stdkey = new KeyPairBoolData();
+                                                    stdkey.setId(items.get( i ).getId() );
+                                                    stdkey.setName( items.get( i ).getName() );
+                                                    stdkey.setSelected( true );
+                                                    selectedBoardNameHindi = items.get( i ).getId() + "";
+                                                    selectedlistArrayBoard.add( stdkey );
+                                                    Log.i("", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
+                                                }
+                                            }
+                                        }
+                                    });
+                                    spinnerSchoolBoardGujarati.setItems(listArrayBoard, -1, new SpinnerListener() {
+
+                                        @Override
+                                        public void onItemsSelected(List<KeyPairBoolData> items) {
+
+                                            for (int i = 0; i < items.size(); i++) {
+                                                if (items.get(i).isSelected()) {
+                                                    KeyPairBoolData stdkey = new KeyPairBoolData();
+                                                    stdkey.setId(items.get( i ).getId() );
+                                                    stdkey.setName( items.get( i ).getName() );
+                                                    stdkey.setSelected( true );
+                                                    selectedBoardNameGujarati = items.get( i ).getId() + "";
+                                                    selectedlistArrayBoard.add( stdkey );
+                                                    Log.i("", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
+                                                }
+                                            }
+                                        }
+                                    });
+
+                                 //   ArrayAdapter medium = new ArrayAdapter(School_ClassisActivity.this, android.R.layout.simple_spinner_item, mediumArr);
+                                //    medium.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
                                     //Setting the ArrayAdapter data on the Spinner
-                                    spinnerSchoolBoard.setAdapter(board);
+                               //     spinnerMedium.setAdapter(medium);
+
+                                  //  ArrayAdapter std = new ArrayAdapter(School_ClassisActivity.this, android.R.layout.simple_spinner_item, spotArr);
+                                   // std.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+                                    //Setting the ArrayAdapter data on the Spinner
+                                  //  spinnerStd.setAdapter(std);
+
+
+                              //      ArrayAdapter board = new ArrayAdapter(School_ClassisActivity.this, android.R.layout.simple_spinner_item, boardArr);
+                              //      board.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+                                    //Setting the ArrayAdapter data on the Spinner
+                              //      spinnerSchoolBoard.setAdapter(board);
 
                                 } else {
                                     progressDialog.dismiss();
@@ -325,24 +480,33 @@ public class School_ClassisActivity extends AppCompatActivity {
             progressDialog.setMessage("Loading...");
             progressDialog.show();
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-
+            Calendar c1 = Calendar.getInstance();
+            SimpleDateFormat df1 = new SimpleDateFormat("dd/M/yyyy");
+            String formattedDate1 = df1.format(c1.getTime());
             final JSONObject object = new JSONObject();
             try {
                 object.put("OrganisationName", edtSchoolOrganization.getText().toString());
                 object.put("PartyName", edtSchoolPartyName.getText().toString());
                 object.put("Designation", edtSchoolDesignation.getText().toString());
-//                object.put("SankulName", "");
-//                object.put("ShopName", "");
-//                object.put("DistubitorName", "");
-//                object.put("DistubitorType", "");
+                object.put( "reminderDate",formattedDate1 );
+
+//
                 object.put("CreatedBy", Userid);
                 object.put("UpdatedBy", Userid);
 
-                object.put("ContactNo", edtSchoolContactNumber.getText().toString());
-                object.put("Board", boardId);
-                object.put("Medium", mediumId);
-                object.put("Std", stdId);
-                object.put("AvgStudent", edtSchoolAverageStudent.getText().toString());
+Log.d( "boardName",selectedBoardNameEnglish );
+                Log.d( "mediumName",selectedMediumName );
+                Log.d( "stdName",selectedStdNameEnglish );
+                object.put("strMedium", selectedMediumName);
+                object.put("strBoardEnglish", selectedBoardNameEnglish);
+                object.put("strStandardEnglish", selectedStdNameEnglish);
+                object.put("strBoardHindi", selectedBoardNameHindi);
+                object.put("strStandardHindi", selectedStdNameHindi);
+                object.put("strBoardGujarati", selectedBoardNameGujarati);
+                object.put("strStandardGujarati", selectedStdNameGujarati);
+                object.put("AvgStudentEnglish", edtSankulAverageStudentEnglish.getText().toString());
+                object.put("AvgStudentHindi", edtSankulAverageStudentHindi.getText().toString());
+                object.put("AvgStudentGujarati", edtSankulAverageStudentGujarati.getText().toString());
                 object.put("iPartyTypeId", fromId);
                 object.put("AddressLine1", edtSchoolAddress1.getText().toString());
                 object.put("AddressLine2", edtSchoolAddress2.getText().toString());
@@ -352,6 +516,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                 object.put("Latitude", latitude);
                 object.put("Longitude", longitude);
                 object.put("Location", location);
+                Log.d( "finalobj",object +"");
             } catch (JSONException e) {
                 Toast.makeText(School_ClassisActivity.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
                 e.printStackTrace();

@@ -26,6 +26,9 @@ import com.example.admin.skolonetapp.Util.Constant;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import static com.example.admin.skolonetapp.Activity.LoginActivity.PREFS_NAME;
 
 public class OtherActivity extends AppCompatActivity {
@@ -116,9 +119,14 @@ public class OtherActivity extends AppCompatActivity {
 
             final JSONObject object = new JSONObject();
             try {
+                Calendar c1 = Calendar.getInstance();
+                SimpleDateFormat df1 = new SimpleDateFormat("dd/M/yyyy");
+                String formattedDate1 = df1.format(c1.getTime());
+
                 object.put("OrganisationName", edtOtherOrganization.getText().toString());
                 object.put("PartyName", edtOtherPartyName.getText().toString());
                 object.put("Designation", edtOtherDesignation.getText().toString());
+                object.put( "reminderDate",formattedDate1 );
 //                object.put("SankulName", "");
 //                object.put("ShopName", "");
 //                object.put("DistubitorName", "");
