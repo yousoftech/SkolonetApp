@@ -489,6 +489,9 @@ public class FullDetail extends AppCompatActivity {
                                 edtPartyShopName.setVisibility(View.GONE);
                                 edtPartyDistributorName.setVisibility(View.GONE);
                                 edtPartyType.setVisibility(View.GONE);
+                                edtSankulAverageStudentEnglish.setVisibility( View.GONE );
+                                edtSankulAverageStudentGujarati.setVisibility( View.GONE );
+
 
                                 setColor();
                                 edtSankulOrganization.setText(organisationName);
@@ -507,6 +510,7 @@ public class FullDetail extends AppCompatActivity {
                                 edtPartyShopName.setVisibility(View.GONE);
                                 edtPartyType.setVisibility(View.GONE);
                                 edtPartyDistributorName.setVisibility(View.GONE);
+                                edtSankulAverageStudentEnglish.setVisibility( View.GONE );
                                 edtSankulOrganization.setText(organisationName);
                                 edtSankulPartyName.setText(partyName);
                                 edtSankulAverageStudentEnglish.setText(avgStudentEnglish+"");
@@ -690,6 +694,8 @@ public class FullDetail extends AppCompatActivity {
 
                                         Log.d("nickname", "" + mediumId + " " + mediumName);
                                     }
+
+
                                     JSONArray objArray3 = obj.getJSONArray("boardList");
                                     for (int i = 0; i < objArray3.length(); i++) {
                                         JSONObject jresponse = objArray3.getJSONObject(i);
@@ -715,6 +721,59 @@ public class FullDetail extends AppCompatActivity {
                                     }
 
 
+                                    for(int k =0;k<=listArrayMedium.size()-1;k++)
+                                    {
+
+                                        Object key = new Object();
+                                        key= listArrayMedium.get( k ).getId();
+                                       String name=listArrayMedium.get( k ).getName();
+                                        String a = key.toString();
+                                        if(k<=getselectedMedium.size()) {
+                                            for(int f =0;f<=getselectedMedium.size()-1;f++)
+                                            {
+                                                String id=getselectedMedium.get( f );
+
+                                                Object as=new Object();
+                                                as=id;
+                                                if (a.equals( as ) ) {
+                                                    listArrayMedium.get( k ).setSelected( true );
+                                                    if(name.equalsIgnoreCase( "English" ))
+                                                    {
+                                                        spinnerStdEnglish.setVisibility(View.VISIBLE);
+
+                                                        spinnerSchoolBoardEnglish.setVisibility(View.VISIBLE);
+                                                        edtSankulAverageStudentEnglish.setVisibility( View.VISIBLE );
+                                                        break;
+
+                                                    }
+                                                     if(name.equalsIgnoreCase( "Hindi" ))
+                                                    {
+                                                        spinnerStdHindi.setVisibility(View.VISIBLE);
+
+                                                        spinnerSchoolBoardHindi.setVisibility(View.VISIBLE);
+                                                        edtSankulAverageStudentHindi.setVisibility( View.VISIBLE );
+                                                        break;
+                                                    }
+                                                     if(name.equalsIgnoreCase( "Gujarati" ))
+                                                    {
+                                                        spinnerStdGujarati.setVisibility(View.VISIBLE);
+
+                                                        spinnerSchoolBoardGujarati.setVisibility(View.VISIBLE);
+                                                        edtSankulAverageStudentGujarati.setVisibility( View.VISIBLE );
+                                                        break;
+
+                                                    }
+                                                    break;
+                                                }
+                                                else
+                                                {
+                                                    listArrayMedium.get( k ).setSelected( false );
+
+                                                }
+                                            }
+
+                                        }
+                                    }
 
                                     Log.d( "checkedevalmedium",listArrayMedium + "" );
 
@@ -761,6 +820,16 @@ public class FullDetail extends AppCompatActivity {
                                         }
 
                                     });
+                                 //   for(int k=0;k<getselectedMedium.size();k++)
+                                   // {
+                                     //   String id=getselectedMedium.get( k );
+                                    //    KeyPairBoolData key = new KeyPairBoolData();
+                                     //   key.setId(Integer.parseInt( id) );
+
+                                       // int pos= listArrayMedium.indexOf(key);
+                                      //  int a=pos;
+                                   // }
+
                                     Log.d( "checkedevalboard",listArrayBoard + "" );
 
                                     spinnerSchoolBoardEnglish.setItems(listArrayBoard, -1, new SpinnerListener() {

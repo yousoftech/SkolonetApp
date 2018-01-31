@@ -195,6 +195,9 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements OnCancelList
         }
     }
 
+
+
+
     public interface LimitExceedListener {
         void onLimitListener(KeyPairBoolData data);
     }
@@ -215,6 +218,7 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements OnCancelList
         public int getCount() {
             return arrayList.size();
         }
+
 
         @Override
         public Object getItem(int position) {
@@ -258,11 +262,7 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements OnCancelList
                 public void onClick(View v) {
                     if(data.isSelected()) { // deselect
                         selected--;
-                    } else if(selected == limit) { // select with limit
-                        if(limitListener != null)
-                            limitListener.onLimitListener(data);
-                        return;
-                    } else { // selected
+                    }  else { // selected
                         selected++;
                     }
 
