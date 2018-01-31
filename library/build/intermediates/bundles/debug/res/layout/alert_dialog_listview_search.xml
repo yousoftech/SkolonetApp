@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/alertSearchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/edt_border"
+        android:hint="Enter Shop Name"
+        android:padding="5dp"
+        android:singleLine="true">
+
+        <requestFocus />
+    </EditText>
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/alertSearchEditText">
+
+        <ListView
+            android:id="@+id/alertSearchListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@null"
+            android:fadeScrollbars="true"
+            android:fastScrollEnabled="true"
+            android:textFilterEnabled="true" />
+
+        <TextView
+            android:id="@+id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
+</RelativeLayout>
