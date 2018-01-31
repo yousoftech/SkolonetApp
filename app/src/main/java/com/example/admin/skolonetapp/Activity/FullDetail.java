@@ -648,7 +648,8 @@ public class FullDetail extends AppCompatActivity {
                                                 }
                                             }
                                         }
-                                    }); spinnerStdGujarati.setItems(listArrayStd, -1, new SpinnerListener() {
+                                    });
+                                    spinnerStdGujarati.setItems(listArrayStd, -1, new SpinnerListener() {
 
                                         @Override
                                         public void onItemsSelected(List<KeyPairBoolData> items) {
