@@ -48,7 +48,7 @@
                 android:textStyle="bold" />
 
 
-            <TextView
+        <!--    <TextView
                 android:id="@+id/txt_Latitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,14 +72,14 @@
                 android:text="Longitude : "
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold" />-->
 
 
             <TextView
                 android:id="@+id/txt_PartyLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_Longitude"
+                android:layout_below="@+id/txt_PartyType"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"

@@ -43,6 +43,7 @@
         <activity
             android:name=".Activity.SalesMan"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".Activity.FullDetail"
             android:screenOrientation="portrait" />

@@ -54,15 +54,13 @@ public class FullDetail extends AppCompatActivity {
     Sales sales;
     String stdName="", mediumName="", boardName="";
     String selectedMediumName="",strMedium, selectedBoardNameEnglish="",selectedStdNameEnglish="",selectedBoardNameHindi="",selectedStdNameHindi="",selectedBoardNameGujarati="",selectedStdNameGujarati="" ;
-
+    List<String> MediumNameList = new ArrayList<>(  );
     final List<KeyPairBoolData> listArrayStd = new ArrayList<>();
     final List<KeyPairBoolData> listArrayMedium = new ArrayList<>();
     final List<KeyPairBoolData> listArrayBoard = new ArrayList<>();
     final List<KeyPairBoolData> listArrayStdGujarati = new ArrayList<>();
-    final List<KeyPairBoolData> listArrayMediumGujarati = new ArrayList<>();
     final List<KeyPairBoolData> listArrayBoardGujarati = new ArrayList<>();
     final List<KeyPairBoolData> listArrayStdHindi = new ArrayList<>();
-    final List<KeyPairBoolData> listArrayMediumHindi = new ArrayList<>();
     final List<KeyPairBoolData> listArrayBoardHindi = new ArrayList<>();
     final List<KeyPairBoolData> selectedlistArrayStd = new ArrayList<>();
     final List<KeyPairBoolData> selectedlistArrayMedium = new ArrayList<>();
@@ -290,13 +288,63 @@ public class FullDetail extends AppCompatActivity {
                     Log.d("mediummid", mediumId + "");
                     Log.d("stddid", stdId + "");
 
-                    object.put("strMedium", selectedMediumName);
-                    object.put("strBoardEnglish", selectedBoardNameEnglish);
-                    object.put("strStandardEnglish", selectedStdNameEnglish);
-                    object.put("strBoardHindi", selectedBoardNameHindi);
-                    object.put("strStandardHindi", selectedStdNameHindi);
-                    object.put("strBoardGujarati", selectedBoardNameGujarati);
-                    object.put("strStandardGujarati", selectedStdNameGujarati);
+                    if(selectedMediumName.isEmpty())
+                    {
+                        object.put( "strMedium", getselectedMedium );
+
+                    }
+                    else {
+                        object.put( "strMedium", selectedMediumName );
+                    }
+                    if(selectedBoardNameEnglish.isEmpty())
+                    {
+                        object.put( "strMedium", getselectedBoardEnglish );
+
+                    }
+                    else {
+                        object.put( "strBoardEnglish", selectedBoardNameEnglish );
+                    }
+                    if(selectedStdNameEnglish.isEmpty())
+                    {
+                        object.put("strStandardEnglish", getselectedStdEnglish);
+
+                    }
+                    else {
+                        object.put("strStandardEnglish", selectedStdNameEnglish);
+                    }
+                    if(selectedBoardNameHindi.isEmpty())
+                    {
+                        object.put("strBoardHindi", getselectedBoardHindi);
+
+                    }
+                    else {
+                        object.put("strBoardHindi", selectedBoardNameHindi);
+                    }
+                    if(selectedStdNameHindi.isEmpty())
+                    {
+                        object.put("strStandardHindi", getselectedStdHindi);
+
+                    }
+                    else {
+                        object.put("strStandardHindi", selectedStdNameHindi);
+                    }
+
+                    if(selectedBoardNameGujarati.isEmpty())
+                    {
+                        object.put("strBoardGujarati", getselectedBoardGujarati);
+
+                    }
+                    else {
+                        object.put("strBoardGujarati", selectedBoardNameGujarati);
+                    }
+                    if(selectedStdNameHindi.isEmpty())
+                    {
+                        object.put("strStandardGujarati", getselectedStdHindi);
+
+                    }
+                    else {
+                        object.put("strStandardGujarati", selectedStdNameGujarati);
+                    }
                     object.put("AvgStudentEnglish", edtSankulAverageStudentEnglish.getText().toString());
                     object.put("AvgStudentHindi", edtSankulAverageStudentHindi.getText().toString());
                     object.put("AvgStudentGujarati", edtSankulAverageStudentGujarati.getText().toString());
@@ -320,13 +368,63 @@ public class FullDetail extends AppCompatActivity {
                     edtPartyType.setVisibility(View.GONE);
                     object.put("OrganisationName", edtSankulOrganization.getText().toString());
                     object.put("PartyName", edtSankulPartyName.getText().toString());
-                    object.put("strMedium", selectedMediumName);
-                    object.put("strBoardEnglish", selectedBoardNameEnglish);
-                    object.put("strStandardEnglish", selectedStdNameEnglish);
-                    object.put("strBoardHindi", selectedBoardNameHindi);
-                    object.put("strStandardHindi", selectedStdNameHindi);
-                    object.put("strBoardGujarati", selectedBoardNameGujarati);
-                    object.put("strStandardGujarati", selectedStdNameGujarati);
+                    if(selectedMediumName.isEmpty())
+                    {
+                        object.put( "strMedium", strMedium  );
+
+                    }
+                    else {
+                        object.put( "strMedium", selectedMediumName );
+                    }
+                    if(selectedBoardNameEnglish.isEmpty())
+                    {
+                        object.put( "strBoardEnglish", strBoardEnglish );
+
+                    }
+                    else {
+                        object.put( "strBoardEnglish", selectedBoardNameEnglish );
+                    }
+                    if(selectedStdNameEnglish.isEmpty())
+                    {
+                        object.put("strStandardEnglish", strStandardEnglish );
+
+                    }
+                    else {
+                        object.put("strStandardEnglish", selectedStdNameEnglish);
+                    }
+                    if(selectedBoardNameHindi.isEmpty())
+                    {
+                        object.put("strBoardHindi", strBoardHindi );
+
+                    }
+                    else {
+                        object.put("strBoardHindi", selectedBoardNameHindi);
+                    }
+                    if(selectedStdNameHindi.isEmpty())
+                    {
+                        object.put("strStandardHindi", strStandardHindi );
+
+                    }
+                    else {
+                        object.put("strStandardHindi", selectedStdNameHindi);
+                    }
+
+                    if(selectedBoardNameGujarati.isEmpty())
+                    {
+                        object.put("strBoardGujarati", strBoardGujarati );
+
+                    }
+                    else {
+                        object.put("strBoardGujarati", selectedBoardNameGujarati);
+                    }
+                    if(selectedStdNameHindi.isEmpty())
+                    {
+                        object.put("strStandardGujarati", strStandardGujarati );
+
+                    }
+                    else {
+                        object.put("strStandardGujarati", selectedStdNameGujarati);
+                    }
                     object.put("AvgStudentEnglish", edtSankulAverageStudentEnglish.getText().toString());
                     object.put("AvgStudentHindi", edtSankulAverageStudentHindi.getText().toString());
                     object.put("AvgStudentGujarati", edtSankulAverageStudentGujarati.getText().toString());
@@ -374,6 +472,7 @@ Log.d( "asdasd",object+"" );
                                 // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
                                 if (code == true) {
                                     Toast.makeText(FullDetail.this, "" + msg, Toast.LENGTH_SHORT).show();
+                                    
                                     // JSONObject obj = response.getJSONObject("data");
                                     progressDialog.dismiss();
                                     finish();
@@ -483,8 +582,16 @@ if(!strBoardEnglish.isEmpty()) {
                                 edtPartyShopName.setVisibility(View.GONE);
                                 edtPartyDistributorName.setVisibility(View.GONE);
                                 edtPartyType.setVisibility(View.GONE);
-                                spinnerMedium.setVisibility(View.GONE);
-                                spinnerSchoolBoardEnglish.setVisibility(View.GONE);
+                                spinnerMedium.setVisibility( View.GONE );
+                                edtSankulAverageStudentEnglish.setVisibility( View.GONE );
+                                edtSankulAverageStudentGujarati.setVisibility( View.GONE );
+                                edtSankulAverageStudentHindi.setVisibility( View.GONE );
+                                spinnerSchoolBoardGujarati.setVisibility( View.GONE );
+                                spinnerSchoolBoardHindi.setVisibility( View.GONE );
+                                spinnerSchoolBoardEnglish.setVisibility( View.GONE );
+                                spinnerStdEnglish.setVisibility( View.GONE );
+                                spinnerStdGujarati.setVisibility( View.GONE );
+                                spinnerStdHindi.setVisibility( View.GONE );
                                 spinnerStdEnglish.setVisibility(View.GONE);
                                 setColor();
                                 edtSankulOrganization.setText(organisationName);
@@ -496,12 +603,19 @@ if(!strBoardEnglish.isEmpty()) {
                             }
                             if (strPartyType.equals("Party")) {
                                 edtSankulName.setVisibility(View.GONE);
+                                spinnerMedium.setVisibility( View.GONE );
+
                                 edtSankulOrganization.setVisibility(View.GONE);
                                 edtSankulPartyName.setVisibility(View.GONE);
-                                edtSankulAverageStudentEnglish.setVisibility(View.GONE);
-                                spinnerSchoolBoardEnglish.setVisibility(View.GONE);
-                                spinnerStdEnglish.setVisibility(View.GONE);
-                                spinnerMedium.setVisibility(View.GONE);
+                                edtSankulAverageStudentEnglish.setVisibility( View.GONE );
+                                edtSankulAverageStudentGujarati.setVisibility( View.GONE );
+                                edtSankulAverageStudentHindi.setVisibility( View.GONE );
+                                spinnerSchoolBoardGujarati.setVisibility( View.GONE );
+                                spinnerSchoolBoardHindi.setVisibility( View.GONE );
+                                spinnerSchoolBoardEnglish.setVisibility( View.GONE );
+                                spinnerStdEnglish.setVisibility( View.GONE );
+                                spinnerStdGujarati.setVisibility( View.GONE );
+                                spinnerStdHindi.setVisibility( View.GONE );
                                 edtPartyShopName.setText(shopName);
                                 edtPartyDistributorName.setText(distubitorName);
                                 edtPartyType.setText(distubitorType);
@@ -515,6 +629,14 @@ if(!strBoardEnglish.isEmpty()) {
                                 edtPartyType.setVisibility(View.GONE);
                                 edtSankulAverageStudentEnglish.setVisibility( View.GONE );
                                 edtSankulAverageStudentGujarati.setVisibility( View.GONE );
+                                edtSankulAverageStudentHindi.setVisibility( View.GONE );
+                                spinnerSchoolBoardGujarati.setVisibility( View.GONE );
+                                spinnerSchoolBoardHindi.setVisibility( View.GONE );
+                                spinnerSchoolBoardEnglish.setVisibility( View.GONE );
+spinnerStdEnglish.setVisibility( View.GONE );
+spinnerStdGujarati.setVisibility( View.GONE );
+spinnerStdHindi.setVisibility( View.GONE );
+
 
 
                                 setColor();
@@ -530,6 +652,14 @@ if(!strBoardEnglish.isEmpty()) {
                                 edtPartyType.setVisibility(View.GONE);
                                 edtPartyDistributorName.setVisibility(View.GONE);
                                 edtSankulAverageStudentEnglish.setVisibility( View.GONE );
+                                edtSankulAverageStudentGujarati.setVisibility( View.GONE );
+                                edtSankulAverageStudentHindi.setVisibility( View.GONE );
+                                spinnerSchoolBoardGujarati.setVisibility( View.GONE );
+                                spinnerSchoolBoardHindi.setVisibility( View.GONE );
+                                spinnerSchoolBoardEnglish.setVisibility( View.GONE );
+                                spinnerStdEnglish.setVisibility( View.GONE );
+                                spinnerStdGujarati.setVisibility( View.GONE );
+                                spinnerStdHindi.setVisibility( View.GONE );
                                 edtSankulOrganization.setText(organisationName);
                                 edtSankulPartyName.setText(partyName);
                                 edtSankulAverageStudentEnglish.setText(avgStudentEnglish+"");
@@ -610,26 +740,38 @@ if(!strBoardEnglish.isEmpty()) {
                                         int stdId = jresponse.getInt("iStandardId");
                                         String stdName = jresponse.getString("strStandardName");
                                         KeyPairBoolData stddata = new KeyPairBoolData();
-
-                                        /*if (i == 0) {
-                                            stddata.setId(0);
-                                            stddata.setName("Select Standard");
-                                            stddata.setSelected(false );
-                                            listArrayStd.add(stddata);
-
-                                        }*/
                                         stddata.setId(stdId);
                                         stddata.setName(stdName);
                                         stddata.setSelected(false );
                                         Log.d("ArrayStd",stddata + "");
 
                                         listArrayStd.add(stddata);
-                                        listArrayStdGujarati.add(stddata);
-                                        listArrayStdHindi.add(stddata);
 
-                                        Log.d("nickname", "" + stdId + " " + stddata.getName());
                                     }
-                                    Log.d("nicknameaas", "" + listArrayStd);
+                                    for (int i = 0; i < objArray1.length(); i++) {
+                                        JSONObject jresponse = objArray1.getJSONObject(i);
+                                        int stdId = jresponse.getInt("iStandardId");
+                                        String stdName = jresponse.getString("strStandardName");
+                                        KeyPairBoolData stddata = new KeyPairBoolData();
+                                        stddata.setId(stdId);
+                                        stddata.setName(stdName);
+                                        stddata.setSelected(false );
+                                        Log.d("ArrayStd",stddata + "");
+
+                                        listArrayStdGujarati.add(stddata);
+                                    }
+                                    for (int i = 0; i < objArray1.length(); i++) {
+                                        JSONObject jresponse = objArray1.getJSONObject(i);
+                                        int stdId = jresponse.getInt("iStandardId");
+                                        String stdName = jresponse.getString("strStandardName");
+                                        KeyPairBoolData stddata = new KeyPairBoolData();
+                                        stddata.setId(stdId);
+                                        stddata.setName(stdName);
+                                        stddata.setSelected(false );
+                                        Log.d("ArrayStd",stddata + "");
+
+                                        listArrayStdHindi.add(stddata);
+                                    }
 
 
                                     for(int k =0;k<=listArrayStd.size()-1;k++)
@@ -868,28 +1010,35 @@ if(!strBoardEnglish.isEmpty()) {
                                                     stdkey.setId(items.get( i ).getId() );
                                                     stdkey.setName( items.get( i ).getName() );
                                                     stdkey.setSelected( true );
+                                                    mediumName += items.get( i ).getName() + ",";
                                                     selectedMediumName += items.get( i ).getId() + ",";
-                                                    if(items.get(i).getName().equals("Hindi"))
+                                                    if(items.get(i).getName().equals("Hindi") )
                                                     {
                                                         spinnerStdHindi.setVisibility(View.VISIBLE);
 
                                                         spinnerSchoolBoardHindi.setVisibility(View.VISIBLE);
                                                         edtSankulAverageStudentHindi.setVisibility( View.VISIBLE );
 
+
+
+
                                                     }
-                                                    if(items.get(i).getName().equals("Gujarati"))
+                                                    if(items.get(i).getName().equals("Gujarati") )
                                                     {
                                                         spinnerStdGujarati.setVisibility(View.VISIBLE);
-
                                                         spinnerSchoolBoardGujarati.setVisibility(View.VISIBLE);
                                                         edtSankulAverageStudentGujarati.setVisibility( View.VISIBLE );
+
+
                                                     }
                                                     if(items.get(i).getName().equals("English"))
                                                     {
                                                         spinnerStdEnglish.setVisibility(View.VISIBLE);
-
                                                         spinnerSchoolBoardEnglish.setVisibility(View.VISIBLE);
                                                         edtSankulAverageStudentEnglish.setVisibility( View.VISIBLE );
+                                                        spinnerStdGujarati.setVisibility(View.GONE);
+
+
                                                     }
                                                     selectedlistArrayMedium.add( stdkey );
                                                     Log.i("", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
@@ -899,7 +1048,8 @@ if(!strBoardEnglish.isEmpty()) {
                                         }
 
                                     });
-                                 //   for(int k=0;k<getselectedMedium.size();k++)
+
+                                //   for(int k=0;k<getselectedMedium.size();k++)
                                    // {
                                      //   String id=getselectedMedium.get( k );
                                     //    KeyPairBoolData key = new KeyPairBoolData();
@@ -916,24 +1066,30 @@ if(!strBoardEnglish.isEmpty()) {
                                         int boardId = jresponse.getInt("iBoardId");
                                         String boardName = jresponse.getString("strBoardName");
                                         KeyPairBoolData boarddata = new KeyPairBoolData();
-
-                                       /* if (i == 0) {
-                                            boarddata.setId(0);
-                                            boarddata.setName("Select Board");
-                                            boarddata.setSelected( false );
-
-                                            listArrayBoard.add( boarddata );
-
-                                        }*/
                                         boarddata.setId(boardId);
                                         boarddata.setName(boardName);
                                         boarddata.setSelected( false );
                                         listArrayBoard.add(boarddata);
+                                    }
+                                    for (int i = 0; i < objArray3.length(); i++) {
+                                        JSONObject jresponse = objArray3.getJSONObject(i);
+                                        int boardId = jresponse.getInt("iBoardId");
+                                        String boardName = jresponse.getString("strBoardName");
+                                        KeyPairBoolData boarddata = new KeyPairBoolData();
+                                        boarddata.setId(boardId);
+                                        boarddata.setName(boardName);
+                                        boarddata.setSelected( false );
                                         listArrayBoardGujarati.add(boarddata);
+                                    }
+                                    for (int i = 0; i < objArray3.length(); i++) {
+                                        JSONObject jresponse = objArray3.getJSONObject(i);
+                                        int boardId = jresponse.getInt("iBoardId");
+                                        String boardName = jresponse.getString("strBoardName");
+                                        KeyPairBoolData boarddata = new KeyPairBoolData();
+                                        boarddata.setId(boardId);
+                                        boarddata.setName(boardName);
+                                        boarddata.setSelected( false );
                                         listArrayBoardHindi.add(boarddata);
-
-
-
                                     }
 
 

@@ -356,7 +356,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                                                         spinnerSchoolBoardGujarati.setVisibility(View.VISIBLE);
                                                         edtSankulAverageStudentGujarati.setVisibility( View.VISIBLE );
                                                     }
-                                                    if(items.get(i).getName().equals("English"))
+                                                       if(items.get(i).getName().equals("English"))
                                                     {
                                                         spinnerStdEnglish.setVisibility(View.VISIBLE);
 

@@ -96,8 +96,8 @@ float a;
         holder.txt_PartyType.setText("" + event.get(position).getStrPartyType());
         holder.txt_PartyLocation.setText("" + event.get(position).getLocation());
         holder.txt_PartyDateTime.setText("" + event.get(position).getDatetimeCreated());
-        holder.txt_Longitude.setText("" + event.get(position).getStrLatitude());
-        holder.txt_Latitude.setText("" + event.get(position).getStrLongitude());
+       // holder.txt_Longitude.setText("" + event.get(position).getStrLatitude());
+      //  holder.txt_Latitude.setText("" + event.get(position).getStrLongitude());
 
         Id = event.get(position).getPartyInfoId();
         type = event.get(position).getStrPartyType();
@@ -199,6 +199,8 @@ float a;
 
                                 month=month+1;
                                 reminderDate =  dayOfMonth + "/" + month+ "/" + year;
+
+                                Log.d( "asdasddsad",reminderDate );
                                 AddReminder();
                                 notifyDataSetChanged();
                                 reminder.cancel();
@@ -241,8 +243,12 @@ float a;
                                 editDelete.cancel();
                             }
                         } );
+                      //  priority1.cancel();
+
                     }
-                } );
+                }
+
+                );
             }
         });
     }
@@ -266,8 +272,8 @@ float a;
             txt_PartyType = (TextView) itemView.findViewById(R.id.txt_PartyType);
             txt_PartyLocation = (TextView) itemView.findViewById(R.id.txt_PartyLocation);
             txt_PartyDateTime = (TextView) itemView.findViewById(R.id.txt_PartyDateTime);
-            txt_Latitude = (TextView) itemView.findViewById(R.id.txt_Latitude);
-            txt_Longitude = (TextView) itemView.findViewById(R.id.txt_Longitude);
+           // txt_Latitude = (TextView) itemView.findViewById(R.id.txt_Latitude);
+            //txt_Longitude = (TextView) itemView.findViewById(R.id.txt_Longitude);
 
 
         }
@@ -336,10 +342,16 @@ Log.d("datee",reminderDate+"");
                     try {
                         boolean code = response.getBoolean("status");
                         Log.d("code",code+"");
+                        String msg = response.getString( "message" ) ;
                         if (code == true) {
                             Toast.makeText(context, "Reminder Added", Toast.LENGTH_SHORT).show();
-
                             progressDialog.dismiss();
+                        }
+                        else
+                        {
+                            Toast.makeText(context, "Reminder Added", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+
                         }
 
                     } catch (JSONException e) {

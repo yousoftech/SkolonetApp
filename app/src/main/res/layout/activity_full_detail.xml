@@ -123,8 +123,7 @@
                     android:layout_margin="10dp"
                     android:layout_below="@id/spinnerSchoolMedium"
                     android:paddingLeft="10dp"
-                    app:hintText="Select Board"
-                    android:visibility="gone"
+                    app:hintText="Select Board for english medium"
                     android:background="@drawable/edt_border"
                     android:spinnerMode="dialog"/>
 
@@ -136,9 +135,8 @@
                     android:layout_height="35dp"
                     android:layout_below="@id/spinnerSchoolBoardEnglish"
                     android:layout_margin="10dp"
-                    app:hintText="Select Standard"
+                    app:hintText="Select Standard for english medium"
                     android:background="@drawable/edt_border"
-                    android:visibility="gone"
 
                     android:paddingLeft="10dp"
 
@@ -148,7 +146,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_below="@+id/spinnerSchoolStandardEnglish"
-                    android:visibility="gone"
 
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
@@ -160,9 +157,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_below="@id/edtSchoolAverageStudentEnglish"
-                    android:visibility="gone"
 
-                    app:hintText="Select Medium"
+                    app:hintText="Select Board for hindi medium"
                     android:paddingLeft="10dp"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
@@ -172,10 +168,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_below="@id/spinnerSchoolBoardHindi"
-                    android:visibility="gone"
 
                     android:layout_margin="10dp"
-                    app:hintText="Select Standard"
+                    app:hintText="Select Standard for hindi medium"
                     android:background="@drawable/edt_border"
                     android:paddingLeft="10dp"
                     android:spinnerMode="dialog"/>
@@ -184,8 +179,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_below="@+id/spinnerSchoolStandardHindi"
-                    android:visibility="gone"
-
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Average Student Of School for Hindi Medium"
@@ -197,9 +190,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_below="@id/edtSchoolAverageStudentHindi"
-                    android:visibility="gone"
 
-                    app:hintText="Select Medium"
+                    app:hintText="Select Board for gujarati medium"
                     android:paddingLeft="10dp"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
@@ -209,10 +201,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_below="@id/spinnerSchoolBoardGujarati"
-                    android:visibility="gone"
 
                     android:layout_margin="10dp"
-                    app:hintText="Select Standard"
+                    app:hintText="Select Standard for gujarati medium"
                     android:background="@drawable/edt_border"
                     android:paddingLeft="10dp"
                     android:spinnerMode="dialog"/>
@@ -221,7 +212,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_below="@+id/spinnerSchoolStandardGujarati"
-                    android:visibility="gone"
 
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
