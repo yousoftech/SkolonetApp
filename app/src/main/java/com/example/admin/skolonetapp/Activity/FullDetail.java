@@ -58,6 +58,12 @@ public class FullDetail extends AppCompatActivity {
     final List<KeyPairBoolData> listArrayStd = new ArrayList<>();
     final List<KeyPairBoolData> listArrayMedium = new ArrayList<>();
     final List<KeyPairBoolData> listArrayBoard = new ArrayList<>();
+    final List<KeyPairBoolData> listArrayStdGujarati = new ArrayList<>();
+    final List<KeyPairBoolData> listArrayMediumGujarati = new ArrayList<>();
+    final List<KeyPairBoolData> listArrayBoardGujarati = new ArrayList<>();
+    final List<KeyPairBoolData> listArrayStdHindi = new ArrayList<>();
+    final List<KeyPairBoolData> listArrayMediumHindi = new ArrayList<>();
+    final List<KeyPairBoolData> listArrayBoardHindi = new ArrayList<>();
     final List<KeyPairBoolData> selectedlistArrayStd = new ArrayList<>();
     final List<KeyPairBoolData> selectedlistArrayMedium = new ArrayList<>();
     final List<KeyPairBoolData> selectedlistArrayBoard = new ArrayList<>();
@@ -67,9 +73,9 @@ public class FullDetail extends AppCompatActivity {
     List<String> getselectedStdHindi;
     List<String> getselectedStdEnglish;
     List<String> getselectedStdGujarati;
-    List<String> getselectedBoardHindi;
-    List<String> getselectedBoardGujarati;
-    List<String> getselectedBoardEnglish;
+    int getselectedBoardHindi;
+    int getselectedBoardGujarati;
+    int getselectedBoardEnglish;
 
 
     String strBoardHindi,strBoardGujarati,strBoardEnglish,strStandardHindi,strStandardEnglish,strStandardGujarati;
@@ -284,10 +290,16 @@ public class FullDetail extends AppCompatActivity {
                     Log.d("mediummid", mediumId + "");
                     Log.d("stddid", stdId + "");
 
-                    object.put("Board", boardId);
-                    object.put("Medium", mediumId);
-                    object.put("Std", stdId);
-                    object.put("AvgStudent", edtSankulAverageStudentEnglish.getText().toString());
+                    object.put("strMedium", selectedMediumName);
+                    object.put("strBoardEnglish", selectedBoardNameEnglish);
+                    object.put("strStandardEnglish", selectedStdNameEnglish);
+                    object.put("strBoardHindi", selectedBoardNameHindi);
+                    object.put("strStandardHindi", selectedStdNameHindi);
+                    object.put("strBoardGujarati", selectedBoardNameGujarati);
+                    object.put("strStandardGujarati", selectedStdNameGujarati);
+                    object.put("AvgStudentEnglish", edtSankulAverageStudentEnglish.getText().toString());
+                    object.put("AvgStudentHindi", edtSankulAverageStudentHindi.getText().toString());
+                    object.put("AvgStudentGujarati", edtSankulAverageStudentGujarati.getText().toString());
 
                 }
                 if (type.equals("Party")) {
@@ -308,12 +320,18 @@ public class FullDetail extends AppCompatActivity {
                     edtPartyType.setVisibility(View.GONE);
                     object.put("OrganisationName", edtSankulOrganization.getText().toString());
                     object.put("PartyName", edtSankulPartyName.getText().toString());
-                    object.put("Board", boardId);
-                    object.put("Medium", mediumId);
-                    object.put("Std", stdId);
-                    object.put("AvgStudent", edtSankulAverageStudentEnglish.getText().toString());
+                    object.put("strMedium", selectedMediumName);
+                    object.put("strBoardEnglish", selectedBoardNameEnglish);
+                    object.put("strStandardEnglish", selectedStdNameEnglish);
+                    object.put("strBoardHindi", selectedBoardNameHindi);
+                    object.put("strStandardHindi", selectedStdNameHindi);
+                    object.put("strBoardGujarati", selectedBoardNameGujarati);
+                    object.put("strStandardGujarati", selectedStdNameGujarati);
+                    object.put("AvgStudentEnglish", edtSankulAverageStudentEnglish.getText().toString());
+                    object.put("AvgStudentHindi", edtSankulAverageStudentHindi.getText().toString());
+                    object.put("AvgStudentGujarati", edtSankulAverageStudentGujarati.getText().toString());
 
-
+Log.d( "asdasd",object+"" );
                 }
                 if (type.equals("Others")) {
                     object.put("OrganisationName", edtSankulOrganization.getText().toString());
@@ -429,11 +447,17 @@ public class FullDetail extends AppCompatActivity {
                             avgStudentHindi = object.getInt("avgStudentHindi");
                             avgStudentGujarati = object.getInt("avgStudentGujarati");
                             getselectedMedium = Arrays.asList(strMedium.split(","));
+if(!strBoardEnglish.isEmpty()) {
+    getselectedBoardEnglish = Integer.parseInt( strBoardEnglish );
+}
+                            if(!strBoardGujarati.isEmpty()) {
+                                getselectedBoardGujarati = Integer.parseInt( strBoardGujarati );
+                            }
+                            if(!strBoardHindi.isEmpty()) {
 
-                            getselectedBoardEnglish = Arrays.asList(strBoardEnglish.split(","));
-                            getselectedBoardGujarati = Arrays.asList(strBoardGujarati.split(","));
-                            getselectedBoardHindi = Arrays.asList(strBoardHindi.split(","));
-                            getselectedStdEnglish = Arrays.asList(strStandardEnglish.split(","));
+                                getselectedBoardHindi = Integer.parseInt( strBoardHindi );
+
+                            }  getselectedStdEnglish = Arrays.asList(strStandardEnglish.split(","));
                             getselectedStdGujarati = Arrays.asList(strStandardGujarati.split(","));
                             getselectedStdHindi = Arrays.asList(strStandardHindi.split(","));
 
@@ -499,11 +523,6 @@ public class FullDetail extends AppCompatActivity {
                                 edtSankulAverageStudentEnglish.setText(avgStudentEnglish+"");
                                 edtSankulAverageStudentHindi.setText(avgStudentHindi+"");
                                 edtSankulAverageStudentGujarati.setText(avgStudentGujarati+"");
-
-
-                                //   disabled();
-
-
                             }
                             if (strPartyType.equals("Sankul")) {
                                 edtSankulName.setText(sankulName);
@@ -517,13 +536,6 @@ public class FullDetail extends AppCompatActivity {
                                 edtSankulAverageStudentHindi.setText(avgStudentHindi+"");
                                 edtSankulAverageStudentGujarati.setText(avgStudentGujarati+"");
                            //     Log.d("indexofboard",getIndex(spinnerSchoolBoard,boardId + " ") + " "+ boardId);
-
-
-
-
-
-
-
                             }
 
                             edtSankulDesignation.setText(designation);
@@ -612,10 +624,41 @@ public class FullDetail extends AppCompatActivity {
                                         Log.d("ArrayStd",stddata + "");
 
                                         listArrayStd.add(stddata);
+                                        listArrayStdGujarati.add(stddata);
+                                        listArrayStdHindi.add(stddata);
 
                                         Log.d("nickname", "" + stdId + " " + stddata.getName());
                                     }
                                     Log.d("nicknameaas", "" + listArrayStd);
+
+
+                                    for(int k =0;k<=listArrayStd.size()-1;k++)
+                                    {
+
+                                        Object key = new Object();
+                                        key= listArrayStd.get( k ).getId();
+                                        String name=listArrayStd.get( k ).getName();
+                                        String a = key.toString();
+                                        if(k<=getselectedStdEnglish.size()) {
+                                            for(int f =0;f<=getselectedStdEnglish.size()-1;f++)
+                                            {
+                                                String id=getselectedStdEnglish.get( f );
+
+                                                Object as=new Object();
+                                                as=id;
+                                                if (a.equals( as ) ) {
+                                                    listArrayStd.get( k ).setSelected( true );
+                                                    break;
+                                                }
+                                                else
+                                                {
+                                                    listArrayStd.get( k ).setSelected( false );
+                                                }
+                                            }
+
+                                        }
+                                    }
+
 
                                     spinnerStdEnglish.setItems(listArrayStd, -1, new SpinnerListener() {
 
@@ -629,13 +672,43 @@ public class FullDetail extends AppCompatActivity {
                                                     stdkey.setName( items.get( i ).getName() );
                                                     stdkey.setSelected( true );
                                                     selectedStdNameEnglish += items.get( i ).getId() + ",";
+
                                                     selectedlistArrayStd.add( stdkey );
                                                     Log.i("adcs", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
                                                 }
                                             }
                                         }
                                     });
-                                    spinnerStdHindi.setItems(listArrayStd, -1, new SpinnerListener() {
+
+
+                                    for(int k =0;k<=listArrayStdHindi.size()-1;k++)
+                                    {
+
+                                        Object key = new Object();
+                                        key= listArrayStdHindi.get( k ).getId();
+                                        String name=listArrayStdHindi.get( k ).getName();
+                                        String a = key.toString();
+                                        if(k<=getselectedStdHindi.size()) {
+                                            for(int f =0;f<=getselectedStdHindi.size()-1;f++)
+                                            {
+                                                String id=getselectedStdHindi.get( f );
+
+                                                Object as=new Object();
+                                                as=id;
+                                                if (a.equals( as ) ) {
+                                                    listArrayStdHindi.get( k ).setSelected( true );
+                                                    break;
+                                                }
+                                                else
+                                                {
+                                                    listArrayStdHindi.get( k ).setSelected( false );
+                                                }
+                                            }
+
+                                        }
+                                    }
+
+                                    spinnerStdHindi.setItems(listArrayStdHindi, -1, new SpinnerListener() {
 
                                         @Override
                                         public void onItemsSelected(List<KeyPairBoolData> items) {
@@ -653,7 +726,34 @@ public class FullDetail extends AppCompatActivity {
                                             }
                                         }
                                     });
-                                    spinnerStdGujarati.setItems(listArrayStd, -1, new SpinnerListener() {
+                                    for(int k =0;k<=listArrayStdGujarati.size()-1;k++)
+                                    {
+
+                                        Object key = new Object();
+                                        key= listArrayStdGujarati.get( k ).getId();
+                                        String name=listArrayStdGujarati.get( k ).getName();
+                                        String a = key.toString();
+                                        if(k<=getselectedStdGujarati.size()) {
+                                            for(int f =0;f<=getselectedStdGujarati.size()-1;f++)
+                                            {
+                                                String id=getselectedStdGujarati.get( f );
+
+                                                Object as=new Object();
+                                                as=id;
+                                                if (a.equals( as ) ) {
+                                                    listArrayStdGujarati.get( k ).setSelected( true );
+                                                }
+                                                else
+                                                {
+                                                    listArrayStdGujarati.get( k ).setSelected( false );
+                                                }
+                                            }
+
+                                        }
+                                    }
+
+
+                                    spinnerStdGujarati.setItems(listArrayStdGujarati, -1, new SpinnerListener() {
 
                                         @Override
                                         public void onItemsSelected(List<KeyPairBoolData> items) {
@@ -696,29 +796,6 @@ public class FullDetail extends AppCompatActivity {
                                     }
 
 
-                                    JSONArray objArray3 = obj.getJSONArray("boardList");
-                                    for (int i = 0; i < objArray3.length(); i++) {
-                                        JSONObject jresponse = objArray3.getJSONObject(i);
-                                        int boardId = jresponse.getInt("iBoardId");
-                                        String boardName = jresponse.getString("strBoardName");
-                                        KeyPairBoolData boarddata = new KeyPairBoolData();
-
-                                       /* if (i == 0) {
-                                            boarddata.setId(0);
-                                            boarddata.setName("Select Board");
-                                            boarddata.setSelected( false );
-
-                                            listArrayBoard.add( boarddata );
-
-                                        }*/
-                                        boarddata.setId(boardId);
-                                        boarddata.setName(boardName);
-                                        boarddata.setSelected( false );
-                                        listArrayBoard.add(boarddata);
-
-
-
-                                    }
 
 
                                     for(int k =0;k<=listArrayMedium.size()-1;k++)
@@ -775,6 +852,8 @@ public class FullDetail extends AppCompatActivity {
                                         }
                                     }
 
+
+
                                     Log.d( "checkedevalmedium",listArrayMedium + "" );
 
                                     spinnerMedium.setItems(listArrayMedium, -1, new SpinnerListener() {
@@ -789,7 +868,7 @@ public class FullDetail extends AppCompatActivity {
                                                     stdkey.setId(items.get( i ).getId() );
                                                     stdkey.setName( items.get( i ).getName() );
                                                     stdkey.setSelected( true );
-                                                    selectedMediumName += items.get( i ).getId() + "";
+                                                    selectedMediumName += items.get( i ).getId() + ",";
                                                     if(items.get(i).getName().equals("Hindi"))
                                                     {
                                                         spinnerStdHindi.setVisibility(View.VISIBLE);
@@ -830,7 +909,55 @@ public class FullDetail extends AppCompatActivity {
                                       //  int a=pos;
                                    // }
 
-                                    Log.d( "checkedevalboard",listArrayBoard + "" );
+
+                                    JSONArray objArray3 = obj.getJSONArray("boardList");
+                                    for (int i = 0; i < objArray3.length(); i++) {
+                                        JSONObject jresponse = objArray3.getJSONObject(i);
+                                        int boardId = jresponse.getInt("iBoardId");
+                                        String boardName = jresponse.getString("strBoardName");
+                                        KeyPairBoolData boarddata = new KeyPairBoolData();
+
+                                       /* if (i == 0) {
+                                            boarddata.setId(0);
+                                            boarddata.setName("Select Board");
+                                            boarddata.setSelected( false );
+
+                                            listArrayBoard.add( boarddata );
+
+                                        }*/
+                                        boarddata.setId(boardId);
+                                        boarddata.setName(boardName);
+                                        boarddata.setSelected( false );
+                                        listArrayBoard.add(boarddata);
+                                        listArrayBoardGujarati.add(boarddata);
+                                        listArrayBoardHindi.add(boarddata);
+
+
+
+                                    }
+
+
+                                    for(int k =0;k<=listArrayBoard.size()-1;k++)
+                                    {
+
+                                        Object key = new Object();
+                                        key= listArrayBoard.get( k ).getId();
+                                        String name=listArrayBoard.get( k ).getName();
+                                        String a = key.toString();
+                                        Object as = new Object();
+                                            as= getselectedBoardEnglish;
+                                            if(a.equals(as.toString())) {
+                                                    listArrayBoard.get( k ).setSelected( true );
+                                                }
+                                                else{
+                                                    listArrayBoard.get( k ).setSelected( false );
+
+                                                }
+
+
+
+                                    }
+
 
                                     spinnerSchoolBoardEnglish.setItems(listArrayBoard, -1, new SpinnerListener() {
 
@@ -851,7 +978,28 @@ public class FullDetail extends AppCompatActivity {
                                         }
                                     });
 
-                                    spinnerSchoolBoardHindi.setItems(listArrayBoard, -1, new SpinnerListener() {
+                                    for(int k =0;k<=listArrayBoardHindi.size()-1;k++)
+                                    {
+
+                                        Object key = new Object();
+                                        key= listArrayBoardHindi.get( k ).getId();
+                                        String name=listArrayBoardHindi.get( k ).getName();
+                                        String a = key.toString();
+                                        Object as = new Object();
+                                        as= getselectedBoardHindi;
+                                        if(a.equals(as.toString())) {
+                                            listArrayBoardHindi.get( k ).setSelected( true );
+                                            break;
+                                        }
+                                        else{
+                                            listArrayBoardHindi.get( k).setSelected( false );
+
+                                        }
+
+                                        }
+
+
+                                    spinnerSchoolBoardHindi.setItems(listArrayBoardHindi, -1, new SpinnerListener() {
 
                                         @Override
                                         public void onItemsSelected(List<KeyPairBoolData> items) {
@@ -869,7 +1017,25 @@ public class FullDetail extends AppCompatActivity {
                                             }
                                         }
                                     });
-                                    spinnerSchoolBoardGujarati.setItems(listArrayBoard, -1, new SpinnerListener() {
+                                    for(int k =0;k<=listArrayBoardGujarati.size()-1;k++)
+                                    {
+
+                                        Object key = new Object();
+                                        key= listArrayBoardGujarati.get( k ).getId();
+                                        String name=listArrayBoardGujarati.get( k ).getName();
+                                        String a = key.toString();
+                                        Object as = new Object();
+                                        as= getselectedBoardGujarati;
+                                        if(a.equals(as.toString())) {
+                                            listArrayBoardGujarati.get( k ).setSelected( true );
+                                            break;
+                                        }
+                                        else{
+                                            listArrayBoardGujarati.get( k).setSelected( false );
+
+                                        }
+                                    }
+                                    spinnerSchoolBoardGujarati.setItems(listArrayBoardGujarati, -1, new SpinnerListener() {
 
                                         @Override
                                         public void onItemsSelected(List<KeyPairBoolData> items) {
