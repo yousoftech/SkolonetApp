@@ -220,15 +220,7 @@
                     android:singleLine="true" />
 
 
-                <EditText
-                    android:id="@+id/edtSankulAverageStudent"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/edt_border"
-                    android:hint="Enter Average Student Of School"
-                    android:padding="5dp"
-                    android:singleLine="true" />
+
 
                 <EditText
                     android:id="@+id/edtSankulAddress1"

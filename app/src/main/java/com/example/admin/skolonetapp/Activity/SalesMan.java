@@ -571,7 +571,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                     sales.setReminderDate( reminderDate1 );
 
                                     Calendar c1 = Calendar.getInstance();
-                                    SimpleDateFormat df1 = new SimpleDateFormat( "dd/MM/yyyy" );
+                                    SimpleDateFormat df1 = new SimpleDateFormat( "d/M/yyyy" );
                                     String formattedDate1 = df1.format( c1.getTime() );
 
                                     //  Date date1=format.parse(reminderDate1);

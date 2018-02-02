@@ -1,21 +1,6 @@
 {
     "logs": [
         {
-            "outputFile": "F:\\Projects\\Android App\\MultiSelectSpinner\\library\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-v13\\values-v13.xml",
-            "map": [
-                {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.0.2.aar\\13fbaa76c5781620e571fc01e21ae5af\\res\\values-v13\\values-v13.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "58",
-                        "endOffsets": "109"
-                    }
-                }
-            ]
-        },
-        {
             "outputFile": "F:\\Projects\\Android App\\Git Projects\\SkolonetApp\\library\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-v13\\values-v13.xml",
             "map": [
                 {

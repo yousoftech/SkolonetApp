@@ -4,7 +4,7 @@
     android:id="@+id/listTextViewSpinner"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Party Name : Shop Shah"
+    android:text=""
     android:textColor="@color/colorPrimaryText"
     android:textSize="20sp"
    />

@@ -55,9 +55,16 @@ public class SankulActivity extends AppCompatActivity {
     TextView txtFormName;
     Button btnSave, btnCancel;
 
-    final List<KeyPairBoolData> listArrayStd = new ArrayList<>();
+
+    final List<KeyPairBoolData> listArrayStdEnglish = new ArrayList<>();
+    final List<KeyPairBoolData> listArrayStdGujarati = new ArrayList<>();
+    final List<KeyPairBoolData> listArrayStdHindi = new ArrayList<>();
+
+
     final List<KeyPairBoolData> listArrayMedium = new ArrayList<>();
-    final List<KeyPairBoolData> listArrayBoard = new ArrayList<>();
+    final List<KeyPairBoolData> listArrayBoardEnglish = new ArrayList<>();
+    final List<KeyPairBoolData> listArrayBoardHindi = new ArrayList<>();
+    final List<KeyPairBoolData> listArrayBoardGujarti = new ArrayList<>();
     final List<KeyPairBoolData> selectedlistArrayStd = new ArrayList<>();
     final List<KeyPairBoolData> selectedlistArrayMedium = new ArrayList<>();
     final List<KeyPairBoolData> selectedlistArrayBoard = new ArrayList<>();
@@ -187,26 +194,42 @@ public class SankulActivity extends AppCompatActivity {
                                         int stdId = jresponse.getInt("iStandardId");
                                         String stdName = jresponse.getString("strStandardName");
                                         KeyPairBoolData stddata = new KeyPairBoolData();
-
-                                        /*if (i == 0) {
-                                            stddata.setId(0);
-                                            stddata.setName("Select Standard");
-                                            stddata.setSelected(false );
-                                            listArrayStd.add(stddata);
-
-                                        }*/
                                         stddata.setId(stdId);
                                         stddata.setName(stdName);
                                         stddata.setSelected(false );
                                         Log.d("ArrayStd",stddata + "");
 
-                                        listArrayStd.add(stddata);
+                                        listArrayStdEnglish.add(stddata);
 
                                         Log.d("nickname", "" + stdId + " " + stddata.getName());
                                     }
-                                    Log.d("nicknameaas", "" + listArrayStd);
+                                    for (int i = 0; i < objArray1.length(); i++) {
+                                        JSONObject jresponse = objArray1.getJSONObject(i);
+                                        int stdId = jresponse.getInt("iStandardId");
+                                        String stdName = jresponse.getString("strStandardName");
+                                        KeyPairBoolData stddata = new KeyPairBoolData();
+                                        stddata.setId(stdId);
+                                        stddata.setName(stdName);
+                                        stddata.setSelected(false );
+                                        Log.d("ArrayStd",stddata + "");
 
-                                    spinnerStdEnglish.setItems(listArrayStd, -1, new SpinnerListener() {
+                                        listArrayStdGujarati.add(stddata);
+                                    }
+                                    for (int i = 0; i < objArray1.length(); i++) {
+                                        JSONObject jresponse = objArray1.getJSONObject(i);
+                                        int stdId = jresponse.getInt("iStandardId");
+                                        String stdName = jresponse.getString("strStandardName");
+                                        KeyPairBoolData stddata = new KeyPairBoolData();
+                                        stddata.setId(stdId);
+                                        stddata.setName(stdName);
+                                        stddata.setSelected(false );
+                                        Log.d("ArrayStd",stddata + "");
+
+                                        listArrayStdHindi.add(stddata);
+                                    }
+
+
+                                    spinnerStdEnglish.setItems(listArrayStdEnglish, -1, new SpinnerListener() {
 
                                         @Override
                                         public void onItemsSelected(List<KeyPairBoolData> items) {
@@ -224,7 +247,7 @@ public class SankulActivity extends AppCompatActivity {
                                             }
                                         }
                                     });
-                                    spinnerStdHindi.setItems(listArrayStd, -1, new SpinnerListener() {
+                                    spinnerStdHindi.setItems(listArrayStdHindi, -1, new SpinnerListener() {
 
                                         @Override
                                         public void onItemsSelected(List<KeyPairBoolData> items) {
@@ -241,7 +264,7 @@ public class SankulActivity extends AppCompatActivity {
                                                 }
                                             }
                                         }
-                                    }); spinnerStdGujarati.setItems(listArrayStd, -1, new SpinnerListener() {
+                                    }); spinnerStdGujarati.setItems(listArrayStdGujarati, -1, new SpinnerListener() {
 
                                         @Override
                                         public void onItemsSelected(List<KeyPairBoolData> items) {
@@ -300,10 +323,30 @@ public class SankulActivity extends AppCompatActivity {
                                         boarddata.setId(boardId);
                                         boarddata.setName(boardName);
                                         boarddata.setSelected( false );
-                                        listArrayBoard.add(boarddata);
+                                        listArrayBoardEnglish.add(boarddata);
 
 
 
+                                    }
+                                    for (int i = 0; i < objArray3.length(); i++) {
+                                        JSONObject jresponse = objArray3.getJSONObject(i);
+                                        int boardId = jresponse.getInt("iBoardId");
+                                        String boardName = jresponse.getString("strBoardName");
+                                        KeyPairBoolData boarddata = new KeyPairBoolData();
+                                        boarddata.setId(boardId);
+                                        boarddata.setName(boardName);
+                                        boarddata.setSelected( false );
+                                        listArrayBoardGujarti.add(boarddata);
+                                    }
+                                    for (int i = 0; i < objArray3.length(); i++) {
+                                        JSONObject jresponse = objArray3.getJSONObject(i);
+                                        int boardId = jresponse.getInt("iBoardId");
+                                        String boardName = jresponse.getString("strBoardName");
+                                        KeyPairBoolData boarddata = new KeyPairBoolData();
+                                        boarddata.setId(boardId);
+                                        boarddata.setName(boardName);
+                                        boarddata.setSelected( false );
+                                        listArrayBoardHindi.add(boarddata);
                                     }
 
 
@@ -350,9 +393,8 @@ public class SankulActivity extends AppCompatActivity {
                                             }
                                         }
                                     });
-                                    Log.d( "checkedevalboard",listArrayBoard + "" );
 
-                                    spinnerSchoolBoardEnglish.setItems(listArrayBoard, -1, new SpinnerListener() {
+                                    spinnerSchoolBoardEnglish.setItems(listArrayBoardEnglish, -1, new SpinnerListener() {
 
                                         @Override
                                         public void onItemsSelected(List<KeyPairBoolData> items) {
@@ -371,7 +413,7 @@ public class SankulActivity extends AppCompatActivity {
                                         }
                                     });
 
-                                    spinnerSchoolBoardHindi.setItems(listArrayBoard, -1, new SpinnerListener() {
+                                    spinnerSchoolBoardHindi.setItems(listArrayBoardHindi, -1, new SpinnerListener() {
 
                                         @Override
                                         public void onItemsSelected(List<KeyPairBoolData> items) {
@@ -389,7 +431,7 @@ public class SankulActivity extends AppCompatActivity {
                                             }
                                         }
                                     });
-                                    spinnerSchoolBoardGujarati.setItems(listArrayBoard, -1, new SpinnerListener() {
+                                    spinnerSchoolBoardGujarati.setItems(listArrayBoardGujarti, -1, new SpinnerListener() {
 
                                         @Override
                                         public void onItemsSelected(List<KeyPairBoolData> items) {

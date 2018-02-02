@@ -3,6 +3,7 @@ package com.example.admin.skolonetapp.Adapter;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -118,7 +119,7 @@ float a;
                 RelativeLayout relativeLayoutEdit = (RelativeLayout) dialogView.findViewById(R.id.relative_top);
                 RelativeLayout relativeLayoutDelete = (RelativeLayout) dialogView.findViewById(R.id.relative_bottom);
                 final RelativeLayout relativeLayoutReminder = (RelativeLayout) dialogView.findViewById(R.id.relative_reminder);
-                RelativeLayout relativeLayoutPriority = (RelativeLayout) dialogView.findViewById(R.id.relative_Priority);
+                final RelativeLayout relativeLayoutPriority = (RelativeLayout) dialogView.findViewById(R.id.relative_Priority);
 
 
                 relativeLayoutEdit.setOnClickListener(new View.OnClickListener() {
@@ -238,14 +239,15 @@ float a;
                             public void onClick(View v) {
                                 Toast.makeText( context,a+"",Toast.LENGTH_SHORT ).show();
                                 AddPriority();
-                                notifyDataSetChanged();
                                 priority.cancel();
                                 editDelete.cancel();
+                                notifyDataSetChanged();
                             }
                         } );
-                      //  priority1.cancel();
 
+                        //  priority1.cancel();
                     }
+
                 }
 
                 );
@@ -395,7 +397,7 @@ Log.d("datee",reminderDate+"");
                         boolean code = response.getBoolean("status");
                         Log.d("code",code+"");
                         if (code == true) {
-                            Toast.makeText(context, "Reminder Added", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, " Priority Updated", Toast.LENGTH_SHORT).show();
 
                             progressDialog.dismiss();
                         }

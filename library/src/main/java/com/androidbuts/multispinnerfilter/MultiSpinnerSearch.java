@@ -266,6 +266,7 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements OnCancelList
                         selected++;
                     }
 
+
                     final ViewHolder temp = (ViewHolder) v.getTag();
                     temp.checkBox.setChecked(!temp.checkBox.isChecked());
 

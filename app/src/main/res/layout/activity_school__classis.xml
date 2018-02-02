@@ -161,7 +161,7 @@
                     android:layout_below="@id/edtSchoolAverageStudentEnglish"
                     android:visibility="gone"
 
-                    app:hintText="Select Medium"
+                    app:hintText="Select Board"
                     android:paddingLeft="10dp"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
@@ -198,7 +198,7 @@
                     android:layout_below="@id/edtSchoolAverageStudentHindi"
                     android:visibility="gone"
 
-                    app:hintText="Select Medium"
+                    app:hintText="Select Board"
                     android:paddingLeft="10dp"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
