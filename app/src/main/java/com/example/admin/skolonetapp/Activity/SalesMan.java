@@ -498,7 +498,9 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                             progressDialog.dismiss();
                             JSONArray array = response.getJSONArray( "data" );
                             Log.d( "yatra", array.toString() );
-                            for (int n = 0; n < array.length(); n++) {
+                            if(array.length() > 0) {
+
+                                for (int n = 0; n < array.length(); n++) {
                                 JSONObject obj = array.getJSONObject( n );
                                 sales = new Sales();
 
@@ -514,114 +516,128 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                 String strMedium = obj.getString( "strMedium" );
                                 List<String> list = new ArrayList<>();
                                 list = Arrays.asList( strMedium.split( "," ) );
-                                for (int i = 0; i <= listArrayMedium.size() - 1; i++) {
-                                    for(int k=0;k<=list.size()-1;k++)
-                                    {
-                                        String a = listArrayMedium.get( i ).getId() +"";
-                                        if(a==list.get( k ))
-                                        {
-                                             strMedium += listArrayMedium.get( i ).getName() +",";
+                                    for (int i = 0; i <= listArrayMedium.size() - 1; i++) {
+                                        for (int k = 0; k <= list.size() - 1; k++) {
+                                            String a = listArrayMedium.get( i ).getId() + "";
+                                            if (a == list.get( k )) {
+                                                strMedium += listArrayMedium.get( i ).getName() + ",";
+                                            }
                                         }
                                     }
-                                }
 
-                                String strAddress = strAddress1 + " " + strAddress2 + " " + strCityName + " " + strStateName;
-                                String reminderDate = obj.getString( "reminderDate" );
+                                    String strAddress = strAddress1 + " " + strAddress2 + " " + strCityName + " " + strStateName;
+                                    String reminderDate = obj.getString( "reminderDate" );
 
-                                String location = obj.getString( "location" );
-                                String partyDate = obj.getString( "datetimeCreated" );
-                                String latitude = obj.getString( "latitude" );
-                                String longitude = obj.getString( "longitude" );
-                                double priority = obj.getDouble( "priority" );
-                                int ipartTypeId = obj.getInt( "iPartyTypeId" );
+                                    String location = obj.getString( "location" );
+                                    String partyDate = obj.getString( "datetimeCreated" );
+                                    String latitude = obj.getString( "latitude" );
+                                    String longitude = obj.getString( "longitude" );
+                                    double priority = obj.getDouble( "priority" );
+                                    int ipartTypeId = obj.getInt( "iPartyTypeId" );
 
-                                if (ipartTypeId == typeId) {
-                                    sales.setPartyInfoId( partyInfoId );
-                                    sales.setStrPartyType( iPartyTypeName );
-                                    sales.setLocation( "Address : " + strAddress );
-                                    sales.setDatetimeCreated( partyDate );
-                                  //  sales.setStrLatitude( "Medium : " + strMedium );
-                                  //  sales.setStrLongitude( "Longitude : " + longitude );
-                                    sales.setReminderDate( reminderDate );
-                                    sales.setPriority( priority );
-                                    if (partyName != "null") {
-                                        sales.setPartyName( partyName );
+                                    if (ipartTypeId == typeId) {
+                                        sales.setPartyInfoId( partyInfoId );
+                                        sales.setStrPartyType( iPartyTypeName );
+                                        sales.setLocation( "Address : " + strAddress );
+                                        sales.setDatetimeCreated( partyDate );
+                                        //  sales.setStrLatitude( "Medium : " + strMedium );
+                                        //  sales.setStrLongitude( "Longitude : " + longitude );
+                                        sales.setReminderDate( reminderDate );
+                                        sales.setPriority( priority );
+                                        if (partyName != "null") {
+                                            sales.setPartyName( partyName );
+                                        } else {
+                                            sales.setShopName( shopName );
+
+                                        }
+                                        event.add( sales );
+                                        Log.d( "asazza", event.size() + " " );
+
+
                                     } else {
-                                        sales.setShopName( shopName );
+                                        txtRecords.setVisibility( View.VISIBLE );
+                                        recyclerView.setVisibility( View.GONE );
 
                                     }
-                                    event.add( sales );
-                                    Log.d( "asazza", event.size() + " " );
+                                    if (typeId == -1) {
+                                        sales.setPartyInfoId( partyInfoId );
+                                        sales.setStrPartyType( iPartyTypeName );
+                                        sales.setLocation( "Address : " + strAddress );
+                                        sales.setDatetimeCreated( partyDate );
+                                        // sales.setStrLatitude( "Medium : " + strMedium );
+                                        //sales.setStrLongitude( "Longitude : " + longitude );
+                                        sales.setPriority( priority );
+                                        String reminderDate1 = obj.getString( "reminderDate" );
+                                        sales.setReminderDate( reminderDate1 );
+
+                                        Calendar c1 = Calendar.getInstance();
+                                        SimpleDateFormat df1 = new SimpleDateFormat( "d/M/yyyy" );
+                                        String formattedDate1 = df1.format( c1.getTime() );
+
+                                        //  Date date1=format.parse(reminderDate1);
+
+                                        //reminderDate1 = df1.format( reminderDate1 );
+                                        int i = 0;
+                                        if (reminderDate1.equals( formattedDate1 )) {
+                                            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder( getBaseContext() );
+                                            mBuilder.setSmallIcon( R.drawable.logo );
+                                            mBuilder.setContentTitle( "Reminder Alert For" + partyName + " " );
+                                            mBuilder.setVibrate( new long[]{1000, 1000, 1000, 1000, 1000} );
+                                            mBuilder.setLights( Color.RED, 3000, 3000 );
+                                            Uri alarmSound = RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION );
+                                            mBuilder.setSound( alarmSound );
+                                            mBuilder.setContentText( iPartyTypeName + " " + reminderDate1 );
 
 
-                                } else {
-                                    txtRecords.setVisibility( View.VISIBLE );
-                                    recyclerView.setVisibility( View.GONE );
+                                            // Moves events into the big view
 
-                                }
-                                if (typeId == -1) {
-                                    sales.setPartyInfoId( partyInfoId );
-                                    sales.setStrPartyType( iPartyTypeName );
-                                    sales.setLocation( "Address : " + strAddress );
-                                    sales.setDatetimeCreated( partyDate );
-                                   // sales.setStrLatitude( "Medium : " + strMedium );
-                                    //sales.setStrLongitude( "Longitude : " + longitude );
-                                    sales.setPriority( priority );
-                                    String reminderDate1 = obj.getString( "reminderDate" );
-                                    sales.setReminderDate( reminderDate1 );
+                                            Intent resultIntent = new Intent( SalesMan.this, SalesMan.class );
+                                            TaskStackBuilder stackBuilder = TaskStackBuilder.create( getApplicationContext() );
+                                            stackBuilder.addParentStack( SalesMan.class );
+                                            stackBuilder.addNextIntent( resultIntent );
+                                            PendingIntent resultPendingIntent = stackBuilder.getPendingIntent( 0, PendingIntent.FLAG_UPDATE_CURRENT );
+                                            mBuilder.setContentIntent( resultPendingIntent );
+                                            NotificationManager mNotificationManager = (NotificationManager) getSystemService( getApplicationContext().NOTIFICATION_SERVICE );
+                                            mNotificationManager.notify( 1, mBuilder.build() );
+                                            //PendingIntent.getBroadcast(getApplicationContext(),1,resultIntent,0);
+                                        }
+                                        if (partyName != "null") {
+                                            sales.setPartyName( partyName );
+                                        } else {
+                                            sales.setShopName( shopName );
 
-                                    Calendar c1 = Calendar.getInstance();
-                                    SimpleDateFormat df1 = new SimpleDateFormat( "d/M/yyyy" );
-                                    String formattedDate1 = df1.format( c1.getTime() );
-
-                                    //  Date date1=format.parse(reminderDate1);
-
-                                    //reminderDate1 = df1.format( reminderDate1 );
-                                    int i = 0;
-                                    if (reminderDate1.equals( formattedDate1 )) {
-                                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder( getBaseContext() );
-                                        mBuilder.setSmallIcon( R.drawable.logo );
-                                        mBuilder.setContentTitle( "Reminder Alert For" + partyName + " " );
-                                        mBuilder.setVibrate( new long[]{1000, 1000, 1000, 1000, 1000} );
-                                        mBuilder.setLights( Color.RED, 3000, 3000 );
-                                        Uri alarmSound = RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION );
-                                        mBuilder.setSound( alarmSound );
-                                        mBuilder.setContentText( iPartyTypeName + " " + reminderDate1 );
-
-
-                                        // Moves events into the big view
-
-                                        Intent resultIntent = new Intent( SalesMan.this, SalesMan.class );
-                                        TaskStackBuilder stackBuilder = TaskStackBuilder.create( getApplicationContext() );
-                                        stackBuilder.addParentStack( SalesMan.class );
-                                        stackBuilder.addNextIntent( resultIntent );
-                                        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent( 0, PendingIntent.FLAG_UPDATE_CURRENT );
-                                        mBuilder.setContentIntent( resultPendingIntent );
-                                        NotificationManager mNotificationManager = (NotificationManager) getSystemService( getApplicationContext().NOTIFICATION_SERVICE );
-                                        mNotificationManager.notify( 1, mBuilder.build() );
-                                        //PendingIntent.getBroadcast(getApplicationContext(),1,resultIntent,0);
+                                        }
+                                        event.add( sales );
                                     }
-                                    if (partyName != "null") {
-                                        sales.setPartyName( partyName );
-                                    } else {
-                                        sales.setShopName( shopName );
+
+
+                                    int totalElements = event.size();
+                                    if (totalElements > 0) {
+                                        txtRecords.setVisibility( View.GONE );
+                                        recyclerView.setVisibility( View.VISIBLE );
+                                        aSales = new adapterSales( SalesMan.this, event );
+                                        recyclerView.setAdapter( aSales );
+                                        recyclerView.setLayoutManager( new LinearLayoutManager( SalesMan.this, LinearLayoutManager.VERTICAL, false ) );
+                                        aSales.notifyDataSetChanged();
+                                        btnFilter.setVisibility( View.VISIBLE );
 
                                     }
-                                    event.add( sales );
-                                }
+                                    progressDialog.dismiss();
 
-
-                                int totalElements = event.size();
-                                if (totalElements > 0) {
-                                    txtRecords.setVisibility( View.GONE );
-                                    recyclerView.setVisibility( View.VISIBLE );
-                                    aSales = new adapterSales( SalesMan.this, event );
-                                    recyclerView.setAdapter( aSales );
-                                    recyclerView.setLayoutManager( new LinearLayoutManager( SalesMan.this, LinearLayoutManager.VERTICAL, false ) );
-                                    aSales.notifyDataSetChanged();
-                                }
-                                progressDialog.dismiss();
                             }
+
+                        }
+                            else
+                            {
+                                txtRecords.setVisibility( View.VISIBLE );
+                                recyclerView.setVisibility( View.GONE );
+                                aSales = new adapterSales( SalesMan.this, event );
+                                recyclerView.setAdapter( aSales );
+                                recyclerView.setLayoutManager( new LinearLayoutManager( SalesMan.this, LinearLayoutManager.VERTICAL, false ) );
+                                aSales.notifyDataSetChanged();
+                                btnFilter.setVisibility( View.GONE );
+                            }
+
                         }
 
                     } catch (JSONException e) {

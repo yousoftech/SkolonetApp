@@ -224,6 +224,7 @@ float a;
                         final RatingBar ratings=(RatingBar)dialogView.findViewById( R.id.Priority );
                         final TextView txtRating = (TextView)dialogView.findViewById( R.id.txtRating );
                         final Button btnPriority = (Button)dialogView.findViewById( R.id.btnPriority );
+
                         ratings.setRating( (float) priorityval );
                         int pr = (int) priorityval;
                         txtRating.setText( new String( String.valueOf( priorityval  ) ) + "/5" );
