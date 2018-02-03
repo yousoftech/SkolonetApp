@@ -359,7 +359,7 @@ public class SankulActivity extends AppCompatActivity {
                                         public void onItemsSelected(List<KeyPairBoolData> items) {
 
                                             for (int i = 0; i < items.size(); i++) {
-                                                if (items.get(i).isSelected()) {
+                                                if (items.get(i).isSelected() == true) {
                                                     KeyPairBoolData stdkey = new KeyPairBoolData();
                                                     stdkey.setId(items.get( i ).getId() );
                                                     stdkey.setName( items.get( i ).getName() );
@@ -390,7 +390,11 @@ public class SankulActivity extends AppCompatActivity {
                                                     selectedlistArrayMedium.add( stdkey );
                                                     Log.i("", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
                                                 }
-                                            }
+                                                if (items.get(i).isSelected() == false) {
+
+                                                }
+
+                                                }
                                         }
                                     });
 
