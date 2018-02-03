@@ -42,7 +42,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.SalesMan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
+        <receiver android:name=".Util.NotificationReceiver" android:process=":remote" />
+
+
 
         <activity
             android:name=".Activity.FullDetail"
