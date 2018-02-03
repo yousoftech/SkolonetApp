@@ -166,6 +166,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                 } else {
                     submitForm();
                     startActivity(new Intent(School_ClassisActivity.this, SalesMan.class));
+                    finish();
                 }
             }
         });

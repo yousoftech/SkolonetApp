@@ -43,6 +43,7 @@ public class PartyActivity extends AppCompatActivity {
     String fromName,Userid,latitude,longitude,location;
     SharedPreferences preferences;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +100,7 @@ public class PartyActivity extends AppCompatActivity {
                 } else {
                     submitForm();
                     startActivity(new Intent(PartyActivity.this, SalesMan.class));
+                    finish();
                 }
 
             }

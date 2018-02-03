@@ -146,6 +146,7 @@ public class SankulActivity extends AppCompatActivity {
                 } else {
                     submitForm();
                     startActivity(new Intent(SankulActivity.this, SalesMan.class));
+                    finish();
                 }
 
             }

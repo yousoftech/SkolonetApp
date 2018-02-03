@@ -96,6 +96,7 @@ public class OtherActivity extends AppCompatActivity {
                 } else {
                     submitForm();
                     startActivity(new Intent(OtherActivity.this, SalesMan.class));
+                    finish();
                 }
             }
         });
