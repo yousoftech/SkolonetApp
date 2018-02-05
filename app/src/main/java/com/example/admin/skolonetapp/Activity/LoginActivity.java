@@ -167,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putString("firstName",firstName);
                                     editor.putString("lastName",lastName);
                                     editor.commit();
-                                    startActivity(new Intent(LoginActivity.this, SalesMan.class));
+                                    startActivity(new Intent(LoginActivity.this, HomeScreen.class));
                                     finish();
 //                                    String firstName = obj.getString("strUserFirstName");
 //                                    String lastName = obj.getString("strUserLastName");
