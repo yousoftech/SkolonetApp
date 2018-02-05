@@ -152,8 +152,8 @@ float a;
                                 event.remove(position);
                                 notifyItemRemoved(position);
                                 delete.cancel();
-                                notifyDataSetChanged();
                                 editDelete.cancel();
+                                notifyDataSetChanged();
                             }
                         });
                         Button btnClose = (Button) dialogView.findViewById(R.id.btnClose);
@@ -164,6 +164,14 @@ float a;
                                 editDelete.cancel();
                             }
                         });
+                        delete.setOnDismissListener( new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                Intent intent=new Intent(context,SalesMan.class);
+                                intent.putExtra( "EXIT",true );
+                                context.startActivity(intent);                     }
+                        } );
+
 
                     }
                 });
@@ -209,6 +217,14 @@ float a;
 
                             }
                         });
+                        reminder.setOnDismissListener( new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                Intent intent=new Intent(context,SalesMan.class);
+                                intent.putExtra( "EXIT",true );
+                                context.startActivity(intent);                     }
+                        } );
+
                     }
                 });
                 relativeLayoutPriority.setOnClickListener( new View.OnClickListener() {
@@ -244,6 +260,14 @@ float a;
                                 editDelete.cancel();
                                 notifyDataSetChanged();
                             }
+                        } );
+                        priority.setOnDismissListener( new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+
+                               Intent intent=new Intent(context,SalesMan.class);
+                               intent.putExtra( "EXIT",true );
+                              context.startActivity(intent);                     }
                         } );
 
                         //  priority1.cancel();

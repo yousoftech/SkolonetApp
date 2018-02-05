@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.admin.skolonetapp.Activity.HomeScreen">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/app_toolbar_sales"></include>
+
+    <RelativeLayout
+        android:id="@+id/r1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="37dp">
+
+        <Button
+            android:id="@+id/btnTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnSales"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="64dp"
+            android:text="Task Details"
+            android:background="@color/colorPrimaryLight"
+            tools:ignore="NotSibling" />
+
+        <Button
+            android:id="@+id/btnSales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="268dp"
+            android:background="@color/colorPrimaryLight"
+            android:text="Sales Details"
+            tools:ignore="NotSibling" />
+
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>
