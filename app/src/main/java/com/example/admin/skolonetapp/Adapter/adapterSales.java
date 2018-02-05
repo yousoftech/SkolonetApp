@@ -265,10 +265,11 @@ float a;
                             @Override
                             public void onDismiss(DialogInterface dialog) {
 
-                               Intent intent=new Intent(context,SalesMan.class);
-                               intent.putExtra( "EXIT",true );
-                              context.startActivity(intent);                     }
-                        } );
+                                //     Intent intent=new Intent(context,SalesMan.class);
+                                //   intent.putExtra( "EXIT",true );
+                                // context.startActivity(intent);                     }
+                            }
+                            } );
 
                         //  priority1.cancel();
                     }
@@ -279,7 +280,11 @@ float a;
             }
         });
     }
-
+    public void refreshEvents(ArrayList<Sales> events) {
+      //  this.events.;
+        //this.events.addAll(events);
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {

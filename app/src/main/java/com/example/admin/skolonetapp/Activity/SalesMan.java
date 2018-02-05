@@ -137,7 +137,8 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         NotificationManager manager;
         Notification myNotication;
 
-       if (getIntent().getBooleanExtra("EXIT", false)) {
+      //  recyclerView.destroyDrawingCache();
+       /*if (getIntent().getBooleanExtra("EXIT", false)) {
            Intent intent = new Intent(getBaseContext(), SalesMan.class);
            intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK );
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -146,7 +147,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
            SalesMan.this.finish();
 
 
-       }
+       }*/
         manager = (NotificationManager) getSystemService( NOTIFICATION_SERVICE );
 
 
