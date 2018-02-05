@@ -138,15 +138,19 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         Notification myNotication;
 
       //  recyclerView.destroyDrawingCache();
-       /*if (getIntent().getBooleanExtra("EXIT", false)) {
-           Intent intent = new Intent(getBaseContext(), SalesMan.class);
-           intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK );
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-           //
-            startActivity(intent);
-           SalesMan.this.finish();
+        Bundle bundle = getIntent().getExtras();
+
+        Log.d( "asdv" ,bundle+"" );
 
 
+       /*if (!bundle.getString("total").equalsIgnoreCase( "" ))
+        {
+           txtRecords.setVisibility( View.VISIBLE );
+
+       }
+       else
+       {
+           txtRecords.setVisibility( View.GONE );
        }*/
         manager = (NotificationManager) getSystemService( NOTIFICATION_SERVICE );
 
@@ -517,13 +521,13 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                 sales = new Sales();
 
                                 String partyInfoId = obj.getString( "partyInfoId" );
-                                String iPartyTypeName = obj.getString( "strPartyType" );
-                                String shopName = obj.getString( "shopName" );
-                                String partyName = obj.getString( "partyName" );
-                                String strAddress1 = obj.getString( "addressLine1" );
-                                String strAddress2 = obj.getString( "addressLine2" );
-                                String strCityName = obj.getString( "cityName" );
-                                String strStateName = obj.getString( "stateName" );
+                                    String iPartyTypeName = obj.getString( "strPartyType" );
+                                    String shopName = obj.getString( "shopName" );
+                                    String partyName = obj.getString( "partyName" );
+                                    String strAddress1 = obj.getString( "addressLine1" );
+                                    String strAddress2 = obj.getString( "addressLine2" );
+                                    String strCityName = obj.getString( "cityName" );
+                                    String strStateName = obj.getString( "stateName" );
 
                                 String strMedium = obj.getString( "strMedium" );
                                 List<String> list = new ArrayList<>();
@@ -541,17 +545,19 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                     String reminderDate = obj.getString( "reminderDate" );
 
                                     String location = obj.getString( "location" );
-                                    String partyDate = obj.getString( "datetimeCreated" );
+                                    String partyDate1 = obj.getString( "datetimeCreated" );
                                     String latitude = obj.getString( "latitude" );
                                     String longitude = obj.getString( "longitude" );
                                     double priority = obj.getDouble( "priority" );
+String partyDate = convert( partyDate1 );
+
                                     int ipartTypeId = obj.getInt( "iPartyTypeId" );
 
                                     if (ipartTypeId == typeId) {
                                         sales.setPartyInfoId( partyInfoId );
                                         sales.setStrPartyType( iPartyTypeName );
                                         sales.setLocation( "Address : " + strAddress );
-                                        sales.setDatetimeCreated( partyDate );
+                                        sales.setDatetimeCreated( partyDate.toString() );
                                         //  sales.setStrLatitude( "Medium : " + strMedium );
                                         //  sales.setStrLongitude( "Longitude : " + longitude );
                                         sales.setReminderDate( reminderDate );
@@ -575,7 +581,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                         sales.setPartyInfoId( partyInfoId );
                                         sales.setStrPartyType( iPartyTypeName );
                                         sales.setLocation( "Address : " + strAddress );
-                                        sales.setDatetimeCreated( partyDate );
+                                        sales.setDatetimeCreated( partyDate.toString() );
                                         // sales.setStrLatitude( "Medium : " + strMedium );
                                         //sales.setStrLongitude( "Longitude : " + longitude );
                                         sales.setPriority( priority );
@@ -912,6 +918,36 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
             requestQueue.add( request );
         } else {
             Toast.makeText( this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG ).show();
+        }
+    }
+
+
+
+    public String convert(String s){
+        SimpleDateFormat newformat = new SimpleDateFormat("dd-MM-yyyy");
+        try{
+            if(s.contains("T")){
+                String datestring = s.split("T")[0];
+                SimpleDateFormat oldformat = new SimpleDateFormat("yyyy-MM-dd");
+                String reformattedStr = newformat.format(oldformat.parse(datestring));
+                return reformattedStr;
+            }
+            else{
+                if(Integer.parseInt(s.split("-")[0])>13){
+                    SimpleDateFormat oldformat = new SimpleDateFormat("yyyy-MM-dd");
+                    String reformattedStr = newformat.format(oldformat.parse(s));
+                    return reformattedStr;
+                }
+                else{
+                    SimpleDateFormat oldformat = new SimpleDateFormat("MM-dd-yyyy");
+                    String reformattedStr = newformat.format(oldformat.parse(s));
+                    return reformattedStr;
+                }
+
+            }
+        }
+        catch (Exception e){
+            return null;
         }
     }
 

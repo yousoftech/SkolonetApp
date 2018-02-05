@@ -84,7 +84,8 @@ public class adapterAdminSales extends RecyclerView.Adapter<adapterAdminSales.Re
         String Partytype = event.get(position).getStrPartyType();
         Log.d("adapterval", Partytype);
 
-
+        holder.txt_PartyName.setText(event.get(position).getPartyName());
+        holder.txt_ShoopName.setText(event.get(position).getPartyName());
         holder.txt_PartyType.setText("" + event.get(position).getStrPartyType());
         holder.txt_PartyLocation.setText("" + event.get(position).getLocation());
         holder.txt_PartyDateTime.setText("" + event.get(position).getDatetimeCreated());

@@ -29,7 +29,7 @@ public class HomeScreen extends AppCompatActivity {
     SharedPreferences preferences;
     ProgressDialog progressDialog;
     ConnectionDetector detector;
-    Button btnSales,btnTask;
+    Button btnSales,btnTask,btnFilter;
     Toolbar toolbar;
     Button btnLogout;
     TextView txtTitle;
@@ -48,6 +48,9 @@ public class HomeScreen extends AppCompatActivity {
         btnSales = (Button)findViewById( R.id.btnSales );
         btnTask = (Button)findViewById( R.id.btnTask );
         btnLogout=(Button)findViewById(R.id.btnLogout);
+        btnFilter = (Button)findViewById( R.id.btnFilter );
+
+        btnFilter.setVisibility( View.GONE );
 
         setupToolbar( "" + firstName + " " + lastName );
 

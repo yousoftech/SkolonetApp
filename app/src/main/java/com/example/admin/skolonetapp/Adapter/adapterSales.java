@@ -39,6 +39,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.jar.Attributes;
 
 /**
  * Created by DELL on 1/21/2018.
@@ -53,6 +54,7 @@ public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerView
     ConnectionDetector detector;
     String Id, fId, type;
     String reminderDate;
+    int total=1;
 float a;
     public adapterSales(Context context, ArrayList<Sales> event) {
         this.event = event;
@@ -69,9 +71,16 @@ float a;
 
     @Override
     public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
-         String ParName = event.get(position).getPartyName();
+         final String ParName = event.get(position).getPartyName();
          final String reDate = event.get(position).getReminderDate();
          final double priorityval = event.get( position ).getPriority();
+      final  String strAddress1 = event.get(position).getAddressLine1();
+       final String strAddress2 = event.get(position).getAddressLine2();
+       final String strCityName = event.get(position).getCityName();
+       final String strStateName =event.get(position).getStateName();
+       final String strAddress = strAddress1 + " " + strAddress2 + " " + strCityName + " " + strStateName;
+final String s = event.get( position ).getLocation();
+final String sdate = event.get( position ).getDatetimeCreated();
 
         Log.d("PArName", ParName + " ");
         String shopName=event.get(position).getShopName();
@@ -91,7 +100,8 @@ float a;
             holder.txt_ShoopName.setVisibility(View.VISIBLE);
         }
         String Partytype = event.get(position).getStrPartyType();
-        Log.d("adapterval", Partytype);
+
+        Log.d("adapterval", Partytype +"");
 
 
         holder.txt_PartyType.setText("" + event.get(position).getStrPartyType());
@@ -151,6 +161,13 @@ float a;
                                 deleteDetail();
                                 event.remove(position);
                                 notifyItemRemoved(position);
+                                if(event.size() == 0)
+                                {
+                                    total=0;
+                                    Intent i = new Intent(context,SalesMan.class );
+                                    i.putExtra( "total",total );
+
+                                }
                                 delete.cancel();
                                 editDelete.cancel();
                                 notifyDataSetChanged();
@@ -164,13 +181,7 @@ float a;
                                 editDelete.cancel();
                             }
                         });
-                        delete.setOnDismissListener( new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialog) {
-                                Intent intent=new Intent(context,SalesMan.class);
-                                intent.putExtra( "EXIT",true );
-                                context.startActivity(intent);                     }
-                        } );
+
 
 
                     }
@@ -211,6 +222,17 @@ float a;
 
                                 Log.d( "asdasddsad",reminderDate );
                                 AddReminder();
+                                Sales sales = new Sales();
+                                Id = event.get(position).getPartyInfoId();
+                                type = event.get(position).getStrPartyType();
+                                sales.setPartyInfoId( fId );
+                                sales.setStrPartyType( type );
+                                sales.setReminderDate( reminderDate );
+                                sales.setPartyName( ParName );
+                                sales.setDatetimeCreated(sdate  );
+                                sales.setLocation( s );
+                                sales.setPriority( priorityval );
+                                event.set( position,sales );
                                 notifyDataSetChanged();
                                 reminder.cancel();
                                 editDelete.cancel();
@@ -220,9 +242,7 @@ float a;
                         reminder.setOnDismissListener( new DialogInterface.OnDismissListener() {
                             @Override
                             public void onDismiss(DialogInterface dialog) {
-                                Intent intent=new Intent(context,SalesMan.class);
-                                intent.putExtra( "EXIT",true );
-                                context.startActivity(intent);                     }
+                                        }
                         } );
 
                     }
@@ -256,20 +276,24 @@ float a;
                             public void onClick(View v) {
                                 Toast.makeText( context,a+"",Toast.LENGTH_SHORT ).show();
                                 AddPriority();
+                                Sales sales = new Sales();
+                                Id = event.get(position).getPartyInfoId();
+                                type = event.get(position).getStrPartyType();
+                                sales.setPartyInfoId( fId );
+                                sales.setStrPartyType( type );
+                                sales.setReminderDate( reDate );
+                                sales.setPartyName( ParName );
+                                sales.setDatetimeCreated( sdate );
+                                sales.setLocation( s );
+                                sales.setPriority( a );
+                                event.set( position,sales );
+
                                 priority.cancel();
                                 editDelete.cancel();
                                 notifyDataSetChanged();
                             }
                         } );
-                        priority.setOnDismissListener( new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialog) {
 
-                                //     Intent intent=new Intent(context,SalesMan.class);
-                                //   intent.putExtra( "EXIT",true );
-                                // context.startActivity(intent);                     }
-                            }
-                            } );
 
                         //  priority1.cancel();
                     }
@@ -281,8 +305,8 @@ float a;
         });
     }
     public void refreshEvents(ArrayList<Sales> events) {
-      //  this.events.;
-        //this.events.addAll(events);
+        events.clear();
+        events.addAll(events);
         notifyDataSetChanged();
     }
 
