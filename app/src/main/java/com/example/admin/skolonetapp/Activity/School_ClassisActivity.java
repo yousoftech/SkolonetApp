@@ -379,7 +379,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                                         public void onItemsSelected(List<KeyPairBoolData> items) {
 
                                             for (int i = 0; i < items.size(); i++) {
-                                                if (items.get(i).isSelected()) {
+                                                if (items.get(i).isSelected()==true) {
                                                     KeyPairBoolData stdkey = new KeyPairBoolData();
                                                     stdkey.setId(items.get( i ).getId() );
                                                     stdkey.setName( items.get( i ).getName() );
@@ -409,6 +409,30 @@ public class School_ClassisActivity extends AppCompatActivity {
                                                     }
                                                     selectedlistArrayMedium.add( stdkey );
                                                     Log.i("", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
+                                                }
+                                                if (items.get(i).isSelected() == false) {
+                                                    if(items.get(i).getName().equals("English"))
+                                                    {
+                                                        spinnerStdEnglish.setVisibility(View.GONE);
+
+                                                        spinnerSchoolBoardEnglish.setVisibility(View.GONE);
+                                                        edtSankulAverageStudentEnglish.setVisibility( View.GONE );
+                                                    }
+                                                    if(items.get(i).getName().equals("Hindi"))
+                                                    {
+                                                        spinnerStdHindi.setVisibility(View.GONE);
+
+                                                        spinnerSchoolBoardHindi.setVisibility(View.GONE);
+                                                        edtSankulAverageStudentHindi.setVisibility( View.GONE );
+
+                                                    }
+                                                    if(items.get(i).getName().equals("Gujarati"))
+                                                    {
+                                                        spinnerStdGujarati.setVisibility(View.GONE);
+
+                                                        spinnerSchoolBoardGujarati.setVisibility(View.GONE);
+                                                        edtSankulAverageStudentGujarati.setVisibility( View.GONE );
+                                                    }
                                                 }
                                             }
                                         }

@@ -137,7 +137,18 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         NotificationManager manager;
         Notification myNotication;
 
+       if (getIntent().getBooleanExtra("EXIT", false)) {
+           Intent intent = new Intent(getBaseContext(), SalesMan.class);
+           intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK );
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+           //
+            startActivity(intent);
+           SalesMan.this.finish();
+
+
+       }
         manager = (NotificationManager) getSystemService( NOTIFICATION_SERVICE );
+
 
 
         spinnerFliter.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
@@ -622,6 +633,15 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                         btnFilter.setVisibility( View.VISIBLE );
 
                                     }
+                                    else{
+                                        txtRecords.setVisibility( View.VISIBLE );
+                                        recyclerView.setVisibility( View.GONE );
+                                        aSales = new adapterSales( SalesMan.this, event );
+                                        recyclerView.setAdapter( aSales );
+                                        recyclerView.setLayoutManager( new LinearLayoutManager( SalesMan.this, LinearLayoutManager.VERTICAL, false ) );
+                                        aSales.notifyDataSetChanged();
+                                        btnFilter.setVisibility( View.GONE );
+                                    }
                                     progressDialog.dismiss();
 
                             }
@@ -783,6 +803,9 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                 doubleBackToExitPressedOnce = false;
             }
         }, 2000 );
+
+    //finish();
+
     }
     public void std12()
     {
