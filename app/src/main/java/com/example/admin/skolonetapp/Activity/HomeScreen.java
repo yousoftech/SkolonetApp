@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.example.admin.skolonetapp.R;
 import com.example.admin.skolonetapp.Util.ConnectionDetector;
 
+import static com.example.admin.skolonetapp.Activity.LoginActivity.PREFS_NAME;
+
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -38,11 +40,14 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_home_screen );
 
+        preferences = getSharedPreferences( PREFS_NAME, MODE_PRIVATE );
+        txtTitle=(TextView)findViewById(R.id.txtTitle);
         firstName = preferences.getString( "firstName", null );
         lastName = preferences.getString( "lastName", null );
         Userid = preferences.getString( "LoggedUser", null );
         btnSales = (Button)findViewById( R.id.btnSales );
         btnTask = (Button)findViewById( R.id.btnTask );
+        btnLogout=(Button)findViewById(R.id.btnLogout);
 
         setupToolbar( "" + firstName + " " + lastName );
 

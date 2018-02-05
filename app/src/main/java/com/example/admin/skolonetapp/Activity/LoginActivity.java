@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
         preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         if (preferences.getString("logged", "").equals("logged")) {
-            startActivity(new Intent(LoginActivity.this, SalesMan.class));
+            startActivity(new Intent(LoginActivity.this, HomeScreen.class));
             finish();
         }
 
