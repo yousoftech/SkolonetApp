@@ -62,38 +62,20 @@ public class adapterAdminSales extends RecyclerView.Adapter<adapterAdminSales.Re
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.app_recyclerrow, parent, false);
+        View view = inflater.inflate(R.layout.app_adminrecyclerrow, parent, false);
         RecyclerViewHolder holder = new RecyclerViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
-        String ParName = event.get(position).getPartyName();
 
-        Log.d("PArName", ParName + " ");
-        String shopName=event.get(position).getShopName();
-        Log.d("PArName", shopName + " ");
+        String a=event.get(position).getStrTaskName();
+        String b=event.get(position).getStrTaskDescription();
+        holder.txt_taskName.setText(a);
+        holder.txt_taskDescription.setText(b);
 
-
-            Log.d("adfg", event.get(position).getShopName() + " ");
-            holder.txt_PartyName.setVisibility(View.GONE);
-            holder.txt_ShoopName.setText(event.get(position).getShopName());
-            holder.txt_ShoopName.setVisibility(View.VISIBLE);
-
-        String Partytype = event.get(position).getStrPartyType();
-        Log.d("adapterval", Partytype);
-
-        holder.txt_PartyName.setText(event.get(position).getPartyName());
-        holder.txt_ShoopName.setText(event.get(position).getPartyName());
-        holder.txt_PartyType.setText("" + event.get(position).getStrPartyType());
-        holder.txt_PartyLocation.setText("" + event.get(position).getLocation());
-        holder.txt_PartyDateTime.setText("" + event.get(position).getDatetimeCreated());
-
-
-        Id = event.get(position).getPartyInfoId();
-        type = event.get(position).getStrPartyType();
-      /*  holder.itemView.setOnClickListener(new View.OnClickListener() {
+            /*  holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
 
@@ -262,17 +244,15 @@ public class adapterAdminSales extends RecyclerView.Adapter<adapterAdminSales.Re
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txt_PartyName, txt_PartyType, txt_PartyLocation, txt_PartyDateTime, txt_Latitude, txt_Longitude, txt_ShoopName;
+        TextView txt_taskName, txt_taskDescription;
 
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
-            txt_ShoopName = (TextView) itemView.findViewById(R.id.txt_Shop_Name);
+            txt_taskName = (TextView) itemView.findViewById(R.id.txt_task_Name);
 
-            txt_PartyName = (TextView) itemView.findViewById(R.id.txt_PartyName);
-            txt_PartyType = (TextView) itemView.findViewById(R.id.txt_PartyType);
-            txt_PartyLocation = (TextView) itemView.findViewById(R.id.txt_PartyLocation);
-            txt_PartyDateTime = (TextView) itemView.findViewById(R.id.txt_PartyDateTime);
+            txt_taskDescription = (TextView) itemView.findViewById(R.id.txt_task_description);
+
 
         }
     }

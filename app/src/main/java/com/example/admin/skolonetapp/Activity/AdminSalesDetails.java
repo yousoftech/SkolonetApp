@@ -88,9 +88,7 @@ public class AdminSalesDetails extends AppCompatActivity {
         txtTitle=(TextView)findViewById(R.id.txtTitle);
         event = new ArrayList<Sales>();
         btnFilter = (Button)findViewById( R.id.btnFilter );
-
-        btnFilter.setVisibility( View.GONE );
-
+        btnFilter.setVisibility( View.INVISIBLE );
 
         setupToolbar( "" + firstName + " " + lastName );
 
@@ -106,8 +104,8 @@ public class AdminSalesDetails extends AppCompatActivity {
             progressDialog.setMessage( "Loading..." );
             progressDialog.show();
 
-            JsonObjectRequest objectRequest = new JsonObjectRequest( Request.Method.POST,
-                    Constant.PATH + "Sales/GetSalesData?id=" + Userid, null, new Response.Listener<JSONObject>() {
+            JsonObjectRequest objectRequest = new JsonObjectRequest( Request.Method.GET,
+                    Constant.PATH + "task/GetAll?userGuid=" + Userid.toString(), null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.d( "yatra", response.toString() );
@@ -123,72 +121,50 @@ public class AdminSalesDetails extends AppCompatActivity {
                                     JSONObject obj = array.getJSONObject( n );
                                     sales = new Sales();
 
-                                    String partyInfoId = obj.getString( "partyInfoId" );
-                                    String iPartyTypeName = obj.getString( "strPartyType" );
-                                    String shopName = obj.getString( "shopName" );
-                                    String partyName = obj.getString( "partyName" );
-                                    String strAddress1 = obj.getString( "addressLine1" );
-                                    String strAddress2 = obj.getString( "addressLine2" );
-                                    String strCityName = obj.getString( "cityName" );
-                                    String strStateName = obj.getString( "stateName" );
+                                    String taskName = obj.getString( "taskName" );
+                                    String description = obj.getString( "description" );
 
 
 
-                                    String strAddress = strAddress1 + " " + strAddress2 + " " + strCityName + " " + strStateName;
-                                    String reminderDate = obj.getString( "reminderDate" );
-
-                                    String location = obj.getString( "location" );
-                                    String partyDate1 = obj.getString( "datetimeCreated" );
-                                    String latitude = obj.getString( "latitude" );
-                                    String longitude = obj.getString( "longitude" );
-                                    double priority = obj.getDouble( "priority" );
-                                    int ipartTypeId = obj.getInt( "iPartyTypeId" );
-                                    String partyDate = convert( partyDate1 );
-
-
-                                    sales.setPartyName( partyName );
-                                        sales.setPartyInfoId( partyInfoId );
-                                        sales.setStrPartyType( iPartyTypeName );
-                                        sales.setLocation( "Address : " + strAddress );
-                                        sales.setDatetimeCreated( partyDate );
-                                        // sales.setStrLatitude( "Medium : " + strMedium );
-                                        //sales.setStrLongitude( "Longitude : " + longitude );
-                                        sales.setPriority( priority );
-                                        String reminderDate1 = obj.getString( "reminderDate" );
-                                        sales.setReminderDate( reminderDate1 );
 
 
 
-                                        //  Date date1=format.parse(reminderDate1);
+                                sales.setStrTaskName("Task Name : " +  taskName );
+                                sales.setStrTaskDescription("Task Description : " + description );
 
 
-                                        event.add( sales );
+
+
+                                //  Date date1=format.parse(reminderDate1);
+
+
+                                event.add( sales );
 
 
 
-                                    int totalElements = event.size();
-                                    if (totalElements > 0) {
-                                        txtRecords.setVisibility( View.GONE );
-                                        recyclerView.setVisibility( View.VISIBLE );
-                                        aSales = new adapterAdminSales( AdminSalesDetails.this, event );
-                                        recyclerView.setAdapter( aSales );
-                                        recyclerView.setLayoutManager( new LinearLayoutManager( AdminSalesDetails.this, LinearLayoutManager.VERTICAL, false ) );
-                                        aSales.notifyDataSetChanged();
-                                        btnFilter.setVisibility( View.VISIBLE );
-
-                                    }
-                                    else{
-                                        txtRecords.setVisibility( View.VISIBLE );
-                                        recyclerView.setVisibility( View.GONE );
-                                        aSales = new adapterAdminSales( AdminSalesDetails.this, event );
-                                        recyclerView.setAdapter( aSales );
-                                        recyclerView.setLayoutManager( new LinearLayoutManager( AdminSalesDetails.this, LinearLayoutManager.VERTICAL, false ) );
-                                        aSales.notifyDataSetChanged();
-                                        btnFilter.setVisibility( View.GONE );
-                                    }
-                                    progressDialog.dismiss();
+                                int totalElements = event.size();
+                                if (totalElements > 0) {
+                                    txtRecords.setVisibility( View.GONE );
+                                    recyclerView.setVisibility( View.VISIBLE );
+                                    aSales = new adapterAdminSales( AdminSalesDetails.this, event );
+                                    recyclerView.setAdapter( aSales );
+                                    recyclerView.setLayoutManager( new LinearLayoutManager( AdminSalesDetails.this, LinearLayoutManager.VERTICAL, false ) );
+                                    aSales.notifyDataSetChanged();
+                                    btnFilter.setVisibility( View.VISIBLE );
 
                                 }
+                                else{
+                                    txtRecords.setVisibility( View.VISIBLE );
+                                    recyclerView.setVisibility( View.GONE );
+                                    aSales = new adapterAdminSales( AdminSalesDetails.this, event );
+                                    recyclerView.setAdapter( aSales );
+                                    recyclerView.setLayoutManager( new LinearLayoutManager( AdminSalesDetails.this, LinearLayoutManager.VERTICAL, false ) );
+                                    aSales.notifyDataSetChanged();
+                                    btnFilter.setVisibility( View.GONE );
+                                }
+                                progressDialog.dismiss();
+
+                            }
 
                             }
                             else

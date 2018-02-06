@@ -8,6 +8,25 @@ public class Sales {
     public String PartyInfoId;
     public String reminderDate;
 
+    public String getStrTaskName() {
+        return strTaskName;
+    }
+
+    public void setStrTaskName(String strTaskName) {
+        this.strTaskName = strTaskName;
+    }
+
+    public String getStrTaskDescription() {
+        return strTaskDescription;
+    }
+
+    public void setStrTaskDescription(String strTaskDescription) {
+        this.strTaskDescription = strTaskDescription;
+    }
+
+    public String strTaskName;
+    public String strTaskDescription;
+
     public double getPriority() {
         return Priority;
     }
