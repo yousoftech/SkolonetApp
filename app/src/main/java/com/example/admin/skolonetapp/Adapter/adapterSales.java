@@ -1,10 +1,15 @@
 package com.example.admin.skolonetapp.Adapter;
 
+import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +23,7 @@ import android.widget.CalendarView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -37,8 +43,12 @@ import com.example.admin.skolonetapp.Util.Constant;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.jar.Attributes;
 
 /**
@@ -55,7 +65,9 @@ public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerView
     String Id, fId, type;
     String reminderDate;
     int total=1;
-float a;
+     String reDate;
+    float a;
+    int RQS_1=0;
     public adapterSales(Context context, ArrayList<Sales> event) {
         this.event = event;
         this.context = context;
@@ -71,8 +83,10 @@ float a;
 
     @Override
     public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
+
+
          final String ParName = event.get(position).getPartyName();
-         final String reDate = event.get(position).getReminderDate();
+         reDate = event.get(position).getReminderDate();
          final double priorityval = event.get( position ).getPriority();
       final  String strAddress1 = event.get(position).getAddressLine1();
        final String strAddress2 = event.get(position).getAddressLine2();
@@ -87,6 +101,13 @@ final String sdate = event.get( position ).getDatetimeCreated();
         Log.d("PArName", shopName + " ");
         Log.d("reDate", reDate + " ");
         Log.d("priorityval", priorityval + " ");
+
+        try {
+            reminder();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 
         if (ParName != null) {
             Log.d("adfgs", event.get(position).getPartyName() + " ");
@@ -198,14 +219,17 @@ final String sdate = event.get( position ).getDatetimeCreated();
 
                         reminder.show();
                         final CalendarView simpleCalendarView = (CalendarView) dialogView.findViewById(R.id.simpleCalendarView);
-                     //   Log.d( "datede",reDate + " " );
+                   //final TimePickerDialog simpleTimePickerDialog;
+                      //  simpleTimePickerDialog = (TimePickerDialog) dialogView.findViewById(R.id.simpleTimePicker);
+                        //   Log.d( "datede",reDate + " " );
                         if(!reDate.equals(null)){
 
-                            Log.d( "asdasdasdasd","hrllo" );
-                            Long b= convertDate(reDate);
-                            Toast.makeText( context,  b + " ",Toast.LENGTH_SHORT ).show();
 
-                            simpleCalendarView.setDate(  b,false,false );
+                            Log.d( "asdasdasdasd","hrllo" );
+                  //          Long b= convertDate(reDate);
+                    //        Toast.makeText( context,  b + " ",Toast.LENGTH_SHORT ).show();
+
+                      //      simpleCalendarView.setDate(  b,false,false );
                             editDelete.cancel();
                             notifyDataSetChanged();
 
@@ -215,24 +239,41 @@ final String sdate = event.get( position ).getDatetimeCreated();
 
                         simpleCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                             @Override
-                            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                            public void onSelectedDayChange(@NonNull CalendarView view, final int year, int month, final int dayOfMonth) {
 
                                 month=month+1;
-                                reminderDate =  dayOfMonth + "/" + month+ "/" + year;
 
-                                Log.d( "asdasddsad",reminderDate );
-                                AddReminder();
-                                Sales sales = new Sales();
-                                Id = event.get(position).getPartyInfoId();
-                                type = event.get(position).getStrPartyType();
-                                sales.setPartyInfoId( fId );
-                                sales.setStrPartyType( type );
-                                sales.setReminderDate( reminderDate );
-                                sales.setPartyName( ParName );
-                                sales.setDatetimeCreated(sdate  );
-                                sales.setLocation( s );
-                                sales.setPriority( priorityval );
-                                event.set( position,sales );
+
+
+
+                                final Calendar c= Calendar.getInstance();
+                                int hoursofday =c.get(Calendar.HOUR_OF_DAY);
+                                int minutesofday=c.get(Calendar.MINUTE);
+                                final int finalMonth = month;
+                                TimePickerDialog timePickerDialog=new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                                    @Override
+                                    public void onTimeSet (TimePicker timePicker, int hours, int minutes) {
+                                        reminderDate =  year + "/" + finalMonth + "/" + dayOfMonth + " " + hours + ":" + minutes;
+                                        Log.d( "asdasdasdasd",reminderDate );
+
+
+                                    }
+                                },hoursofday,minutesofday,true);
+
+                                timePickerDialog.show();
+                                //showTimePicker();
+  //                              Sales sales = new Sales();
+    //                            Id = event.get(position).getPartyInfoId();
+      //                          type = event.get(position).getStrPartyType();
+        //                        sales.setPartyInfoId( fId );
+        //                        sales.setStrPartyType( type );
+         //                       sales.setReminderDate( reminderDate );
+           //                     sales.setPartyName( ParName );
+           //                     sales.setDatetimeCreated(sdate  );
+          //                      sales.setLocation( s );
+           //                     sales.setPriority( priorityval );
+           //                     event.set( position,sales );
+
                                 notifyDataSetChanged();
                                 reminder.cancel();
                                 editDelete.cancel();
@@ -496,5 +537,51 @@ Log.d("datee",reminderDate+"");
         long milliTime = calendar.getTimeInMillis();
         return milliTime;
     }
+    public void showTimePicker()
+    {
+        final Calendar c= Calendar.getInstance();
+        int hours =c.get(Calendar.HOUR_OF_DAY);
+        int minutes=c.get(Calendar.MINUTE);
+        TimePickerDialog timePickerDialog=new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet (TimePicker timePicker, int hours, int minutes) {
+                reminderDate += " " + hours + ":" + "minutes";
+
+            }
+        },hours,minutes,true);
+
+        timePickerDialog.show();
+    }
+
+    public void reminder()throws ParseException
+    {
+        String d=reDate;
+        Log.d("sd",d);
+        Date date=new SimpleDateFormat("yyyy/MM/dd hh:mm").parse(d);
+        Log.d("sdsd",d + "");
+
+        Toast.makeText(context,date+" ",Toast.LENGTH_LONG);
+        Calendar callNow=Calendar.getInstance();
+        Calendar calSet=(Calendar) callNow.clone();
+        calSet.set(Calendar.HOUR_OF_DAY,date.getHours());
+        calSet.set(Calendar.MINUTE,date.getMinutes());
+        calSet.set(Calendar.SECOND,0);
+        calSet.set(Calendar.MILLISECOND,0);
+        if(calSet.compareTo(callNow)<=0){
+            calSet.add(Calendar.DATE,1);
+        }
+        setAlarm(calSet);
+    }
+
+    private void setAlarm (Calendar targetcal) {
+
+            Intent intent =new Intent(context,AlarmReceiver.class);
+
+        PendingIntent pendingIntent=PendingIntent.getBroadcast(context,RQS_1,intent,0) ;
+        AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP,targetcal.getTimeInMillis(),pendingIntent);
+RQS_1++;
+    }
+
 
 }
