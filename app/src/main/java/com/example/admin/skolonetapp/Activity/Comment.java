@@ -2,22 +2,16 @@ package com.example.admin.skolonetapp.Activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,16 +21,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.app.NotificationManager;
-import android.app.Notification;
-import android.app.TaskStackBuilder;
-import android.support.v4.app.NotificationCompat;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -46,31 +36,26 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.androidbuts.multispinnerfilter.KeyPairBoolData;
 import com.example.admin.skolonetapp.Adapter.adapterSales;
+import com.example.admin.skolonetapp.Adapter.adaptercomment;
 import com.example.admin.skolonetapp.Pojo.Sales;
 import com.example.admin.skolonetapp.Pojo.SalesList;
+import com.example.admin.skolonetapp.Pojo.comment;
 import com.example.admin.skolonetapp.R;
 import com.example.admin.skolonetapp.Util.ConnectionDetector;
 import com.example.admin.skolonetapp.Util.Constant;
-import com.example.admin.skolonetapp.Util.LocationAddress;
-import com.example.admin.skolonetapp.Util.LocationResult;
-import com.example.admin.skolonetapp.Util.MyLocation;
-import java.text.SimpleDateFormat;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
-
-import  android.net.Uri;
-import android.media.RingtoneManager;
 
 import static com.example.admin.skolonetapp.Activity.LoginActivity.PREFS_NAME;
 
-public class CloseLead extends AppCompatActivity{
+public class Comment extends AppCompatActivity {
 
     FloatingActionButton fabButton;
     Spinner spinner;
@@ -88,10 +73,10 @@ public class CloseLead extends AppCompatActivity{
     ArrayList<String> salesArr;
     ArrayList<SalesList> arrayFilter;
     ArrayList<String> filterArr;
-    Sales sales;
+    comment comment;
     RecyclerView recyclerView;
-    ArrayList<Sales> event;
-    adapterSales aSales;
+    ArrayList<comment> event;
+    adaptercomment aComment;
     boolean doubleBackToExitPressedOnce = false;
     TextView txtRecords;
     RelativeLayout relativeFilter;
@@ -99,7 +84,7 @@ public class CloseLead extends AppCompatActivity{
     final List<KeyPairBoolData> listArrayStd = new ArrayList<>();
     final List<KeyPairBoolData> listArrayMedium = new ArrayList<>();
     final List<KeyPairBoolData> listArrayBoard = new ArrayList<>();
-    String strMedium1 =null;
+    String strMedium1 = null;
 
     private static final String[] INITIAL_PERMS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -113,7 +98,7 @@ public class CloseLead extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_sales_man );
+        setContentView( R.layout.commentrecyclerview );
 
         detector = new ConnectionDetector( this );
 
@@ -122,62 +107,19 @@ public class CloseLead extends AppCompatActivity{
         txtTitle = (TextView) findViewById( R.id.txtTitle );
         btnLogout = (Button) findViewById( R.id.btnLogout );
         btnFilter = (Button) findViewById( R.id.btnFilter );
-        relativeFilter = (RelativeLayout) findViewById( R.id.RelativeFilter );
-        spinnerFliter = (Spinner) findViewById( R.id.spinnerFilter );
         firstName = preferences.getString( "firstName", null );
         lastName = preferences.getString( "lastName", null );
         Userid = preferences.getString( "LoggedUser", null );
         setupToolbar( "" + firstName + " " + lastName );
-        recyclerView = (RecyclerView) findViewById( R.id.recyclerSales );
+        recyclerView = (RecyclerView) findViewById( R.id.recyclercomment );
         txtRecords = (TextView) findViewById( R.id.txtNoRecords );
         btnFilter = (Button) findViewById( R.id.btnFilter );
-        event = new ArrayList<Sales>();
+        event = new ArrayList<comment>();
         NotificationManager manager;
         Notification myNotication;
-btnFilter.setVisibility( View.GONE );
-        //  recyclerView.destroyDrawingCache();
-        Bundle bundle = getIntent().getExtras();
-
-        Log.d( "asdv" ,bundle+"" );
-
-
-       /*if (!bundle.getString("total").equalsIgnoreCase( "" ))
-        {
-           txtRecords.setVisibility( View.VISIBLE );
-
-       }
-       else
-       {
-           txtRecords.setVisibility( View.GONE );
-       }*/
-        manager = (NotificationManager) getSystemService( NOTIFICATION_SERVICE );
-
-
-
-        spinnerFliter.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                event.clear();
-                aSales.notifyDataSetChanged();
-                from = spinnerFliter.getSelectedItem().toString();
-                salesList = arraySales.get( i );
-                salesId = salesList.getSalesId();
-                Log.d( "asdassadasdasd", salesId + " " + from );
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        } );
-
 
         detailFrom();
     }
-
     private void setupToolbar(String title) {
         setSupportActionBar( toolbar );
         txtTitle.setText( title );
@@ -185,8 +127,8 @@ btnFilter.setVisibility( View.GONE );
             @Override
             public void onClick(View view) {
 
-                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder( CloseLead.this );
-                LayoutInflater inflater = CloseLead.this.getLayoutInflater();
+                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder( Comment.this );
+                LayoutInflater inflater = Comment.this.getLayoutInflater();
                 dialogBuilder.setMessage( "Are you sure you want to logout ?" );
 
                 dialogBuilder.setPositiveButton( "Logout", new DialogInterface.OnClickListener() {
@@ -197,7 +139,7 @@ btnFilter.setVisibility( View.GONE );
                         editor.clear();
                         editor.commit();
                         finish();
-                        startActivity( new Intent( CloseLead.this, LoginActivity.class ) );
+                        startActivity( new Intent( Comment.this, LoginActivity.class ) );
                         Toast.makeText( getApplicationContext(), "Logout", Toast.LENGTH_SHORT ).show();
                     }
                 } );
@@ -221,7 +163,6 @@ btnFilter.setVisibility( View.GONE );
     }
 
 
-
     public void detailFrom() {
         if (detector.isConnectingToInternet()) {
 
@@ -231,7 +172,7 @@ btnFilter.setVisibility( View.GONE );
             progressDialog.show();
 
             JsonObjectRequest objectRequest = new JsonObjectRequest( Request.Method.POST,
-                    Constant.PATH + "Sales/getsalesclosedata?id=" + Userid, null, new Response.Listener<JSONObject>() {
+                    Constant.PATH + "Comment/getall", null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.d( "yatra", response.toString() );
@@ -241,95 +182,51 @@ btnFilter.setVisibility( View.GONE );
                             progressDialog.dismiss();
                             JSONArray array = response.getJSONArray( "data" );
                             Log.d( "yatra", array.toString() );
-                            if(array.length() > 0) {
+                            if (array.length() > 0) {
 
                                 for (int n = 0; n < array.length(); n++) {
                                     JSONObject obj = array.getJSONObject( n );
-                                    sales = new Sales();
+                                    comment = new comment();
 
-                                    String partyInfoId = obj.getString( "partyInfoId" );
-                                    String iPartyTypeName = obj.getString( "strPartyType" );
-                                    String shopName = obj.getString( "shopName" );
-                                    String partyName = obj.getString( "partyName" );
-                                    String strAddress1 = obj.getString( "addressLine1" );
-                                    String strAddress2 = obj.getString( "addressLine2" );
-                                    String strCityName = obj.getString( "cityName" );
-                                    String strStateName = obj.getString( "stateName" );
+                                    String commentText = obj.getString( "commentText" );
 
 
-                                    String strAddress = strAddress1 + " " + strAddress2 + " " + strCityName + " " + strStateName;
-                                    String reminderDate = obj.getString( "reminderDate" );
-
-                                    String partyDate1 = obj.getString( "datetimeCreated" );
-
-                                    double priority = obj.getDouble( "priority" );
-                                    String partyDate = convert( partyDate1 );
-
-                                    int ipartTypeId = obj.getInt( "iPartyTypeId" );
+                                    comment.setRemark( commentText );
 
 
-
-                                        sales.setPartyInfoId( partyInfoId );
-                                        sales.setStrPartyType( iPartyTypeName );
-                                        sales.setLocation( "Address : " + strAddress );
-                                        sales.setDatetimeCreated( partyDate.toString() );
-                                        // sales.setStrLatitude( "Medium : " + strMedium );
-                                        //sales.setStrLongitude( "Longitude : " + longitude );
-                                        sales.setPriority( priority );
-                                        String reminderDate1 = obj.getString( "reminderDate" );
-                                        sales.setReminderDate( reminderDate1 );
-
-                                        Calendar c1 = Calendar.getInstance();
-                                        SimpleDateFormat df1 = new SimpleDateFormat( "d/M/yyyy" );
-                                        String formattedDate1 = df1.format( c1.getTime() );
-
-                                        //  Date date1=format.parse(reminderDate1);
-
-                                        //reminderDate1 = df1.format( reminderDate1 );
-
-                                        if (partyName != "null") {
-                                            sales.setPartyName( partyName );
-                                        } else {
-                                            sales.setShopName( shopName );
-
-                                        }
-                                        event.add( sales );
-
+                                    event.add( comment );
 
 
                                     int totalElements = event.size();
                                     if (totalElements > 0) {
                                         txtRecords.setVisibility( View.GONE );
                                         recyclerView.setVisibility( View.VISIBLE );
-                                        aSales = new adapterSales( CloseLead.this, event );
-                                        recyclerView.setAdapter( aSales );
-                                        recyclerView.setLayoutManager( new LinearLayoutManager( CloseLead.this, LinearLayoutManager.VERTICAL, false ) );
-                                        aSales.notifyDataSetChanged();
+                                        aComment = new adaptercomment( Comment.this, event );
+                                        recyclerView.setAdapter( aComment );
+                                        recyclerView.setLayoutManager( new LinearLayoutManager( Comment.this, LinearLayoutManager.VERTICAL, false ) );
+                                        aComment.notifyDataSetChanged();
                                         btnFilter.setVisibility( View.VISIBLE );
 
-                                    }
-                                    else{
+                                    } else {
                                         txtRecords.setVisibility( View.VISIBLE );
                                         recyclerView.setVisibility( View.GONE );
-                                        aSales = new adapterSales( CloseLead.this, event );
-                                        recyclerView.setAdapter( aSales );
-                                        recyclerView.setLayoutManager( new LinearLayoutManager( CloseLead.this, LinearLayoutManager.VERTICAL, false ) );
-                                        aSales.notifyDataSetChanged();
+                                        aComment = new adaptercomment( Comment.this, event );
+                                        recyclerView.setAdapter( aComment );
+                                        recyclerView.setLayoutManager( new LinearLayoutManager( Comment.this, LinearLayoutManager.VERTICAL, false ) );
+                                        aComment.notifyDataSetChanged();
                                         btnFilter.setVisibility( View.GONE );
                                     }
                                     progressDialog.dismiss();
 
                                 }
 
-                            }
-                            else
-                            {
+                            } else {
                                 txtRecords.setVisibility( View.VISIBLE );
                                 recyclerView.setVisibility( View.GONE );
-                                aSales = new adapterSales( CloseLead.this, event );
-                                recyclerView.setAdapter( aSales );
-                                recyclerView.setLayoutManager( new LinearLayoutManager( CloseLead.this, LinearLayoutManager.VERTICAL, false ) );
-                                aSales.notifyDataSetChanged();
+                                aComment = new adaptercomment( Comment.this, event );
+                                recyclerView.setAdapter( aComment );
+                                recyclerView.setLayoutManager( new LinearLayoutManager( Comment.this, LinearLayoutManager.VERTICAL, false ) );
+                                aComment.notifyDataSetChanged();
                                 btnFilter.setVisibility( View.GONE );
                             }
 
@@ -352,17 +249,17 @@ btnFilter.setVisibility( View.GONE );
                     30000,
                     DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT ) );
-            RequestQueue requestQueue = Volley.newRequestQueue( CloseLead.this );
+            RequestQueue requestQueue = Volley.newRequestQueue( Comment.this );
             requestQueue.add( objectRequest );
         } else {
-            Toast.makeText( CloseLead.this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG ).show();
+            Toast.makeText( Comment.this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG ).show();
         }
     }
 
 
     public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(
-                CloseLead.this );
+                Comment.this );
         alertDialog.setTitle( "SETTINGS" );
         alertDialog.setMessage( "Enable Location Provider! Go to settings menu?" );
         alertDialog.setPositiveButton( "Settings",
@@ -370,7 +267,7 @@ btnFilter.setVisibility( View.GONE );
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(
                                 Settings.ACTION_LOCATION_SOURCE_SETTINGS );
-                        CloseLead.this.startActivity( intent );
+                        Comment.this.startActivity( intent );
                     }
                 } );
         alertDialog.setNegativeButton( "Cancel",
@@ -381,8 +278,6 @@ btnFilter.setVisibility( View.GONE );
                 } );
         alertDialog.show();
     }
-
-
 
 
     @Override
@@ -409,34 +304,5 @@ btnFilter.setVisibility( View.GONE );
     }
 
 
-
-
-    public String convert(String s){
-        SimpleDateFormat newformat = new SimpleDateFormat("dd-MM-yyyy");
-        try{
-            if(s.contains("T")){
-                String datestring = s.split("T")[0];
-                SimpleDateFormat oldformat = new SimpleDateFormat("yyyy-MM-dd");
-                String reformattedStr = newformat.format(oldformat.parse(datestring));
-                return reformattedStr;
-            }
-            else{
-                if(Integer.parseInt(s.split("-")[0])>13){
-                    SimpleDateFormat oldformat = new SimpleDateFormat("yyyy-MM-dd");
-                    String reformattedStr = newformat.format(oldformat.parse(s));
-                    return reformattedStr;
-                }
-                else{
-                    SimpleDateFormat oldformat = new SimpleDateFormat("MM-dd-yyyy");
-                    String reformattedStr = newformat.format(oldformat.parse(s));
-                    return reformattedStr;
-                }
-
-            }
-        }
-        catch (Exception e){
-            return null;
-        }
-    }
-
 }
+

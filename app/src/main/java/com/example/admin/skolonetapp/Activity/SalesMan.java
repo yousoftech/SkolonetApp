@@ -596,7 +596,7 @@ String partyDate = convert( partyDate1 );
 
                                         //reminderDate1 = df1.format( reminderDate1 );
                                         int i = 0;
-                                        if (reminderDate1.equals( formattedDate1 )) {
+                      /*                  if (reminderDate1.equals( formattedDate1 )) {
                                             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder( getBaseContext() );
                                             mBuilder.setSmallIcon( R.drawable.logo );
                                             mBuilder.setContentTitle( "Reminder Alert For" + partyName + " " );
@@ -618,7 +618,7 @@ String partyDate = convert( partyDate1 );
                                             NotificationManager mNotificationManager = (NotificationManager) getSystemService( getApplicationContext().NOTIFICATION_SERVICE );
                                             mNotificationManager.notify( 1, mBuilder.build() );
                                             //PendingIntent.getBroadcast(getApplicationContext(),1,resultIntent,0);
-                                        }
+                                        }*/
                                         if (partyName != "null") {
                                             sales.setPartyName( partyName );
                                         } else {

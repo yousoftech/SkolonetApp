@@ -29,7 +29,7 @@ public class HomeScreen extends AppCompatActivity {
     SharedPreferences preferences;
     ProgressDialog progressDialog;
     ConnectionDetector detector;
-    Button btnSales,btnTask,btnFilter,btnCloseLead;
+    Button btnSales,btnTask,btnFilter,btnCloseLead,btnComment;
     Toolbar toolbar;
     Button btnLogout;
     TextView txtTitle;
@@ -50,6 +50,8 @@ public class HomeScreen extends AppCompatActivity {
         btnLogout=(Button)findViewById(R.id.btnLogout);
         btnFilter = (Button)findViewById( R.id.btnFilter );
 btnCloseLead = (Button)findViewById(R.id.btnCloseLead);
+        btnComment = (Button)findViewById(R.id.btnComments);
+
         btnFilter.setVisibility( View.GONE );
 
         setupToolbar( "" + firstName + " " + lastName );
@@ -73,6 +75,13 @@ btnCloseLead = (Button)findViewById(R.id.btnCloseLead);
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getApplicationContext(),CloseLead.class).setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                startActivity(intent);
+            }
+        } );
+        btnComment.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),Comment.class).setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                 startActivity(intent);
             }
         } );

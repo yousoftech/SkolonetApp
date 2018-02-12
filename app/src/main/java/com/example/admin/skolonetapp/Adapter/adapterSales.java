@@ -3,23 +3,23 @@ package com.example.admin.skolonetapp.Adapter;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.accessibility.AccessibilityEvent;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,20 +43,19 @@ import com.example.admin.skolonetapp.Util.Constant;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.jar.Attributes;
 
 /**
  * Created by DELL on 1/21/2018.
  */
 
 public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerViewHolder> {
-
+    Calendar dateSelected = Calendar.getInstance();
+    private DatePickerDialog datePickerDialog;
     Context context;
     ArrayList<Sales> event;
     LayoutInflater inflater;
@@ -66,6 +65,9 @@ public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerView
     String reminderDate;
     int total=1;
      String reDate;
+     String time;
+     String ParName;
+    String selectedTime;
     float a;
     int RQS_1=0;
     public adapterSales(Context context, ArrayList<Sales> event) {
@@ -85,7 +87,7 @@ public class adapterSales extends RecyclerView.Adapter<adapterSales.RecyclerView
     public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
 
 
-         final String ParName = event.get(position).getPartyName();
+          ParName = event.get(position).getPartyName();
          reDate = event.get(position).getReminderDate();
          final double priorityval = event.get( position ).getPriority();
       final  String strAddress1 = event.get(position).getAddressLine1();
@@ -102,11 +104,7 @@ final String sdate = event.get( position ).getDatetimeCreated();
         Log.d("reDate", reDate + " ");
         Log.d("priorityval", priorityval + " ");
 
-        try {
-            reminder();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
 
 
         if (ParName != null) {
@@ -208,6 +206,7 @@ final String sdate = event.get( position ).getDatetimeCreated();
                     }
                 });
                 relativeLayoutReminder.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onClick(View v) {
 
@@ -222,64 +221,31 @@ final String sdate = event.get( position ).getDatetimeCreated();
                    //final TimePickerDialog simpleTimePickerDialog;
                       //  simpleTimePickerDialog = (TimePickerDialog) dialogView.findViewById(R.id.simpleTimePicker);
                         //   Log.d( "datede",reDate + " " );
-                        if(!reDate.equals(null)){
 
 
-                            Log.d( "asdasdasdasd","hrllo" );
-                  //          Long b= convertDate(reDate);
-                    //        Toast.makeText( context,  b + " ",Toast.LENGTH_SHORT ).show();
-
-                      //      simpleCalendarView.setDate(  b,false,false );
-                            editDelete.cancel();
-                            notifyDataSetChanged();
-
+                        try {
+                            setDateTimeField();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
 
+                        Sales sales = new Sales();
+                        Id = event.get(position).getPartyInfoId();
+                        type = event.get(position).getStrPartyType();
+                        sales.setPartyInfoId( fId );
+                        sales.setStrPartyType( type );
+                        sales.setReminderDate( reminderDate );
+                        sales.setPartyName( ParName );
+                        sales.setDatetimeCreated(sdate  );
+                        sales.setLocation( s );
+                        sales.setPriority( priorityval );
+                        event.set( position,sales );
+
+                        notifyDataSetChanged();
+                        reminder.cancel();
+                        editDelete.cancel();
 
 
-                        simpleCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-                            @Override
-                            public void onSelectedDayChange(@NonNull CalendarView view, final int year, int month, final int dayOfMonth) {
-
-                                month=month+1;
-
-
-
-
-                                final Calendar c= Calendar.getInstance();
-                                int hoursofday =c.get(Calendar.HOUR_OF_DAY);
-                                int minutesofday=c.get(Calendar.MINUTE);
-                                final int finalMonth = month;
-                                TimePickerDialog timePickerDialog=new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
-                                    @Override
-                                    public void onTimeSet (TimePicker timePicker, int hours, int minutes) {
-                                        reminderDate =  year + "/" + finalMonth + "/" + dayOfMonth + " " + hours + ":" + minutes;
-                                        Log.d( "asdasdasdasd",reminderDate );
-
-
-                                    }
-                                },hoursofday,minutesofday,true);
-
-                                timePickerDialog.show();
-                                //showTimePicker();
-  //                              Sales sales = new Sales();
-    //                            Id = event.get(position).getPartyInfoId();
-      //                          type = event.get(position).getStrPartyType();
-        //                        sales.setPartyInfoId( fId );
-        //                        sales.setStrPartyType( type );
-         //                       sales.setReminderDate( reminderDate );
-           //                     sales.setPartyName( ParName );
-           //                     sales.setDatetimeCreated(sdate  );
-          //                      sales.setLocation( s );
-           //                     sales.setPriority( priorityval );
-           //                     event.set( position,sales );
-
-                                notifyDataSetChanged();
-                                reminder.cancel();
-                                editDelete.cancel();
-
-                            }
-                        });
                         reminder.setOnDismissListener( new DialogInterface.OnDismissListener() {
                             @Override
                             public void onDismiss(DialogInterface dialog) {
@@ -521,67 +487,103 @@ Log.d("datee",reminderDate+"");
         }
     }
 
-    public Long convertDate(String dat)
-    {
-        String parts[] = dat.split("/");
 
-        int day = Integer.parseInt(parts[0]);
-        int month = Integer.parseInt(parts[1]);
-        int year = Integer.parseInt(parts[2]);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month-1);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
 
-        long milliTime = calendar.getTimeInMillis();
-        return milliTime;
-    }
-    public void showTimePicker()
-    {
-        final Calendar c= Calendar.getInstance();
-        int hours =c.get(Calendar.HOUR_OF_DAY);
-        int minutes=c.get(Calendar.MINUTE);
-        TimePickerDialog timePickerDialog=new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet (TimePicker timePicker, int hours, int minutes) {
-                reminderDate += " " + hours + ":" + "minutes";
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setDateTimeField() throws ParseException {
+        String parts[] = reDate.split(" ");
+        String date[] = parts[0].split("/");
+        String timeA[] = parts[1].split(":");
+
+        int day = Integer.parseInt(date[2]);
+        int month = Integer.parseInt(date[1]);
+        int year = Integer.parseInt(date[0]);
+        int mHour = Integer.parseInt(timeA[0]);
+        int mMinute =Integer.parseInt(timeA[1]);
+        Calendar newCalendar = Calendar.getInstance();
+newCalendar.set(year,month,day);
+      //  newCalendar.set(Calendar.YEAR, year);
+       // newCalendar.set(Calendar.MONTH, month-1);
+      //  newCalendar.set(Calendar.DAY_OF_MONTH, day);
+
+
+        datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                dateSelected.set(year, monthOfYear, dayOfMonth, 0, 0);
+                reminderDate = String.format( "%d/%d/%d", year, monthOfYear + 1, dayOfMonth );
             }
-        },hours,minutes,true);
+
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+
+
+
+        // Launch Time Picker Dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(context,
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay,
+                                          int minute) {
+
+                        try {
+                         time = " " +hourOfDay + ":" + minute + " ";
+                            remindre();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, mHour, mMinute, true);
 
         timePickerDialog.show();
-    }
+        datePickerDialog.show();
 
-    public void reminder()throws ParseException
-    {
-        String d=reDate;
-        Log.d("sd",d);
-        Date date=new SimpleDateFormat("yyyy/MM/dd hh:mm").parse(d);
-        Log.d("sdsd",d + "");
+    }    @SuppressLint("WrongConstant")
+    public void remindre() throws ParseException {
 
-        Toast.makeText(context,date+" ",Toast.LENGTH_LONG);
-        Calendar callNow=Calendar.getInstance();
-        Calendar calSet=(Calendar) callNow.clone();
-        calSet.set(Calendar.HOUR_OF_DAY,date.getHours());
-        calSet.set(Calendar.MINUTE,date.getMinutes());
-        calSet.set(Calendar.SECOND,0);
-        calSet.set(Calendar.MILLISECOND,0);
-        if(calSet.compareTo(callNow)<=0){
-            calSet.add(Calendar.DATE,1);
+
+
+
+        reminderDate += time;
+
+        Date date =new SimpleDateFormat("yyyy/MM/d HH:mm").parse(reminderDate);
+        Toast.makeText(context,date + " ",Toast.LENGTH_LONG);
+        Calendar calNow = Calendar.getInstance();
+        Calendar calSet = (Calendar) calNow.clone();
+        calSet.setTime(date);
+        calSet.set(Calendar.HOUR_OF_DAY, date.getHours());
+        calSet.set(Calendar.MINUTE, date.getMinutes());
+        calSet.set(Calendar.SECOND, 0);
+        calSet.set(Calendar.MILLISECOND, 0);
+        AddReminder();
+
+        if (calSet.compareTo(calNow) <= 0) {
+            // Today Set time passed, count to tomorrow
+            calSet.add(Calendar.DATE, 1);
         }
+
         setAlarm(calSet);
+
+
+    }
+    private void setAlarm(Calendar targetCal) {
+
+
+
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra( "partyName",ParName );
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context, RQS_1, intent, 0);
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(),
+                pendingIntent);
+        RQS_1++;
     }
 
-    private void setAlarm (Calendar targetcal) {
 
-            Intent intent =new Intent(context,AlarmReceiver.class);
-
-        PendingIntent pendingIntent=PendingIntent.getBroadcast(context,RQS_1,intent,0) ;
-        AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP,targetcal.getTimeInMillis(),pendingIntent);
-RQS_1++;
-    }
 
 
 }

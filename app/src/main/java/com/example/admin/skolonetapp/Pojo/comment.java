@@ -5,23 +5,33 @@ package com.example.admin.skolonetapp.Pojo;
  */
 
 public class comment {
-    public String getS() {
-        return s;
+    public int getId() {
+        return id;
     }
 
-    public void setS(String s) {
-        this.s = s;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String s;
-
-    public int getI() {
-        return i;
+    int id;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setI(int i) {
-        this.i = i;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
-    public int i;
+    String remark;
+
+    public String getText() {
+        return description;
+    }
+
+    public void setText(String text) {
+        this.description = text;
+    }
+
+    String description;
+
 }

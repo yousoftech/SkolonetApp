@@ -64,6 +64,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Activity.HomeScreen"
             android:screenOrientation="portrait"/>
+        <activity android:name=".Activity.Comment"
+            android:screenOrientation="portrait"/>
 <receiver android:name=".Adapter.AlarmReceiver"
     android:directBootAware="true"
     android:exported="false"
