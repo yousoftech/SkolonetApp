@@ -145,8 +145,7 @@ public class SankulActivity extends AppCompatActivity {
                     Toast.makeText(SankulActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
                 } else {
                     submitForm();
-                    startActivity(new Intent(SankulActivity.this, SalesMan.class));
-                    finish();
+                    startActivity(new Intent(SankulActivity.this, HomeScreen.class));
                 }
 
             }
@@ -155,7 +154,7 @@ public class SankulActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                startActivity(new Intent(SankulActivity.this, SalesMan.class));
+                startActivity(new Intent(SankulActivity.this, HomeScreen.class));
             }
         });
 
@@ -597,11 +596,15 @@ public class SankulActivity extends AppCompatActivity {
                                     String msg1 = response.getString("message");
                                     progressDialog.dismiss();
                                     Toast.makeText(SankulActivity.this, "" + msg1, Toast.LENGTH_SHORT).show();
+                                    finish();
+
                                 }
                             } catch (JSONException e) {
                                 progressDialog.dismiss();
                                 Toast.makeText(SankulActivity.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
                                 e.printStackTrace();
+                                finish();
+
                             }
                         }
                     }, new Response.ErrorListener() {
@@ -624,7 +627,7 @@ public class SankulActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(SankulActivity.this, SalesMan.class));
+        startActivity(new Intent(SankulActivity.this, HomeScreen.class));
         finish();
     }
 }

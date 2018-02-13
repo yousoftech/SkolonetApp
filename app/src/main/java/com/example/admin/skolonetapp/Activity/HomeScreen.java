@@ -6,6 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +24,13 @@ import android.widget.Toast;
 
 import com.example.admin.skolonetapp.R;
 import com.example.admin.skolonetapp.Util.ConnectionDetector;
+import com.example.admin.skolonetapp.fragments.HoldFragment;
+import com.example.admin.skolonetapp.fragments.SalesFragment;
+import com.example.admin.skolonetapp.fragments.commentFragment;
+import com.example.admin.skolonetapp.fragments.taskFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.admin.skolonetapp.Activity.LoginActivity.PREFS_NAME;
 
@@ -30,62 +42,77 @@ public class HomeScreen extends AppCompatActivity {
     ProgressDialog progressDialog;
     ConnectionDetector detector;
     Button btnSales,btnTask,btnFilter,btnCloseLead,btnComment;
-    Toolbar toolbar;
     Button btnLogout;
     TextView txtTitle;
     boolean doubleBackToExitPressedOnce = false;
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_home_screen );
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home_screen);
         preferences = getSharedPreferences( PREFS_NAME, MODE_PRIVATE );
         txtTitle=(TextView)findViewById(R.id.txtTitle);
         firstName = preferences.getString( "firstName", null );
         lastName = preferences.getString( "lastName", null );
         Userid = preferences.getString( "LoggedUser", null );
-        btnSales = (Button)findViewById( R.id.btnSales );
-        btnTask = (Button)findViewById( R.id.btnTask );
-        btnLogout=(Button)findViewById(R.id.btnLogout);
-        btnFilter = (Button)findViewById( R.id.btnFilter );
-btnCloseLead = (Button)findViewById(R.id.btnCloseLead);
-        btnComment = (Button)findViewById(R.id.btnComments);
+        btnLogout = (Button) findViewById( R.id.btnLogout );
 
-        btnFilter.setVisibility( View.GONE );
 
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setupToolbar( "" + firstName + " " + lastName );
 
-        btnTask.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),AdminSalesDetails.class).setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                startActivity(intent);
-            }
-        } );
+        setSupportActionBar(toolbar);
 
-        btnSales.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),SalesMan.class).setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                startActivity(intent);
-            }
-        } );
-        btnCloseLead.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),CloseLead.class).setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                startActivity(intent);
-            }
-        } );
-        btnComment.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),Comment.class).setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                startActivity(intent);
-            }
-        } );
 
+
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new commentFragment(), "Dashboard");
+       adapter.addFragment(new taskFragment(), "Task");
+       adapter.addFragment(new SalesFragment(), "Sales");
+        adapter.addFragment(new HoldFragment(), "Hold");
+
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
     private void setupToolbar(String title) {
         setSupportActionBar( toolbar );
@@ -145,7 +172,7 @@ btnCloseLead = (Button)findViewById(R.id.btnCloseLead);
                 doubleBackToExitPressedOnce = false;
             }
         }, 2000 );
-        //  finish();
+         finish();
 
     }
 

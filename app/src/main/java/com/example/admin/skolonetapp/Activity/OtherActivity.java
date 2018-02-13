@@ -95,8 +95,7 @@ public class OtherActivity extends AppCompatActivity {
                     Toast.makeText(OtherActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
                 } else {
                     submitForm();
-                    startActivity(new Intent(OtherActivity.this, SalesMan.class));
-                    finish();
+                    startActivity(new Intent(OtherActivity.this, HomeScreen.class));
                 }
             }
         });
@@ -104,7 +103,7 @@ public class OtherActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                startActivity(new Intent(OtherActivity.this, SalesMan.class));
+                startActivity(new Intent(OtherActivity.this, HomeScreen.class));
             }
         });
     }
@@ -176,10 +175,15 @@ public class OtherActivity extends AppCompatActivity {
                                 } else if (code == false) {
                                     String msg1 = response.getString("message");
                                     progressDialog.dismiss();
+                                    finish();
+
                                     Toast.makeText(OtherActivity.this, "" + msg1, Toast.LENGTH_SHORT).show();
+
                                 }
                             } catch (JSONException e) {
                                 progressDialog.dismiss();
+                                finish();
+
                                 Toast.makeText(OtherActivity.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
                                 e.printStackTrace();
                             }
@@ -205,7 +209,7 @@ public class OtherActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(OtherActivity.this, SalesMan.class));
+        startActivity(new Intent(OtherActivity.this, HomeScreen.class));
         finish();
     }
 }

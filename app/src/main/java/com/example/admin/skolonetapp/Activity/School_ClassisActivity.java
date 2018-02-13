@@ -165,8 +165,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                     Toast.makeText(School_ClassisActivity.this, "Please Select Medium", Toast.LENGTH_SHORT).show();
                 } else {
                     submitForm();
-                    startActivity(new Intent(School_ClassisActivity.this, SalesMan.class));
-                    finish();
+                    startActivity(new Intent(School_ClassisActivity.this, HomeScreen.class));
                 }
             }
         });
@@ -174,7 +173,7 @@ public class School_ClassisActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                startActivity(new Intent(School_ClassisActivity.this, SalesMan.class));
+                startActivity(new Intent(School_ClassisActivity.this, HomeScreen.class));
             }
         });
     }
@@ -605,14 +604,20 @@ Log.d( "boardName",selectedBoardNameEnglish );
                                 if (code == true) {
                                     Toast.makeText(School_ClassisActivity.this, "" + msg, Toast.LENGTH_SHORT).show();
                                     progressDialog.dismiss();
+                                    finish();
 
                                 } else if (code == false) {
                                     String msg1 = response.getString("message");
                                     progressDialog.dismiss();
+                                    finish();
+
                                     Toast.makeText(School_ClassisActivity.this, "" + msg1, Toast.LENGTH_SHORT).show();
+
                                 }
                             } catch (JSONException e) {
                                 progressDialog.dismiss();
+                                finish();
+
                                 Toast.makeText(School_ClassisActivity.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
                                 e.printStackTrace();
                             }
@@ -638,7 +643,7 @@ Log.d( "boardName",selectedBoardNameEnglish );
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(School_ClassisActivity.this, SalesMan.class));
+        startActivity(new Intent(School_ClassisActivity.this, HomeScreen.class));
         finish();
     }
 

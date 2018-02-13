@@ -99,8 +99,7 @@ public class PartyActivity extends AppCompatActivity {
                     Toast.makeText(PartyActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
                 } else {
                     submitForm();
-                    startActivity(new Intent(PartyActivity.this, SalesMan.class));
-                    finish();
+                //    startActivity(new Intent(PartyActivity.this, HomeScreen.class));
                 }
 
             }
@@ -109,7 +108,7 @@ public class PartyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                startActivity(new Intent(PartyActivity.this, SalesMan.class));
+                startActivity(new Intent(PartyActivity.this, HomeScreen.class));
             }
         });
     }
@@ -182,15 +181,21 @@ public class PartyActivity extends AppCompatActivity {
 //                                    JSONObject obj = response.getJSONObject("data");
                                     progressDialog.dismiss();
                                     finish();
+                                    startActivity(new Intent(PartyActivity.this, HomeScreen.class));
+
                                 } else if (code == false) {
                                     String msg1 = response.getString("message");
                                     Log.d("messsafe",msg1);
                                     progressDialog.dismiss();
                                     Toast.makeText(PartyActivity.this, "" + msg1, Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(PartyActivity.this, HomeScreen.class));
+
                                 }
                             } catch (JSONException e) {
                                 progressDialog.dismiss();
                                 Toast.makeText(PartyActivity.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(PartyActivity.this, HomeScreen.class));
+
                                 e.printStackTrace();
                             }
                         }
@@ -214,7 +219,7 @@ public class PartyActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(PartyActivity.this, SalesMan.class));
+        startActivity(new Intent(PartyActivity.this, HomeScreen.class));
         finish();
     }
 }

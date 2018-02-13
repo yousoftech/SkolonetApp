@@ -7,9 +7,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -50,9 +49,11 @@
             android:name=".Activity.SalesMan"
             android:screenOrientation="portrait" />
 
-       <!-- <receiver
+        <!--
+            <receiver
             android:name=".Util.NotificationReceiver"
-            android:process=":remote" />-->
+            android:process=":remote" />
+        -->
 
         <activity
             android:name=".Activity.FullDetail"
@@ -60,23 +61,35 @@
         <activity
             android:name=".spinnerex"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.AdminSalesDetails"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Activity.HomeScreen"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Activity.Comment"
-            android:screenOrientation="portrait"/>
-<receiver android:name=".Adapter.AlarmReceiver"
-    android:directBootAware="true"
-    android:exported="false"
-    >
-    <intent-filter>
-        <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+        <activity
+            android:name=".Activity.AdminSalesDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.HomeScreen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.Comment"
+            android:screenOrientation="portrait" />
 
-        <category android:name="android.intent.action.BOOT_COMPLETED" />
-    </intent-filter>
-</receiver>
+        <receiver
+            android:name=".Adapter.AlarmReceiver"
+            android:directBootAware="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
 
+                <category android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".Activity.MainHomeActivity"
+            android:label="@string/title_activity_main_home"
+            >
+            <intent-filter>
+            <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

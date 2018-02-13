@@ -158,7 +158,7 @@ public class FullDetail extends AppCompatActivity {
                         Toast.makeText(FullDetail.this, "Please Enter AverageStudent", Toast.LENGTH_SHORT).show();
                     } else {
                         submitForm();
-                        startActivity(new Intent(FullDetail.this, SalesMan.class));
+                        startActivity(new Intent(FullDetail.this, HomeScreen.class));
                     }
                 } else if (type.equals("Party")) {
                     if (edtPartyShopName.getText().toString().equals("")) {
@@ -183,7 +183,7 @@ public class FullDetail extends AppCompatActivity {
                         Toast.makeText(FullDetail.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
                     } else {
                         submitForm();
-                        startActivity(new Intent(FullDetail.this, SalesMan.class));
+                        startActivity(new Intent(FullDetail.this, HomeScreen.class));
                     }
                 } else if (type.equals("Classes") || type.equals(("School"))) {
                     if (edtSankulOrganization.getText().toString().equals("")) {
@@ -208,7 +208,7 @@ public class FullDetail extends AppCompatActivity {
                         Toast.makeText(FullDetail.this, "Please Enter AverageStudent", Toast.LENGTH_SHORT).show();
                     } else {
                         submitForm();
-                        startActivity(new Intent(FullDetail.this, SalesMan.class));
+                        startActivity(new Intent(FullDetail.this, HomeScreen.class));
                     }
                 } else if (type.equals("Others")) {
                     if (edtSankulOrganization.getText().toString().equals("")) {
@@ -231,7 +231,7 @@ public class FullDetail extends AppCompatActivity {
                         Toast.makeText(FullDetail.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
                     } else {
                         submitForm();
-                        startActivity(new Intent(FullDetail.this, SalesMan.class));
+                        startActivity(new Intent(FullDetail.this, HomeScreen.class));
                     }
                 }
 
@@ -242,7 +242,7 @@ public class FullDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                startActivity(new Intent(FullDetail.this, SalesMan.class));
+                startActivity(new Intent(FullDetail.this, HomeScreen.class));
             }
         });
 
@@ -1321,7 +1321,7 @@ spinnerStdHindi.setVisibility( View.GONE );
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(FullDetail.this, SalesMan.class));
+        startActivity(new Intent(FullDetail.this, HomeScreen.class));
         finish();
     }
 

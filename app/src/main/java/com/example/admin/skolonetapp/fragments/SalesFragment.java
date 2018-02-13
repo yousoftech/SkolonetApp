@@ -1,15 +1,17 @@
-package com.example.admin.skolonetapp.Activity;
+package com.example.admin.skolonetapp.fragments;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,15 +19,16 @@ import android.os.Message;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -33,10 +36,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.app.NotificationManager;
-import android.app.Notification;
-import android.app.TaskStackBuilder;
-import android.support.v4.app.NotificationCompat;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -45,32 +45,45 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.androidbuts.multispinnerfilter.KeyPairBoolData;
+import com.example.admin.skolonetapp.Activity.AdminSalesDetails;
+import com.example.admin.skolonetapp.Activity.Comment;
+import com.example.admin.skolonetapp.Activity.HomeScreen;
+import com.example.admin.skolonetapp.Activity.LoginActivity;
+import com.example.admin.skolonetapp.Activity.OtherActivity;
+import com.example.admin.skolonetapp.Activity.PartyActivity;
+import com.example.admin.skolonetapp.Activity.SalesMan;
+import com.example.admin.skolonetapp.Activity.SankulActivity;
+import com.example.admin.skolonetapp.Activity.School_ClassisActivity;
+import com.example.admin.skolonetapp.Adapter.adapterAdminSales;
 import com.example.admin.skolonetapp.Adapter.adapterSales;
+import com.example.admin.skolonetapp.Adapter.adaptercomment;
 import com.example.admin.skolonetapp.Pojo.Sales;
 import com.example.admin.skolonetapp.Pojo.SalesList;
+import com.example.admin.skolonetapp.Pojo.comment;
 import com.example.admin.skolonetapp.R;
 import com.example.admin.skolonetapp.Util.ConnectionDetector;
 import com.example.admin.skolonetapp.Util.Constant;
 import com.example.admin.skolonetapp.Util.LocationAddress;
 import com.example.admin.skolonetapp.Util.LocationResult;
 import com.example.admin.skolonetapp.Util.MyLocation;
-import java.text.SimpleDateFormat;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import  android.net.Uri;
-import android.media.RingtoneManager;
-
+import static android.content.Context.MODE_PRIVATE;
+import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.example.admin.skolonetapp.Activity.LoginActivity.PREFS_NAME;
 
-public class SalesMan extends AppCompatActivity implements LocationResult {
+
+public class SalesFragment extends Fragment implements LocationResult {
+
 
     FloatingActionButton fabButton;
     Spinner spinner;
@@ -111,36 +124,47 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
     private static final int INITIAL_REQUEST = 13;
 
 
+    public SalesFragment() {
+        // Required empty public constructor
+
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_sales_man );
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
-        detector = new ConnectionDetector( this );
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.activity_sales_man, container, false);
+
+        detector = new ConnectionDetector( getContext() );
 
 
-        preferences = getSharedPreferences( PREFS_NAME, MODE_PRIVATE );
-        txtTitle = (TextView) findViewById( R.id.txtTitle );
-        btnLogout = (Button) findViewById( R.id.btnLogout );
-        btnFilter = (Button) findViewById( R.id.btnFilter );
-        relativeFilter = (RelativeLayout) findViewById( R.id.RelativeFilter );
-        spinnerFliter = (Spinner) findViewById( R.id.spinnerFilter );
+        preferences = getContext().getSharedPreferences( PREFS_NAME, MODE_PRIVATE );
+        txtTitle = (TextView)view.findViewById( R.id.txtTitle );
+        btnLogout = (Button) view.findViewById( R.id.btnLogout );
+        btnFilter = (Button) view.findViewById( R.id.btnFilter );
+        relativeFilter = (RelativeLayout) view.findViewById( R.id.RelativeFilter );
+        spinnerFliter = (Spinner) view.findViewById( R.id.spinnerFilter );
         firstName = preferences.getString( "firstName", null );
         lastName = preferences.getString( "lastName", null );
         Userid = preferences.getString( "LoggedUser", null );
-      //  setupToolbar( "" + firstName + " " + lastName );
-        recyclerView = (RecyclerView) findViewById( R.id.recyclerSales );
-        txtRecords = (TextView) findViewById( R.id.txtNoRecords );
-        btnFilter = (Button) findViewById( R.id.btnFilter );
+        recyclerView = (RecyclerView) view.findViewById( R.id.recyclerSales );
+        txtRecords = (TextView) view.findViewById( R.id.txtNoRecords );
+        btnFilter = (Button) view.findViewById( R.id.btnFilter );
         event = new ArrayList<Sales>();
         myLocation = new MyLocation();
         NotificationManager manager;
         Notification myNotication;
 
-      //  recyclerView.destroyDrawingCache();
-        Bundle bundle = getIntent().getExtras();
+        //  recyclerView.destroyDrawingCache();
+       // Bundle bundle = getContext().getIntent().getExtras();
 
-        Log.d( "asdv" ,bundle+"" );
+
+      //  Log.d( "asdv" ,bundle+"" );
 
 
        /*if (!bundle.getString("total").equalsIgnoreCase( "" ))
@@ -152,7 +176,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
        {
            txtRecords.setVisibility( View.GONE );
        }*/
-        manager = (NotificationManager) getSystemService( NOTIFICATION_SERVICE );
+        manager = (NotificationManager)getContext().getSystemService( NOTIFICATION_SERVICE );
 
 
 
@@ -180,7 +204,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
             }
         } );
 
-        fabButton = (FloatingActionButton) findViewById( R.id.fabButton );
+        fabButton = (FloatingActionButton)view.findViewById( R.id.fabButton );
         fabButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,14 +214,14 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                     }
 
                 } else {
-                    boolean networkPresent = myLocation.getLocation( SalesMan.this, SalesMan.this );
+                    boolean networkPresent = myLocation.getLocation( getContext(), SalesFragment.this );
                     if (!networkPresent) {
                         showSettingsAlert();
                     }
                 }
                 std();
-                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder( SalesMan.this );
-                final LayoutInflater inflater = (LayoutInflater) SalesMan.this.getSystemService( SalesMan.this.LAYOUT_INFLATER_SERVICE );
+                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder( getContext() );
+                final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService( getContext().LAYOUT_INFLATER_SERVICE );
                 final View dialogView = inflater.inflate( R.layout.app_choose, null );
                 dialogBuilder.setView( dialogView );
                 final AlertDialog a = dialogBuilder.create();
@@ -213,35 +237,34 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                         salesId = salesList.getSalesId();
 
                         if (from.equalsIgnoreCase( "School" )) {
-                            Intent intent = new Intent( SalesMan.this, School_ClassisActivity.class );
+                            Intent intent = new Intent( getContext(), School_ClassisActivity.class );
                             intent.putExtra( "fromName", from );
                             intent.putExtra( "fromId", salesId );
                             startActivity( intent );
-                            finish();
                         } else if (from.equalsIgnoreCase( "Classes" )) {
-                            Intent intent = new Intent( SalesMan.this, School_ClassisActivity.class );
+                            Intent intent = new Intent( getContext(), School_ClassisActivity.class );
                             intent.putExtra( "fromName", from );
                             intent.putExtra( "fromId", salesId );
                             startActivity( intent );
-                            finish();
+                        //    finish();
                         } else if (from.equalsIgnoreCase( "Sankul" )) {
-                            Intent intent = new Intent( SalesMan.this, SankulActivity.class );
+                            Intent intent = new Intent( getContext(), SankulActivity.class );
                             intent.putExtra( "fromName", from );
                             intent.putExtra( "fromId", salesId );
                             startActivity( intent );
-                            finish();
+                         //   finish();
                         } else if (from.equalsIgnoreCase( "Party" )) {
-                            Intent intent = new Intent( SalesMan.this, PartyActivity.class );
+                            Intent intent = new Intent( getContext(), PartyActivity.class );
                             intent.putExtra( "fromName", from );
                             intent.putExtra( "fromId", salesId );
                             startActivity( intent );
-                            finish();
+                        //    finish();
                         } else if (from.equalsIgnoreCase( "Others" )) {
-                            Intent intent = new Intent( SalesMan.this, OtherActivity.class );
+                            Intent intent = new Intent( getContext(), OtherActivity.class );
                             intent.putExtra( "fromName", from );
                             intent.putExtra( "fromId", salesId );
                             startActivity( intent );
-                            finish();
+                         //   finish();
                         }
                     }
 
@@ -254,65 +277,22 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
             }
         } );
         detailFrom( -1 );
+        return  view;
+
     }
 
- /*   private void setupToolbar(String title) {
-        setSupportActionBar( toolbar );
-       // txtTitle.setText( title );
-        btnLogout.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder( SalesMan.this );
-                LayoutInflater inflater = SalesMan.this.getLayoutInflater();
-                dialogBuilder.setMessage( "Are you sure you want to logout ?" );
 
-                dialogBuilder.setPositiveButton( "Logout", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.remove( "logged" );
-                        editor.clear();
-                        editor.commit();
-                        finish();
-                        startActivity( new Intent( SalesMan.this, LoginActivity.class ) );
-                        Toast.makeText( getApplicationContext(), "Logout", Toast.LENGTH_SHORT ).show();
-                    }
-                } );
-                dialogBuilder.setNegativeButton( "Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                } );
-
-                AlertDialog a = dialogBuilder.create();
-                a.show();
-            }
-        } );
-        btnFilter.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                relativeFilter.setVisibility( View.VISIBLE );
-                std1();
-            }
-        } );
-        final ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle( "" );
-            actionBar.setDisplayHomeAsUpEnabled( false );
-            actionBar.setHomeButtonEnabled( false );
-        }
-    }*/
 
     public void std() {
 
         if (detector.isConnectingToInternet()) {
 
-            progressDialog = new ProgressDialog( this );
+            progressDialog = new ProgressDialog( getContext() );
             progressDialog.setCancelable( false );
             progressDialog.setMessage( "Loading..." );
             progressDialog.show();
-            RequestQueue requestQueue = Volley.newRequestQueue( this );
+            RequestQueue requestQueue = Volley.newRequestQueue( getContext() );
 
 
             final JsonObjectRequest request = new JsonObjectRequest( Request.Method.POST,
@@ -363,7 +343,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                     Log.d( "logg", salesArr + "" );
 
 
-                                    ArrayAdapter board1 = new ArrayAdapter( SalesMan.this, android.R.layout.simple_spinner_item, salesArr );
+                                    ArrayAdapter board1 = new ArrayAdapter( getContext(), android.R.layout.simple_spinner_item, salesArr );
                                     board1.setDropDownViewResource( android.R.layout.select_dialog_singlechoice );
                                     spinner.setAdapter( board1 );
 
@@ -374,11 +354,11 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
 
                                 } else {
                                     progressDialog.dismiss();
-                                    Toast.makeText( SalesMan.this, msg, Toast.LENGTH_SHORT ).show();
+                                    Toast.makeText( getContext(), msg, Toast.LENGTH_SHORT ).show();
                                 }
                             } catch (JSONException e) {
                                 progressDialog.dismiss();
-                                Toast.makeText( SalesMan.this, "Something take longer time please try again..!", Toast.LENGTH_LONG ).show();
+                                Toast.makeText( getContext(), "Something take longer time please try again..!", Toast.LENGTH_LONG ).show();
                                 e.printStackTrace();
                             }
                         }
@@ -396,7 +376,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT ) );
             requestQueue.add( request );
         } else {
-            Toast.makeText( this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG ).show();
+            Toast.makeText( getContext(), "Please check your internet connection before verification..!", Toast.LENGTH_LONG ).show();
         }
     }
 
@@ -404,11 +384,11 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
 
         if (detector.isConnectingToInternet()) {
 
-            progressDialog = new ProgressDialog( this );
+            progressDialog = new ProgressDialog( getContext() );
             progressDialog.setCancelable( false );
             progressDialog.setMessage( "Loading..." );
             progressDialog.show();
-            RequestQueue requestQueue = Volley.newRequestQueue( this );
+            RequestQueue requestQueue = Volley.newRequestQueue( getContext() );
 
 
             final JsonObjectRequest request = new JsonObjectRequest( Request.Method.POST,
@@ -459,7 +439,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                     Log.d( "logg", salesArr + "" );
 
 
-                                    ArrayAdapter board1 = new ArrayAdapter( SalesMan.this, android.R.layout.simple_spinner_item, salesArr );
+                                    ArrayAdapter board1 = new ArrayAdapter( getContext(), android.R.layout.simple_spinner_item, salesArr );
                                     board1.setDropDownViewResource( android.R.layout.select_dialog_singlechoice );
                                     spinnerFliter.setAdapter( board1 );
 //                                    ArrayAdapter board = new ArrayAdapter(SalesMan.this, android.R.layout.simple_spinner_item, salesArr);
@@ -469,11 +449,11 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
 
                                 } else {
                                     progressDialog.dismiss();
-                                    Toast.makeText( SalesMan.this, msg, Toast.LENGTH_SHORT ).show();
+                                    Toast.makeText( getContext(), msg, Toast.LENGTH_SHORT ).show();
                                 }
                             } catch (JSONException e) {
                                 progressDialog.dismiss();
-                                Toast.makeText( SalesMan.this, "Something take longer time please try again..!", Toast.LENGTH_LONG ).show();
+                                Toast.makeText( getContext(), "Something take longer time please try again..!", Toast.LENGTH_LONG ).show();
                                 e.printStackTrace();
                             }
                         }
@@ -491,14 +471,14 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT ) );
             requestQueue.add( request );
         } else {
-            Toast.makeText( this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG ).show();
+            Toast.makeText( getContext(), "Please check your internet connection before verification..!", Toast.LENGTH_LONG ).show();
         }
     }
 
     public void detailFrom(final int typeId) {
         if (detector.isConnectingToInternet()) {
 
-            progressDialog = new ProgressDialog( this );
+            progressDialog = new ProgressDialog( getContext() );
             progressDialog.setCancelable( false );
             progressDialog.setMessage( "Loading..." );
             progressDialog.show();
@@ -517,10 +497,10 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                             if(array.length() > 0) {
 
                                 for (int n = 0; n < array.length(); n++) {
-                                JSONObject obj = array.getJSONObject( n );
-                                sales = new Sales();
+                                    JSONObject obj = array.getJSONObject( n );
+                                    sales = new Sales();
 
-                                String partyInfoId = obj.getString( "partyInfoId" );
+                                    String partyInfoId = obj.getString( "partyInfoId" );
                                     String iPartyTypeName = obj.getString( "strPartyType" );
                                     String shopName = obj.getString( "shopName" );
                                     String partyName = obj.getString( "partyName" );
@@ -529,9 +509,9 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                     String strCityName = obj.getString( "cityName" );
                                     String strStateName = obj.getString( "stateName" );
 
-                                String strMedium = obj.getString( "strMedium" );
-                                List<String> list = new ArrayList<>();
-                                list = Arrays.asList( strMedium.split( "," ) );
+                                    String strMedium = obj.getString( "strMedium" );
+                                    List<String> list = new ArrayList<>();
+                                    list = Arrays.asList( strMedium.split( "," ) );
                                     for (int i = 0; i <= listArrayMedium.size() - 1; i++) {
                                         for (int k = 0; k <= list.size() - 1; k++) {
                                             String a = listArrayMedium.get( i ).getId() + "";
@@ -549,7 +529,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                     String latitude = obj.getString( "latitude" );
                                     String longitude = obj.getString( "longitude" );
                                     double priority = obj.getDouble( "priority" );
-String partyDate = convert( partyDate1 );
+                                    String partyDate = convert( partyDate1 );
 
                                     int ipartTypeId = obj.getInt( "iPartyTypeId" );
 
@@ -633,36 +613,36 @@ String partyDate = convert( partyDate1 );
                                     if (totalElements > 0) {
                                         txtRecords.setVisibility( View.GONE );
                                         recyclerView.setVisibility( View.VISIBLE );
-                                        aSales = new adapterSales( SalesMan.this, event );
+                                        aSales = new adapterSales( getContext(), event );
                                         recyclerView.setAdapter( aSales );
-                                        recyclerView.setLayoutManager( new LinearLayoutManager( SalesMan.this, LinearLayoutManager.VERTICAL, false ) );
+                                        recyclerView.setLayoutManager( new LinearLayoutManager( getContext(), LinearLayoutManager.VERTICAL, false ) );
                                         aSales.notifyDataSetChanged();
-                                  //      btnFilter.setVisibility( View.VISIBLE );
+                                   //     btnFilter.setVisibility( View.VISIBLE );
 
                                     }
                                     else{
                                         txtRecords.setVisibility( View.VISIBLE );
                                         recyclerView.setVisibility( View.GONE );
-                                        aSales = new adapterSales( SalesMan.this, event );
+                                        aSales = new adapterSales( getContext(), event );
                                         recyclerView.setAdapter( aSales );
-                                        recyclerView.setLayoutManager( new LinearLayoutManager( SalesMan.this, LinearLayoutManager.VERTICAL, false ) );
+                                        recyclerView.setLayoutManager( new LinearLayoutManager( getContext(), LinearLayoutManager.VERTICAL, false ) );
                                         aSales.notifyDataSetChanged();
                                       //  btnFilter.setVisibility( View.GONE );
                                     }
                                     progressDialog.dismiss();
 
-                            }
+                                }
 
-                        }
+                            }
                             else
                             {
                                 txtRecords.setVisibility( View.VISIBLE );
                                 recyclerView.setVisibility( View.GONE );
-                                aSales = new adapterSales( SalesMan.this, event );
+                                aSales = new adapterSales( getContext(), event );
                                 recyclerView.setAdapter( aSales );
-                                recyclerView.setLayoutManager( new LinearLayoutManager( SalesMan.this, LinearLayoutManager.VERTICAL, false ) );
+                                recyclerView.setLayoutManager( new LinearLayoutManager( getContext(), LinearLayoutManager.VERTICAL, false ) );
                                 aSales.notifyDataSetChanged();
-                             //   btnFilter.setVisibility( View.GONE );
+                           //     btnFilter.setVisibility( View.GONE );
                             }
 
                         }
@@ -684,10 +664,10 @@ String partyDate = convert( partyDate1 );
                     30000,
                     DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT ) );
-            RequestQueue requestQueue = Volley.newRequestQueue( SalesMan.this );
+            RequestQueue requestQueue = Volley.newRequestQueue( getContext() );
             requestQueue.add( objectRequest );
         } else {
-            Toast.makeText( SalesMan.this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG ).show();
+            Toast.makeText( getContext(), "Please check your internet connection before verification..!", Toast.LENGTH_LONG ).show();
         }
     }
 
@@ -701,7 +681,7 @@ String partyDate = convert( partyDate1 );
 
     private boolean hasPermission(String perm) {
 
-        return (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission( SalesMan.this, perm ));
+        return (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission( getContext(), perm ));
     }
 
     @Override
@@ -709,7 +689,7 @@ String partyDate = convert( partyDate1 );
         switch (requestCode) {
             case INITIAL_REQUEST:
                 if (canAccessLocation() && canAccessCoreLocation()) {
-                    boolean networkPresent = myLocation.getLocation( SalesMan.this, this );
+                    boolean networkPresent = myLocation.getLocation( getContext(), this );
                     if (!networkPresent) {
                         showSettingsAlert();
                     }
@@ -721,7 +701,7 @@ String partyDate = convert( partyDate1 );
 
     public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(
-                SalesMan.this );
+                getContext() );
         alertDialog.setTitle( "SETTINGS" );
         alertDialog.setMessage( "Enable Location Provider! Go to settings menu?" );
         alertDialog.setPositiveButton( "Settings",
@@ -729,7 +709,7 @@ String partyDate = convert( partyDate1 );
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(
                                 Settings.ACTION_LOCATION_SOURCE_SETTINGS );
-                        SalesMan.this.startActivity( intent );
+                        getContext().startActivity( intent );
                     }
                 } );
         alertDialog.setNegativeButton( "Cancel",
@@ -749,7 +729,7 @@ String partyDate = convert( partyDate1 );
                 " Longitude: " + location.getLongitude();
         Log.d( "latlongggg", latlong );
 
-        preferences = getApplicationContext().getSharedPreferences( PREFS_NAME, 0 );
+        preferences = getContext().getApplicationContext().getSharedPreferences( PREFS_NAME, 0 );
         SharedPreferences.Editor editor = preferences.edit();
         String lat = location.getLatitude() + "";
         String lon = location.getLongitude() + "";
@@ -757,12 +737,12 @@ String partyDate = convert( partyDate1 );
         editor.putString( "longitude", lon );
         editor.commit();
         Log.d( "latlong", latlong + "" );
-        SalesMan.this.runOnUiThread( new Runnable() {
+        getActivity().runOnUiThread( new Runnable() {
             @Override
             public void run() {
                 LocationAddress locationAddress = new LocationAddress();
                 locationAddress.getAddressFromLocation( latitude, longitude,
-                        getApplicationContext(), new GeocoderHandler() );
+                     getActivity().getApplicationContext(), new GeocoderHandler() );
             }
         } );
 
@@ -783,7 +763,7 @@ String partyDate = convert( partyDate1 );
             addtLocation = locationAddress;
             Log.d( "location", addtLocation );
 
-            preferences = getApplicationContext().getSharedPreferences( PREFS_NAME, 0 );
+            preferences = getContext().getApplicationContext().getSharedPreferences( PREFS_NAME, 0 );
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString( "location", locationAddress );
             editor.commit();
@@ -792,38 +772,17 @@ String partyDate = convert( partyDate1 );
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
 
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText( this, "Please click BACK again to exit", Toast.LENGTH_SHORT ).show();
-
-        new Handler().postDelayed( new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000 );
-
-    //finish();
-
-    }
     public void std12()
     {
 
         if (detector.isConnectingToInternet()) {
 
-            progressDialog = new ProgressDialog( this );
+            progressDialog = new ProgressDialog( getContext() );
             progressDialog.setCancelable( false );
             progressDialog.setMessage( "Loading..." );
             progressDialog.show();
-            RequestQueue requestQueue = Volley.newRequestQueue( this );
+            RequestQueue requestQueue = Volley.newRequestQueue( getContext() );
 
 
             final JsonObjectRequest request = new JsonObjectRequest( Request.Method.GET,
@@ -895,11 +854,11 @@ String partyDate = convert( partyDate1 );
 
                                 } else {
                                     progressDialog.dismiss();
-                                    Toast.makeText( SalesMan.this, msg, Toast.LENGTH_SHORT ).show();
+                                    Toast.makeText( getContext(), msg, Toast.LENGTH_SHORT ).show();
                                 }
                             } catch (JSONException e) {
                                 progressDialog.dismiss();
-                                Toast.makeText( SalesMan.this, "Something take longer time please try again..!", Toast.LENGTH_LONG ).show();
+                                Toast.makeText( getContext(), "Something take longer time please try again..!", Toast.LENGTH_LONG ).show();
                                 e.printStackTrace();
                             }
                         }
@@ -917,7 +876,7 @@ String partyDate = convert( partyDate1 );
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT ) );
             requestQueue.add( request );
         } else {
-            Toast.makeText( this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG ).show();
+            Toast.makeText( getContext(), "Please check your internet connection before verification..!", Toast.LENGTH_LONG ).show();
         }
     }
 
@@ -952,3 +911,4 @@ String partyDate = convert( partyDate1 );
     }
 
 }
+
