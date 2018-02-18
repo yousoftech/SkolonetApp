@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,7 @@ public class School_ClassisActivity extends AppCompatActivity {
     ConnectionDetector detector;
     TextView txtFormName;
     Button btnSave, btnCancel;
+    RelativeLayout r1,r2,r3;
 
     final List<KeyPairBoolData> listArrayStdEnglish = new ArrayList<>();
     final List<KeyPairBoolData> listArrayStdGujarati = new ArrayList<>();
@@ -104,14 +106,14 @@ public class School_ClassisActivity extends AppCompatActivity {
         edtSankulAverageStudentEnglish = (EditText) findViewById(R.id.edtSchoolAverageStudentEnglish);
 
         spinnerStdHindi = (MultiSpinnerSearch) findViewById(R.id.spinnerSchoolStandardHindi );
-        spinnerSchoolBoardHindi  = (SingleSpinner) findViewById(R.id.spinnerSchoolBoardHindi );
         edtSankulAverageStudentHindi  = (EditText) findViewById(R.id.edtSchoolAverageStudentHindi );
 
         spinnerStdGujarati = (MultiSpinnerSearch) findViewById(R.id.spinnerSchoolStandardGujarati );
-        spinnerSchoolBoardGujarati  = (SingleSpinner) findViewById(R.id.spinnerSchoolBoardGujarati );
         edtSankulAverageStudentGujarati  = (EditText) findViewById(R.id.edtSchoolAverageStudentGujarati);
 
-
+r1=(RelativeLayout)findViewById( R.id.r1 );
+        r2=(RelativeLayout)findViewById( R.id.r2 );
+        r3=(RelativeLayout)findViewById( R.id.r3 );
 
         txtFormName = (TextView) findViewById(R.id.txtForm);
         btnSave = (Button) findViewById(R.id.btnYes);
@@ -153,15 +155,15 @@ public class School_ClassisActivity extends AppCompatActivity {
                     Toast.makeText(School_ClassisActivity.this, "Please Enter City", Toast.LENGTH_SHORT).show();
                 } else if (edtSchoolState.getText().toString().equals("")) {
                     Toast.makeText(School_ClassisActivity.this, "Please Enter State", Toast.LENGTH_SHORT).show();
-                } else if (edtSchoolRemark.getText().toString().equals("")) {
-                    Toast.makeText(School_ClassisActivity.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
-                } else if (edtSankulAverageStudentEnglish.getText().toString().equals("")) {
+                }
+                /*else if (edtSankulAverageStudentEnglish.getText().toString().equals("")) {
                     Toast.makeText(School_ClassisActivity.this, "Please Enter AverageStudent", Toast.LENGTH_SHORT).show();
                 }else if (boardName.equalsIgnoreCase("Select Board")) {
                     Toast.makeText(School_ClassisActivity.this, "Please Select Board", Toast.LENGTH_SHORT).show();
                 } else if (stdName.equalsIgnoreCase("Select Standard")) {
                     Toast.makeText(School_ClassisActivity.this, "Please Select Standard", Toast.LENGTH_SHORT).show();
-                } else if (mediumName.equalsIgnoreCase("Select Medium")) {
+                }*/
+                else if (mediumName.equalsIgnoreCase("Select Medium")) {
                     Toast.makeText(School_ClassisActivity.this, "Please Select Medium", Toast.LENGTH_SHORT).show();
                 } else {
                     submitForm();
@@ -347,26 +349,7 @@ public class School_ClassisActivity extends AppCompatActivity {
 
 
                                     }
-                                    for (int i = 0; i < objArray3.length(); i++) {
-                                        JSONObject jresponse = objArray3.getJSONObject(i);
-                                        int boardId = jresponse.getInt("iBoardId");
-                                        String boardName = jresponse.getString("strBoardName");
-                                        KeyPairBoolData boarddata = new KeyPairBoolData();
-                                        boarddata.setId(boardId);
-                                        boarddata.setName(boardName);
-                                        boarddata.setSelected( false );
-                                        listArrayBoardGujarti.add(boarddata);
-                                    }
-                                    for (int i = 0; i < objArray3.length(); i++) {
-                                        JSONObject jresponse = objArray3.getJSONObject(i);
-                                        int boardId = jresponse.getInt("iBoardId");
-                                        String boardName = jresponse.getString("strBoardName");
-                                        KeyPairBoolData boarddata = new KeyPairBoolData();
-                                        boarddata.setId(boardId);
-                                        boarddata.setName(boardName);
-                                        boarddata.setSelected( false );
-                                        listArrayBoardHindi.add(boarddata);
-                                    }
+
 
 
 
@@ -384,54 +367,56 @@ public class School_ClassisActivity extends AppCompatActivity {
                                                     stdkey.setName( items.get( i ).getName() );
                                                     stdkey.setSelected( true );
                                                     selectedMediumName += items.get( i ).getId() + "";
-                                                    if(items.get(i).getName().equals("Hindi"))
+                                                    if(items.get(i).getName().equals("Hindi Medium") )
                                                     {
-                                                        spinnerStdHindi.setVisibility(View.VISIBLE);
 
-                                                        spinnerSchoolBoardHindi.setVisibility(View.VISIBLE);
-                                                        edtSankulAverageStudentHindi.setVisibility( View.VISIBLE );
+                                                        r2.setVisibility( View.VISIBLE );
+
+
+
 
                                                     }
-                                                    if(items.get(i).getName().equals("Gujarati"))
+                                                    if(items.get(i).getName().equals("Gujarati Medium") )
                                                     {
-                                                        spinnerStdGujarati.setVisibility(View.VISIBLE);
+                                                        r3.setVisibility( View.VISIBLE );
 
-                                                        spinnerSchoolBoardGujarati.setVisibility(View.VISIBLE);
-                                                        edtSankulAverageStudentGujarati.setVisibility( View.VISIBLE );
+
                                                     }
-                                                       if(items.get(i).getName().equals("English"))
+                                                    if(items.get(i).getName().equals("English Medium"))
                                                     {
-                                                        spinnerStdEnglish.setVisibility(View.VISIBLE);
+                                                        r1.setVisibility( View.VISIBLE );
 
-                                                        spinnerSchoolBoardEnglish.setVisibility(View.VISIBLE);
-                                                        edtSankulAverageStudentEnglish.setVisibility( View.VISIBLE );
+                                                        //spinnerStdGujarati.setVisibility(View.GONE);
+
+
                                                     }
+                                                    spinnerSchoolBoardEnglish.setVisibility(View.VISIBLE);
+
                                                     selectedlistArrayMedium.add( stdkey );
                                                     Log.i("", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
                                                 }
                                                 if (items.get(i).isSelected() == false) {
-                                                    if(items.get(i).getName().equals("English"))
+                                                    if(items.get(i).getName().equals("English Medium"))
                                                     {
-                                                        spinnerStdEnglish.setVisibility(View.GONE);
 
-                                                        spinnerSchoolBoardEnglish.setVisibility(View.GONE);
-                                                        edtSankulAverageStudentEnglish.setVisibility( View.GONE );
+
+
+                                                        r1.setVisibility( View.GONE );
                                                     }
-                                                    if(items.get(i).getName().equals("Hindi"))
+                                                    if(items.get(i).getName().equals("Hindi Medium"))
                                                     {
-                                                        spinnerStdHindi.setVisibility(View.GONE);
 
-                                                        spinnerSchoolBoardHindi.setVisibility(View.GONE);
-                                                        edtSankulAverageStudentHindi.setVisibility( View.GONE );
+                                                        r2.setVisibility( View.GONE );
+
 
                                                     }
-                                                    if(items.get(i).getName().equals("Gujarati"))
+                                                    if(items.get(i).getName().equals("Gujarati Medium"))
                                                     {
-                                                        spinnerStdGujarati.setVisibility(View.GONE);
 
-                                                        spinnerSchoolBoardGujarati.setVisibility(View.GONE);
-                                                        edtSankulAverageStudentGujarati.setVisibility( View.GONE );
+                                                        r3.setVisibility( View.GONE );
+
                                                     }
+
                                                 }
                                             }
                                         }
@@ -457,42 +442,7 @@ public class School_ClassisActivity extends AppCompatActivity {
                                         }
                                     });
 
-                                    spinnerSchoolBoardHindi.setItems(listArrayBoardHindi, -1, new SpinnerListener() {
 
-                                        @Override
-                                        public void onItemsSelected(List<KeyPairBoolData> items) {
-
-                                            for (int i = 0; i < items.size(); i++) {
-                                                if (items.get(i).isSelected()) {
-                                                    KeyPairBoolData stdkey = new KeyPairBoolData();
-                                                    stdkey.setId(items.get( i ).getId() );
-                                                    stdkey.setName( items.get( i ).getName() );
-                                                    stdkey.setSelected( true );
-                                                    selectedBoardNameHindi = items.get( i ).getId() + "";
-                                                    selectedlistArrayBoard.add( stdkey );
-                                                    Log.i("", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
-                                                }
-                                            }
-                                        }
-                                    });
-                                    spinnerSchoolBoardGujarati.setItems(listArrayBoardGujarti, -1, new SpinnerListener() {
-
-                                        @Override
-                                        public void onItemsSelected(List<KeyPairBoolData> items) {
-
-                                            for (int i = 0; i < items.size(); i++) {
-                                                if (items.get(i).isSelected()) {
-                                                    KeyPairBoolData stdkey = new KeyPairBoolData();
-                                                    stdkey.setId(items.get( i ).getId() );
-                                                    stdkey.setName( items.get( i ).getName() );
-                                                    stdkey.setSelected( true );
-                                                    selectedBoardNameGujarati = items.get( i ).getId() + "";
-                                                    selectedlistArrayBoard.add( stdkey );
-                                                    Log.i("", i + " : " + items.get(i).getName() + " : " + items.get(i).isSelected());
-                                                }
-                                            }
-                                        }
-                                    });
 
                                  //   ArrayAdapter medium = new ArrayAdapter(School_ClassisActivity.this, android.R.layout.simple_spinner_item, mediumArr);
                                 //    medium.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -574,6 +524,7 @@ Log.d( "boardName",selectedBoardNameEnglish );
                 object.put("AvgStudentEnglish", edtSankulAverageStudentEnglish.getText().toString());
                 object.put("AvgStudentHindi", edtSankulAverageStudentHindi.getText().toString());
                 object.put("AvgStudentGujarati", edtSankulAverageStudentGujarati.getText().toString());
+                object.put("contactNo", edtSchoolContactNumber.getText().toString());
                 object.put("iPartyTypeId", fromId);
                 object.put("AddressLine1", edtSchoolAddress1.getText().toString());
                 object.put("AddressLine2", edtSchoolAddress2.getText().toString());

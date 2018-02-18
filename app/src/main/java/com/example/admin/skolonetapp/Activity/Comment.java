@@ -106,14 +106,12 @@ public class Comment extends AppCompatActivity {
         preferences = getSharedPreferences( PREFS_NAME, MODE_PRIVATE );
         txtTitle = (TextView) findViewById( R.id.txtTitle );
         btnLogout = (Button) findViewById( R.id.btnLogout );
-        btnFilter = (Button) findViewById( R.id.btnFilter );
         firstName = preferences.getString( "firstName", null );
         lastName = preferences.getString( "lastName", null );
         Userid = preferences.getString( "LoggedUser", null );
         setupToolbar( "" + firstName + " " + lastName );
         recyclerView = (RecyclerView) findViewById( R.id.recyclercomment );
         txtRecords = (TextView) findViewById( R.id.txtNoRecords );
-        btnFilter = (Button) findViewById( R.id.btnFilter );
         event = new ArrayList<comment>();
         NotificationManager manager;
         Notification myNotication;
@@ -205,7 +203,6 @@ public class Comment extends AppCompatActivity {
                                         recyclerView.setAdapter( aComment );
                                         recyclerView.setLayoutManager( new LinearLayoutManager( Comment.this, LinearLayoutManager.VERTICAL, false ) );
                                         aComment.notifyDataSetChanged();
-                                        btnFilter.setVisibility( View.VISIBLE );
 
                                     } else {
                                         txtRecords.setVisibility( View.VISIBLE );
@@ -214,7 +211,6 @@ public class Comment extends AppCompatActivity {
                                         recyclerView.setAdapter( aComment );
                                         recyclerView.setLayoutManager( new LinearLayoutManager( Comment.this, LinearLayoutManager.VERTICAL, false ) );
                                         aComment.notifyDataSetChanged();
-                                        btnFilter.setVisibility( View.GONE );
                                     }
                                     progressDialog.dismiss();
 
@@ -227,7 +223,6 @@ public class Comment extends AppCompatActivity {
                                 recyclerView.setAdapter( aComment );
                                 recyclerView.setLayoutManager( new LinearLayoutManager( Comment.this, LinearLayoutManager.VERTICAL, false ) );
                                 aComment.notifyDataSetChanged();
-                                btnFilter.setVisibility( View.GONE );
                             }
 
                         }

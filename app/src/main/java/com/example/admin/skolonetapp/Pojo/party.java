@@ -4,12 +4,15 @@ package com.example.admin.skolonetapp.Pojo;
  * Created by DELL on 1/21/2018.
  */
 
-public class SalesList {
+public class party {
     int salesId;
     String salesName;
 
-
-
+    public party( int _id, String _name )
+    {
+        salesId = _id;
+        salesName = _name;
+    }
     public int getSalesId() {
         return salesId;
     }

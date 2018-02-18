@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -70,11 +72,157 @@ public class adapterAdminSales extends RecyclerView.Adapter<adapterAdminSales.Re
     @Override
     public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
 
-        String a=event.get(position).getStrTaskName();
+        final String a=event.get(position).getStrTaskName();
         String b=event.get(position).getStrTaskDescription();
+        String status = event.get( position ).getTaskStatus();
+
+        String reason = event.get( position ).getTaskReason();
+        final String id =event.get(position).getTaskId();
+        if(!reason.isEmpty())
+        {
+            holder.txtReason.setVisibility(View.VISIBLE  );
+            holder.txtReason.setText("Reason : " + reason );
+        }
+        else
+        {
+            holder.txtReason.setVisibility(View.GONE  );
+
+        }
+        if(status.equalsIgnoreCase( "Pending" ) )
+        {
+            Log.d( "TaskStatuss",status + " " + id );
+            holder.btnOpnTask.setVisibility( View.VISIBLE );
+
+        }
+        else if(status.equalsIgnoreCase("Seen"))
+        {
+            holder.btnApprovedTask.setVisibility( View.VISIBLE );
+            holder.btnDeclineTask.setVisibility( View.VISIBLE );
+        }
+        else if(status.equalsIgnoreCase("Approve"))
+        {
+            holder.btnOpnTask.setVisibility( View.GONE );
+            holder.btnCompleted.setVisibility( View.VISIBLE );
+            holder.btnDeclineTask.setVisibility( View.VISIBLE );
+            holder.btnDeclineTask.setText( "Not Completed" );
+
+        }
+        else if(status.equalsIgnoreCase("Completed"))
+        {
+            holder.txtApproved.setVisibility( View.VISIBLE );
+            holder.imgCompleted.setVisibility( View.VISIBLE );
+            holder.btnCompleted.setVisibility( View.GONE );
+            holder.btnApprovedTask.setVisibility( View.GONE );
+            holder.btnDeclineTask.setVisibility( View.GONE );
+            holder.btnOpnTask.setVisibility( View.GONE );
+            //   holder.btnCompleted.setVisibility( View.VISIBLE );
+          //  holder.btnDeclineTask.setVisibility( View.VISIBLE );
+        }
+        else if(status.equalsIgnoreCase("Not Completed"))
+        {
+            holder.txtDeclined.setVisibility( View.VISIBLE );
+            holder.txtDeclined.setText( "Declined After Approving" );
+            holder.imgNotCompleted.setVisibility( View.VISIBLE );
+            holder.btnCompleted.setVisibility( View.GONE );
+            holder.btnApprovedTask.setVisibility( View.GONE );
+            holder.btnDeclineTask.setVisibility( View.GONE );
+            holder.btnOpnTask.setVisibility( View.GONE );
+            //   holder.btnCompleted.setVisibility( View.VISIBLE );
+            //  holder.btnDeclineTask.setVisibility( View.VISIBLE );
+        }
+        else if(status.equalsIgnoreCase("Declined"))
+        {
+            holder.txtDeclined.setVisibility( View.VISIBLE );
+            holder.imgNotCompleted.setVisibility( View.VISIBLE );
+            holder.btnCompleted.setVisibility( View.GONE );
+            holder.btnApprovedTask.setVisibility( View.GONE );
+            holder.btnDeclineTask.setVisibility( View.GONE );
+            holder.btnOpnTask.setVisibility( View.GONE );
+            //   holder.btnCompleted.setVisibility( View.VISIBLE );
+            //  holder.btnDeclineTask.setVisibility( View.VISIBLE );
+        }
         holder.txt_taskName.setText(a);
         holder.txt_taskDescription.setText(b);
 
+
+        holder.btnOpnTask.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d( "taskNae",a +"");
+                holder.btnApprovedTask.setVisibility( View.VISIBLE );
+                holder.btnDeclineTask.setVisibility( View.VISIBLE );
+                holder.btnOpnTask.setVisibility( View.GONE );
+                UpdateTaskStatus(id,"Seen","");
+            }
+        } );
+        holder.btnApprovedTask.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.btnCompleted.setVisibility( View.VISIBLE );
+                holder.btnApprovedTask.setVisibility( View.GONE );
+
+                UpdateTaskStatus(id,"Approve","");
+                holder.btnDeclineTask.setText( "Not Completed" );
+            }
+        } );
+        holder.btnCompleted.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.btnCompleted.setVisibility( View.GONE );
+                holder.btnApprovedTask.setVisibility( View.GONE );
+                holder.btnDeclineTask.setVisibility( View.GONE );
+                holder.btnOpnTask.setVisibility( View.GONE );
+                holder.txtApproved.setVisibility( View.VISIBLE );
+                holder.imgCompleted.setVisibility( View.VISIBLE );
+                }
+        } );
+        holder.btnDeclineTask.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+                final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View dialogView = inflater.inflate(R.layout.taskdeclineview, null);
+                dialogBuilder.setView(dialogView);
+                final AlertDialog editDelete = dialogBuilder.create();
+                editDelete.show();
+                final EditText edtReason;
+                Button btnSubmit;
+                edtReason = (EditText)dialogView.findViewById( R.id.reason );
+                btnSubmit = (Button)dialogView.findViewById( R.id.btnSubmit );
+
+                btnSubmit.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String btnText = holder.btnDeclineTask.getText().toString();
+                        if(btnText.equalsIgnoreCase( "Not Completed" )) {
+                            holder.txtDeclined.setVisibility( View.VISIBLE );
+                            holder.txtDeclined.setText( "Declined After Approving" );
+                            holder.imgNotCompleted.setVisibility( View.VISIBLE );
+                            holder.btnCompleted.setVisibility( View.GONE );
+                            holder.btnApprovedTask.setVisibility( View.GONE );
+                            holder.btnDeclineTask.setVisibility( View.GONE );
+                            holder.btnOpnTask.setVisibility( View.GONE );
+                            UpdateTaskStatus( id, "Not Completed", edtReason.getText().toString() );
+                        }
+                        if(btnText.equalsIgnoreCase( "Decline"   )) {
+                            holder.txtDeclined.setVisibility( View.VISIBLE );
+                            holder.imgNotCompleted.setVisibility( View.VISIBLE );
+                            UpdateTaskStatus( id, "Declined", edtReason.getText().toString() );
+                            holder.btnCompleted.setVisibility( View.GONE );
+                            holder.btnApprovedTask.setVisibility( View.GONE );
+                            holder.btnDeclineTask.setVisibility( View.GONE );
+                            holder.btnOpnTask.setVisibility( View.GONE );
+                        }
+
+                        editDelete.cancel();
+                        notifyDataSetChanged();                    }
+                } );
+
+
+
+
+            }
+        } );
             /*  holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -236,6 +384,58 @@ public class adapterAdminSales extends RecyclerView.Adapter<adapterAdminSales.Re
         });*/
     }
 
+    public void UpdateTaskStatus(String taskId,String taskStatus ,String taskReason) {
+        detector = new ConnectionDetector(context);
+        if (detector.isConnectingToInternet()) {
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Loading...");
+            progressDialog.show();
+      //      Log.d("datee",reminderDate+"");
+//Toast.makeText(this,reminderDate,Toast.LENGTH_LONG).show();
+            JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST,
+                    Constant.PATH + "Task/taskstatusupdate?iUserTaskGuid=" + taskId + "&status=" + taskStatus + "&strReason=" + taskReason , null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.d("fullDetail", response.toString() + " ====>" + fId);
+                    try {
+                        boolean code = response.getBoolean("status");
+                        Log.d("code",code+"");
+                        String msg = response.getString( "message" ) ;
+                        if (code == true) {
+                            Toast.makeText(context, "Task Updated ", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                        }
+                        else
+                        {
+                            Toast.makeText(context, "Task Updating Failure", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    if (progressDialog != null)
+                        progressDialog.dismiss();
+                }
+            });
+            objectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    30000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            RequestQueue requestQueue = Volley.newRequestQueue(context);
+            requestQueue.add(objectRequest);
+        } else {
+            Toast.makeText(context, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
+        }
+    }
 
     @Override
     public int getItemCount() {
@@ -244,7 +444,10 @@ public class adapterAdminSales extends RecyclerView.Adapter<adapterAdminSales.Re
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txt_taskName, txt_taskDescription;
+        TextView txt_taskName, txt_taskDescription,txtApproved,txtDeclined,txtReason;
+        Button btnOpnTask,btnApprovedTask,btnDeclineTask,btnCompleted;
+        ImageView imgCompleted,imgNotCompleted;
+
 
 
         public RecyclerViewHolder(View itemView) {
@@ -252,6 +455,15 @@ public class adapterAdminSales extends RecyclerView.Adapter<adapterAdminSales.Re
             txt_taskName = (TextView) itemView.findViewById(R.id.txt_task_Name);
 
             txt_taskDescription = (TextView) itemView.findViewById(R.id.txt_task_description);
+            btnOpnTask = (Button)itemView.findViewById( R.id.taskOpn );
+            btnApprovedTask=(Button)itemView.findViewById( R.id.taskApprove );
+            btnDeclineTask = (Button)itemView.findViewById( R.id.taskDecline );
+            btnCompleted = (Button)itemView.findViewById( R.id.taskCompleted );
+            txtApproved = (TextView)itemView.findViewById( R.id.txtCompleted );
+            txtDeclined = (TextView)itemView.findViewById( R.id.txtDeclined );
+            imgCompleted = (ImageView)itemView.findViewById( R.id.imgCompleted );
+            imgNotCompleted = (ImageView)itemView.findViewById( R.id.imgNotCompleted );
+            txtReason = (TextView)itemView.findViewById( R.id.txt_task_Reason );
 
 
         }

@@ -18,95 +18,89 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Party Name : Shop Shah"
+                android:text="Shop Name"
+                android:visibility="gone"
+
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 />
             <TextView
-                android:id="@+id/txt_PartyName"
+                android:id="@+id/txt_Organisation_Name"
                 android:layout_below="@+id/txt_Shop_Name"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Party Name : Kush Shah"
+                android:text="YOU Holidays"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="20sp"
                 android:textStyle="bold" />
             <TextView
-                android:id="@+id/txt_PartyType"
+                android:id="@+id/txt_Party_Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_PartyName"
+                android:layout_below="@+id/txt_Organisation_Name"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:text="Type : School"
+                android:text="Arpit Shah"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/txt_Distributor_Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_Party_Name"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="Distributor Name"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
 
-        <!--    <TextView
-                android:id="@+id/txt_Latitude"
+
+            <TextView
+                android:id="@+id/txt_ContatctNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_PartyType"
+                android:layout_below="@+id/txt_Distributor_Name"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:text="Latitude : "
+                android:text="9913658651"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txt_Longitude"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_Latitude"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:text="Longitude : "
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="15sp"
-                android:textStyle="bold" />-->
-
-
-            <TextView
-                android:id="@+id/txt_PartyLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_PartyType"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:text="Meeting Place : Ahmadabad"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txt_PartyDateTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_PartyLocation"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:text="Meeting Date Time : 25/01/2018 10:00"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-            <Button
+                android:id="@+id/txt_Address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_PartyDateTime"
-                android:text="Call"
-                android:background="@color/colorAccent"
-                android:drawableLeft=""/>
+                android:layout_below="@+id/txt_ContatctNo"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="C G Road Ahmedabad"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                style="@style/customRatingBar"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_Address"
+                android:layout_margin="10dp"
+                android:id="@+id/ratingBar"
+                android:clickable="false"
+                android:focusedByDefault="false"
+                android:isIndicator="true"
+                />
 
         </RelativeLayout>
 

@@ -34,7 +34,7 @@
 
     <RatingBar
         android:id="@+id/Priority"
-        android:layout_width="240dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relativePriority"
 android:layout_centerVertical="true"

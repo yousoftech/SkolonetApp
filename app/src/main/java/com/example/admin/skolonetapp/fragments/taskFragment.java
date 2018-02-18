@@ -68,7 +68,7 @@ public class taskFragment extends Fragment {
     ConnectionDetector detector;
     RecyclerView recyclerView;
     TextView txtRecords;Toolbar toolbar;
-    Button btnLogout,btnFilter;
+    Button btnLogout;
     TextView txtTitle;
     boolean doubleBackToExitPressedOnce = false;
     Sales sales;
@@ -110,11 +110,9 @@ public class taskFragment extends Fragment {
 
         txtTitle = (TextView)view.findViewById( R.id.txtTitle );
         btnLogout = (Button)view.findViewById( R.id.btnLogout );
-        btnFilter = (Button)view.findViewById( R.id.btnFilter );
 
         recyclerView = (RecyclerView)view.findViewById( R.id.recyclerSales );
         txtRecords = (TextView)view.findViewById( R.id.txtNoRecords );
-        btnFilter = (Button)view.findViewById( R.id.btnFilter );
         event = new ArrayList<Sales>();
 
 
@@ -152,15 +150,19 @@ public class taskFragment extends Fragment {
 
                                     String taskName = obj.getString( "taskName" );
                                     String description = obj.getString( "description" );
+                                    String reason = obj.getString( "strReason" );
+String status = obj.getString( "status" );
+                                    String taskId = obj.getString( "iUserTaskGuid" );
 
 
 
 
 
-
-                                    sales.setStrTaskName("Task Name : " +  taskName );
-                                    sales.setStrTaskDescription("Task Description : " + description );
-
+                                    sales.setTaskReason( reason );
+                                    sales.setStrTaskName("Name : " +  taskName );
+                                    sales.setStrTaskDescription("Description : " + description );
+                                    sales.setTaskStatus( status );
+                                    sales.setTaskId( taskId );
 
 
 

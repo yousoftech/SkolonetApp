@@ -62,7 +62,7 @@ public class commentFragment extends Fragment {
     FloatingActionButton fabButton;
     Spinner spinner;
     TextView txtTitle;
-    Button btnLogout, btnFilter;
+    Button btnLogout;
     String from, addtLocation, latlong;
     String firstName, lastName, Userid;
     int salesId;
@@ -116,11 +116,9 @@ public class commentFragment extends Fragment {
 
         txtTitle = (TextView)view. findViewById( R.id.txtTitle );
         btnLogout = (Button)view. findViewById( R.id.btnLogout );
-        btnFilter = (Button)view. findViewById( R.id.btnFilter );
 
         recyclerView = (RecyclerView)view.findViewById( R.id.recyclercomment );
         txtRecords = (TextView)view.findViewById( R.id.txtNoRecords );
-        btnFilter = (Button)view.findViewById( R.id.btnFilter );
         event = new ArrayList<comment>();
 
 

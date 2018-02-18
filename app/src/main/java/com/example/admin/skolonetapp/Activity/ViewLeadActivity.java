@@ -2,17 +2,14 @@ package com.example.admin.skolonetapp.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -41,14 +38,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class FullDetail extends AppCompatActivity {
+public class ViewLeadActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
     ConnectionDetector detector;
     String fromId, type, itypeId;
-    EditText edtSankulName, edtSankulOrganization, edtSankulPartyName, edtSankulDesignation, edtSankulContactNumber,
+    TextView edtSankulName, edtSankulOrganization, edtSankulPartyName, edtSankulDesignation, edtSankulContactNumber,
             edtSankulAddress1,edtSankulAverageStudentEnglish,edtSankulAverageStudentHindi,edtSankulAverageStudentGujarati, edtSankulAddress2, edtSankulCity, edtSankulState, edtSankulRemark, edtPartyShopName, edtPartyType, edtPartyDistributorName;
     MultiSpinnerSearch spinnerStdEnglish, spinnerStdHindi,spinnerStdGujarati,  spinnerMedium;
     SingleSpinner spinnerSchoolBoardEnglish, spinnerSchoolBoardHindi,spinnerSchoolBoardGujarati;
@@ -66,7 +62,7 @@ public class FullDetail extends AppCompatActivity {
     final List<KeyPairBoolData> selectedlistArrayStd = new ArrayList<>();
     final List<KeyPairBoolData> selectedlistArrayMedium = new ArrayList<>();
     final List<KeyPairBoolData> selectedlistArrayBoard = new ArrayList<>();
-
+RelativeLayout r1,r2,r3;
     List<String> getselectedMedium = null;
     Integer[] array ={};
     List<String> getselectedStdHindi;
@@ -75,407 +71,68 @@ public class FullDetail extends AppCompatActivity {
     int getselectedBoardHindi;
     int getselectedBoardGujarati;
     int getselectedBoardEnglish;
-RelativeLayout r1,r2,r3;
+
 
     String strBoardHindi,strBoardGujarati,strBoardEnglish,strStandardHindi,strStandardEnglish,strStandardGujarati;
     int avgStudentEnglish,avgStudentHindi,avgStudentGujarati;
 
     int stdId, mediumId, boardId;
     int selectedStdId,selectedBoard,selectedMedium;
-    Button btnSave, btnCancel;
 
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_full_detail);
-        edtSankulName = (EditText) findViewById(R.id.edtSankulName);
-        edtSankulOrganization = (EditText) findViewById(R.id.edtSankulOrganization);
-        edtSankulPartyName = (EditText) findViewById(R.id.edtSankulPartyName);
-        edtSankulDesignation = (EditText) findViewById(R.id.edtSankulDesignation);
-        edtSankulContactNumber = (EditText) findViewById(R.id.edtSankulContactNumber);
-        edtSankulAddress1 = (EditText) findViewById(R.id.edtSankulAddress1);
-        edtSankulAddress2 = (EditText) findViewById(R.id.edtSankulAddress2);
-        edtSankulCity = (EditText) findViewById(R.id.edtSankulCity);
-        edtSankulState = (EditText) findViewById(R.id.edtSankulState);
-        edtSankulRemark = (EditText) findViewById(R.id.edtSankulRemark);
+        super.onCreate( savedInstanceState );
+        setContentView( R.layout.activity_view_lead );
+
+        edtSankulName = (TextView) findViewById(R.id.edtSankulName);
+        edtSankulOrganization = (TextView) findViewById(R.id.edtSankulOrganization);
+        edtSankulPartyName = (TextView) findViewById(R.id.edtSankulPartyName);
+        edtSankulDesignation = (TextView) findViewById(R.id.edtSankulDesignation);
+        edtSankulContactNumber = (TextView) findViewById(R.id.edtSankulContactNumber);
+        edtSankulAddress1 = (TextView) findViewById(R.id.edtSankulAddress1);
+        edtSankulAddress2 = (TextView) findViewById(R.id.edtSankulAddress2);
+        edtSankulCity = (TextView) findViewById(R.id.edtSankulCity);
+        edtSankulState = (TextView) findViewById(R.id.edtSankulState);
+        edtSankulRemark = (TextView) findViewById(R.id.edtSankulRemark);
 
         spinnerMedium = (MultiSpinnerSearch) findViewById(R.id.spinnerSchoolMedium);
         spinnerStdEnglish = (MultiSpinnerSearch) findViewById(R.id.spinnerSchoolStandardEnglish);
         spinnerSchoolBoardEnglish = (SingleSpinner) findViewById(R.id.spinnerSchoolBoardEnglish);
-        edtSankulAverageStudentEnglish = (EditText) findViewById(R.id.edtSchoolAverageStudentEnglish);
+        edtSankulAverageStudentEnglish = (TextView) findViewById(R.id.edtSchoolAverageStudentEnglish);
 
         spinnerStdHindi = (MultiSpinnerSearch) findViewById(R.id.spinnerSchoolStandardHindi );
-        edtSankulAverageStudentHindi  = (EditText) findViewById(R.id.edtSchoolAverageStudentHindi );
+        edtSankulAverageStudentHindi  = (TextView) findViewById(R.id.edtSchoolAverageStudentHindi );
 
         spinnerStdGujarati = (MultiSpinnerSearch) findViewById(R.id.spinnerSchoolStandardGujarati );
-        edtSankulAverageStudentGujarati  = (EditText) findViewById(R.id.edtSchoolAverageStudentGujarati);
+        edtSankulAverageStudentGujarati  = (TextView) findViewById(R.id.edtSchoolAverageStudentGujarati);
 
-        r1=(RelativeLayout)findViewById( R.id.r1 );
+
+r1=(RelativeLayout)findViewById( R.id.r1 );
         r2=(RelativeLayout)findViewById( R.id.r2 );
+
         r3=(RelativeLayout)findViewById( R.id.r3 );
 
+        edtPartyShopName = (TextView) findViewById(R.id.edtPartyShopName);
+        edtPartyDistributorName = (TextView) findViewById(R.id.edtPartyDistributorName);
+        edtPartyType = (TextView) findViewById(R.id.edtPartyType);
 
-
-        edtPartyShopName = (EditText) findViewById(R.id.edtPartyShopName);
-        edtPartyDistributorName = (EditText) findViewById(R.id.edtPartyDistributorName);
-        edtPartyType = (EditText) findViewById(R.id.edtPartyType);
-        btnSave = (Button) findViewById(R.id.btnYesUpdate);
-        btnCancel = (Button) findViewById(R.id.btnCancelUpdate);
         detector = new ConnectionDetector(this);
         Intent intent = getIntent();
         fromId = intent.getStringExtra("fromId");
         Log.d("Typee", type + " ");
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                startActivity(new Intent(FullDetail.this, SalesMan.class));
-            }
-        });
-
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (type.equals("Sankul")) {
-                    if (edtSankulName.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Sankul Name", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulOrganization.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Organization", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulPartyName.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Party Name", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulDesignation.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Designation", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulContactNumber.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Contact Number", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulAddress1.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulAddress2.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulCity.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter City", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulState.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter State", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulRemark.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulAverageStudentEnglish.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter AverageStudent", Toast.LENGTH_SHORT).show();
-                    } else {
-                        submitForm();
-                        startActivity(new Intent(FullDetail.this, HomeScreen.class));
-                    }
-                } else if (type.equals("Party")) {
-                    if (edtPartyShopName.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Shop Name", Toast.LENGTH_SHORT).show();
-                    } else if (edtPartyDistributorName.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Distributor Name", Toast.LENGTH_SHORT).show();
-                    } else if (edtPartyType.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Party Type", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulDesignation.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Designation", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulContactNumber.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Contact Number", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulAddress1.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulAddress2.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulCity.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter City", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulState.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter State", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulRemark.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
-                    } else {
-                        submitForm();
-                        startActivity(new Intent(FullDetail.this, HomeScreen.class));
-                    }
-                } else if (type.equals("Classes") || type.equals(("School"))) {
-                    if (edtSankulOrganization.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Organization", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulPartyName.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Party Name", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulDesignation.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Designation", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulContactNumber.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Contact Number", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulAddress1.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulAddress2.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulCity.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter City", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulState.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter State", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulRemark.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulAverageStudentEnglish.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter AverageStudent", Toast.LENGTH_SHORT).show();
-                    } else {
-                        submitForm();
-                        startActivity(new Intent(FullDetail.this, HomeScreen.class));
-                    }
-                } else if (type.equals("Others")) {
-                    if (edtSankulOrganization.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Organization", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulPartyName.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Party Name", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulDesignation.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Designation", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulContactNumber.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Contact Number", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulAddress1.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulAddress2.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Address", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulCity.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter City", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulState.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter State", Toast.LENGTH_SHORT).show();
-                    } else if (edtSankulRemark.getText().toString().equals("")) {
-                        Toast.makeText(FullDetail.this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
-                    } else {
-                        submitForm();
-                        startActivity(new Intent(FullDetail.this, HomeScreen.class));
-                    }
-                }
-
-
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                startActivity(new Intent(FullDetail.this, HomeScreen.class));
-            }
-        });
-
-
         fullDetail();
 
-     /*   btnCancel .setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                startActivity(new Intent(FullDetail.this, SalesMan.class));
-            }
-        });*/
-
 
     }
-
-    public void submitForm() {
-        if (detector.isConnectingToInternet()) {
-
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setCancelable(false);
-            progressDialog.setMessage("Loading...");
-            progressDialog.show();
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-            final JSONObject object = new JSONObject();
-            try {
-                // Log.d("create object",type);
-                if (type.equals("Sankul")) {
-                    edtPartyShopName.setVisibility(View.GONE);
-                    edtPartyType.setVisibility(View.GONE);
-                    edtPartyDistributorName.setVisibility(View.GONE);
-
-                    object.put("OrganisationName", edtSankulOrganization.getText().toString());
-
-                    object.put("PartyName", edtSankulPartyName.getText().toString());
-                    object.put("SankulName", edtSankulName.getText().toString());
-//                object.put("ShopName", "");
-//                object.put("DistubitorName", "Kush");
-//                object.put("DistubitorType", "Sankul");
-                    Log.d("boarddid", boardId + "");
-                    Log.d("mediummid", mediumId + "");
-                    Log.d("stddid", stdId + "");
-                    object.put( "strBoardEnglish", getselectedBoardEnglish );
-
-                    if(selectedMediumName.isEmpty())
-                    {
-                        object.put( "strMedium", getselectedMedium );
-
-                    }
-                    else {
-                        object.put( "strMedium", selectedMediumName );
-                    }
-
-                    if(selectedStdNameEnglish.isEmpty())
-                    {
-                        object.put("strStandardEnglish", getselectedStdEnglish);
-
-                    }
-                    else {
-                        object.put("strStandardEnglish", selectedStdNameEnglish);
-                    }
-
-                    if(selectedStdNameHindi.isEmpty())
-                    {
-                        object.put("strStandardHindi", getselectedStdHindi);
-
-                    }
-                    else {
-                        object.put("strStandardHindi", selectedStdNameHindi);
-                    }
-
-
-                    if(selectedStdNameHindi.isEmpty())
-                    {
-                        object.put("strStandardGujarati", getselectedStdHindi);
-
-                    }
-                    else {
-                        object.put("strStandardGujarati", selectedStdNameGujarati);
-                    }
-                    object.put("AvgStudentEnglish", edtSankulAverageStudentEnglish.getText().toString());
-                    object.put("AvgStudentHindi", edtSankulAverageStudentHindi.getText().toString());
-                    object.put("AvgStudentGujarati", edtSankulAverageStudentGujarati.getText().toString());
-
-                }
-                if (type.equals("Party")) {
-                    edtSankulName.setVisibility(View.GONE);
-                    edtSankulOrganization.setVisibility(View.GONE);
-                    edtSankulPartyName.setVisibility(View.GONE);
-                    spinnerStdEnglish.setVisibility(View.GONE);
-                    spinnerSchoolBoardEnglish.setVisibility(View.GONE);
-                    spinnerMedium.setVisibility(View.GONE);
-                    object.put("ShopName", edtPartyShopName.getText().toString());
-                    object.put("DistubitorName", edtPartyDistributorName.getText().toString());
-                    object.put("DistubitorType", edtPartyType.getText().toString());
-                }
-                if (type.equals("Classes") || type.equals(("School"))) {
-                    edtSankulName.setVisibility(View.GONE);
-                    edtPartyShopName.setVisibility(View.GONE);
-                    edtPartyDistributorName.setVisibility(View.GONE);
-                    edtPartyType.setVisibility(View.GONE);
-                    object.put("OrganisationName", edtSankulOrganization.getText().toString());
-                    object.put("PartyName", edtSankulPartyName.getText().toString());
-                    object.put( "strBoardEnglish", strBoardEnglish );
-
-                    if(selectedMediumName.isEmpty())
-                    {
-                        object.put( "strMedium", strMedium  );
-
-                    }
-                    else {
-                        object.put( "strMedium", selectedMediumName );
-                    }
-
-                    if(selectedStdNameEnglish.isEmpty())
-                    {
-                        object.put("strStandardEnglish", strStandardEnglish );
-
-                    }
-                    else {
-                        object.put("strStandardEnglish", selectedStdNameEnglish);
-                    }
-
-                    if(selectedStdNameHindi.isEmpty())
-                    {
-                        object.put("strStandardHindi", strStandardHindi );
-
-                    }
-                    else {
-                        object.put("strStandardHindi", selectedStdNameHindi);
-                    }
-
-
-                    if(selectedStdNameHindi.isEmpty())
-                    {
-                        object.put("strStandardGujarati", strStandardGujarati );
-
-                    }
-                    else {
-                        object.put("strStandardGujarati", selectedStdNameGujarati);
-                    }
-                    object.put("AvgStudentEnglish", edtSankulAverageStudentEnglish.getText().toString());
-                    object.put("AvgStudentHindi", edtSankulAverageStudentHindi.getText().toString());
-                    object.put("AvgStudentGujarati", edtSankulAverageStudentGujarati.getText().toString());
-
-Log.d( "asdasd",object+"" );
-                }
-                if (type.equals("Others")) {
-                    object.put("OrganisationName", edtSankulOrganization.getText().toString());
-                    object.put("PartyName", edtSankulPartyName.getText().toString());
-                    edtSankulAverageStudentEnglish.setVisibility((View.GONE));
-                    edtSankulName.setVisibility(View.GONE);
-                    edtPartyShopName.setVisibility(View.GONE);
-                    edtPartyDistributorName.setVisibility(View.GONE);
-                    edtPartyType.setVisibility(View.GONE);
-                    spinnerMedium.setVisibility(View.GONE);
-                    spinnerSchoolBoardEnglish.setVisibility(View.GONE);
-                    spinnerStdEnglish.setVisibility(View.GONE);
-
-                }
-                object.put("Designation", edtSankulDesignation.getText().toString());
-
-                object.put("ContactNo", edtSankulContactNumber.getText().toString());
-                object.put("AddressLine1", edtSankulAddress1.getText().toString());
-                object.put("AddressLine2", edtSankulAddress2.getText().toString());
-                object.put("CityName", edtSankulCity.getText().toString());
-                object.put("StateName", edtSankulState.getText().toString());
-                object.put("Remark", edtSankulRemark.getText().toString());
-                Log.d("updatevalue", object.toString() + " ");
-            } catch (JSONException e) {
-                Toast.makeText(FullDetail.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
-                e.printStackTrace();
-            }
-
-            final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
-                    Constant.PATH + "Sales/Update?id=" + fromId, object,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d("RESPONSE", response.toString());
-
-                            try {
-                                boolean code = response.getBoolean("status");
-                                Log.d("Login", "" + code);
-                                String msg = response.getString("message");
-                                // Toast.makeText(this, ""+code, Toast.LENGTH_SHORT).show();
-                                if (code == true) {
-                                    Toast.makeText(FullDetail.this, "" + msg, Toast.LENGTH_SHORT).show();
-                                    
-                                    // JSONObject obj = response.getJSONObject("data");
-                                    progressDialog.dismiss();
-                                    finish();
-                                } else if (code == false) {
-                                    String msg1 = response.getString("message");
-                                    progressDialog.dismiss();
-                                    Toast.makeText(FullDetail.this, "" + msg1, Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (JSONException e) {
-                                progressDialog.dismiss();
-                                Toast.makeText(FullDetail.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    if (progressDialog != null)
-                        progressDialog.dismiss();
-                    Log.d("RESPONSE", "That didn't work!");
-                }
-            });
-            request.setRetryPolicy(new DefaultRetryPolicy(
-                    30000,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            requestQueue.add(request);
-        } else {
-            Toast.makeText(this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
-        }
-    }
-
     public void fullDetail() {
         if (detector.isConnectingToInternet()) {
             progressDialog = new ProgressDialog(this);
             progressDialog.setCancelable(false);
             progressDialog.setMessage("Loading...");
             progressDialog.show();
+
 
             JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST,
                     Constant.PATH + "Sales/GetSalesDataById?id=" + fromId, null, new Response.Listener<JSONObject>() {
@@ -511,10 +168,10 @@ Log.d( "asdasd",object+"" );
                             avgStudentHindi = object.getInt("avgStudentHindi");
                             avgStudentGujarati = object.getInt("avgStudentGujarati");
                             getselectedMedium = Arrays.asList(strMedium.split(","));
-if(!strBoardEnglish.isEmpty()) {
-    getselectedBoardEnglish = Integer.parseInt( strBoardEnglish );
-}
-                              getselectedStdEnglish = Arrays.asList(strStandardEnglish.split(","));
+                            if(!strBoardEnglish.isEmpty()) {
+                                getselectedBoardEnglish = Integer.parseInt( strBoardEnglish );
+                            }
+                            getselectedStdEnglish = Arrays.asList(strStandardEnglish.split(","));
                             getselectedStdGujarati = Arrays.asList(strStandardGujarati.split(","));
                             getselectedStdHindi = Arrays.asList(strStandardHindi.split(","));
 
@@ -541,7 +198,6 @@ if(!strBoardEnglish.isEmpty()) {
                                 edtPartyDistributorName.setVisibility(View.GONE);
                                 edtPartyType.setVisibility(View.GONE);
                                 spinnerMedium.setVisibility( View.GONE );
-
                                 spinnerSchoolBoardEnglish.setVisibility( View.GONE );
                                 r1.setVisibility( View.GONE );
                                 r2.setVisibility( View.GONE );
@@ -553,10 +209,8 @@ if(!strBoardEnglish.isEmpty()) {
                                 spinnerStdGujarati.setVisibility( View.GONE );
                                 edtSankulAverageStudentGujarati.setVisibility( View.GONE );*/
 
-
-                                setColor();
-                                edtSankulOrganization.setText(organisationName);
-                                edtSankulPartyName.setText(partyName);
+                                edtSankulOrganization.setText("Organisation Name : "+organisationName);
+                                edtSankulPartyName.setText("Party Name : " +partyName);
 
                                 //   disabled();
 
@@ -569,9 +223,7 @@ if(!strBoardEnglish.isEmpty()) {
                                 edtSankulOrganization.setVisibility(View.GONE);
                                 edtSankulPartyName.setVisibility(View.GONE);
 
-
                                 spinnerSchoolBoardEnglish.setVisibility( View.GONE );
-
                                 r1.setVisibility( View.GONE );
                                 r2.setVisibility( View.GONE );
                                 r3.setVisibility( View.GONE );
@@ -583,9 +235,9 @@ if(!strBoardEnglish.isEmpty()) {
                                 edtSankulAverageStudentGujarati.setVisibility( View.GONE );*/
 
 
-                                edtPartyShopName.setText(shopName);
-                                edtPartyDistributorName.setText(distubitorName);
-                                edtPartyType.setText(distubitorType);
+                                edtPartyShopName.setText("Shop Name : "+ shopName);
+                                edtPartyDistributorName.setText("Distributor Name : "+ distubitorName);
+                                edtPartyType.setText("Distributor Type : "+distubitorType);
 
                             }
                             if (strPartyType.equals("Classes") || strPartyType.equals(("School"))) {
@@ -594,10 +246,7 @@ if(!strBoardEnglish.isEmpty()) {
                                 edtPartyShopName.setVisibility(View.GONE);
                                 edtPartyDistributorName.setVisibility(View.GONE);
                                 edtPartyType.setVisibility(View.GONE);
-                               spinnerSchoolBoardEnglish.setVisibility( View.GONE );
-
-
-
+                                spinnerSchoolBoardEnglish.setVisibility( View.GONE );
                                 r1.setVisibility( View.GONE );
                                 r2.setVisibility( View.GONE );
                                 r3.setVisibility( View.GONE );
@@ -609,22 +258,19 @@ if(!strBoardEnglish.isEmpty()) {
                                 edtSankulAverageStudentGujarati.setVisibility( View.GONE );*/
 
 
-                                setColor();
-                                edtSankulOrganization.setText(organisationName);
-                                edtSankulPartyName.setText(partyName);
+                                edtSankulOrganization.setText("Organisation Name : "+organisationName);
+                                edtSankulPartyName.setText("Party Name : "+ partyName);
                                 edtSankulAverageStudentEnglish.setText(avgStudentEnglish+"");
                                 edtSankulAverageStudentHindi.setText(avgStudentHindi+"");
                                 edtSankulAverageStudentGujarati.setText(avgStudentGujarati+"");
                             }
                             if (strPartyType.equals("Sankul")) {
-                                edtSankulName.setText(sankulName);
+                                edtSankulName.setText("Sankul Name : "+sankulName);
                                 edtPartyShopName.setVisibility(View.GONE);
                                 edtPartyType.setVisibility(View.GONE);
                                 edtPartyDistributorName.setVisibility(View.GONE);
-                                spinnerSchoolBoardEnglish.setVisibility( View.GONE );
 
-                                edtSankulOrganization.setText(organisationName);
-                                edtSankulPartyName.setText(partyName);
+                                spinnerSchoolBoardEnglish.setVisibility( View.GONE );
                                 r1.setVisibility( View.GONE );
                                 r2.setVisibility( View.GONE );
                                 r3.setVisibility( View.GONE );
@@ -635,19 +281,21 @@ if(!strBoardEnglish.isEmpty()) {
                                 spinnerStdGujarati.setVisibility( View.GONE );
                                 edtSankulAverageStudentGujarati.setVisibility( View.GONE );*/
 
+                                edtSankulOrganization.setText("Organisation Name :" + organisationName);
+                                edtSankulPartyName.setText("Party Name : "+ partyName);
                                 edtSankulAverageStudentEnglish.setText(avgStudentEnglish+"");
                                 edtSankulAverageStudentHindi.setText(avgStudentHindi+"");
                                 edtSankulAverageStudentGujarati.setText(avgStudentGujarati+"");
-                           //     Log.d("indexofboard",getIndex(spinnerSchoolBoard,boardId + " ") + " "+ boardId);
+                                //     Log.d("indexofboard",getIndex(spinnerSchoolBoard,boardId + " ") + " "+ boardId);
                             }
 
-                            edtSankulDesignation.setText(designation);
-                            edtSankulContactNumber.setText(contactNo);
-                            edtSankulAddress1.setText(addressLine1);
-                            edtSankulAddress2.setText(addressLine2);
-                            edtSankulCity.setText(cityName);
-                            edtSankulState.setText(stateName);
-                            edtSankulRemark.setText(remark);
+                            edtSankulDesignation.setText("Designation : "+designation);
+                            edtSankulContactNumber.setText("Contact No : "+contactNo);
+                            edtSankulAddress1.setText("Address Line 1 : "+addressLine1);
+                            edtSankulAddress2.setText("Address Line 2 : "+addressLine2);
+                            edtSankulCity.setText("City : "+cityName);
+                            edtSankulState.setText("State : "+stateName);
+                            edtSankulRemark.setText("Remarks : "+remark);
 
                             std();
 
@@ -670,10 +318,10 @@ if(!strBoardEnglish.isEmpty()) {
                     30000,
                     DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            RequestQueue requestQueue = Volley.newRequestQueue(FullDetail.this);
+            RequestQueue requestQueue = Volley.newRequestQueue(ViewLeadActivity.this);
             requestQueue.add(objectRequest);
         } else {
-            Toast.makeText(FullDetail.this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
+            Toast.makeText(ViewLeadActivity.this, "Please check your internet connection before verification..!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -924,7 +572,7 @@ if(!strBoardEnglish.isEmpty()) {
 
 
 
-                                    for(int k =0;k<=listArrayMedium.size()-1;k++)
+                                   for(int k =0;k<=listArrayMedium.size()-1;k++)
                                     {
 
                                         Object key = new Object();
@@ -970,7 +618,7 @@ if(!strBoardEnglish.isEmpty()) {
 
 
 
-                                    //   Log.d( "checkedevalmedium",listArrayMedium + "" );
+                                 //   Log.d( "checkedevalmedium",listArrayMedium + "" );
 
                                     spinnerMedium.setItems(listArrayMedium, -1, new SpinnerListener() {
 
@@ -1128,7 +776,7 @@ if(!strBoardEnglish.isEmpty()) {
                                         }
                                     });
 
-                                    spinnerSchoolBoardEnglish.setVisibility( View.VISIBLE );
+spinnerSchoolBoardEnglish.setVisibility( View.VISIBLE );
 
 
 
@@ -1150,11 +798,11 @@ if(!strBoardEnglish.isEmpty()) {
 
                                 } else {
                                     progressDialog.dismiss();
-                                    Toast.makeText(FullDetail.this, msg, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ViewLeadActivity.this, msg, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 progressDialog.dismiss();
-                                Toast.makeText(FullDetail.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ViewLeadActivity.this, "Something take longer time please try again..!", Toast.LENGTH_LONG).show();
                                 e.printStackTrace();
                             }
                         }
@@ -1176,51 +824,6 @@ if(!strBoardEnglish.isEmpty()) {
         }
     }
 
-   public void d (AdapterView<?> parent,
-                         View view,
-                         int position,
-                         long id)
-    {
-
-    }
-    // public void disabled()
-    //{
-    //   edtSankulName.setEnabled(false); edtSankulOrganization.setEnabled(false); edtSankulPartyName.setEnabled(false); edtSankulDesignation.setEnabled(false); edtSankulContactNumber.setEnabled(false);
-    //          edtSankulAddress1.setEnabled(false); edtSankulAddress2.setEnabled(false); edtSankulCity.setEnabled(false); edtSankulState.setEnabled(false); edtSankulRemark.setEnabled(false);edtPartyShopName.setEnabled(false);edtPartyType.setEnabled(false);edtPartyDistributorName.setEnabled(false);
-    //spinnerMedium.setEnabled(false);
-    // spinnerSchoolBoard.setEnabled(false);
-    // spinnerStd.setEnabled(false);
-
-    //   }
-
-    // public void enabled()
-    // {
-
-    //}
-
-    public void setColor() {
-        edtSankulName.setTextColor(Color.BLACK);
-        edtSankulOrganization.setTextColor(Color.BLACK);
-        edtSankulPartyName.setTextColor(Color.BLACK);
-        edtSankulDesignation.setTextColor(Color.BLACK);
-        edtSankulContactNumber.setTextColor(Color.BLACK);
-        edtSankulAddress1.setTextColor(Color.BLACK);
-        edtSankulAddress2.setTextColor(Color.BLACK);
-        edtSankulCity.setTextColor(Color.BLACK);
-        edtSankulState.setTextColor(Color.BLACK);
-        edtSankulRemark.setTextColor(Color.BLACK);
-        edtPartyShopName.setTextColor(Color.BLACK);
-        edtPartyType.setTextColor(Color.BLACK);
-        edtPartyDistributorName.setTextColor(Color.BLACK);
-
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(FullDetail.this, HomeScreen.class));
-        finish();
-    }
-
 }
+
+

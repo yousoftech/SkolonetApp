@@ -87,8 +87,6 @@ public class AdminSalesDetails extends AppCompatActivity {
         btnLogout=(Button)findViewById(R.id.btnLogout);
         txtTitle=(TextView)findViewById(R.id.txtTitle);
         event = new ArrayList<Sales>();
-        btnFilter = (Button)findViewById( R.id.btnFilter );
-        btnFilter.setVisibility( View.INVISIBLE );
 
         setupToolbar( "" + firstName + " " + lastName );
 
@@ -150,7 +148,6 @@ public class AdminSalesDetails extends AppCompatActivity {
                                     recyclerView.setAdapter( aSales );
                                     recyclerView.setLayoutManager( new LinearLayoutManager( AdminSalesDetails.this, LinearLayoutManager.VERTICAL, false ) );
                                     aSales.notifyDataSetChanged();
-                                    btnFilter.setVisibility( View.VISIBLE );
 
                                 }
                                 else{
@@ -160,7 +157,6 @@ public class AdminSalesDetails extends AppCompatActivity {
                                     recyclerView.setAdapter( aSales );
                                     recyclerView.setLayoutManager( new LinearLayoutManager( AdminSalesDetails.this, LinearLayoutManager.VERTICAL, false ) );
                                     aSales.notifyDataSetChanged();
-                                    btnFilter.setVisibility( View.GONE );
                                 }
                                 progressDialog.dismiss();
 
@@ -175,7 +171,6 @@ public class AdminSalesDetails extends AppCompatActivity {
                                 recyclerView.setAdapter( aSales );
                                 recyclerView.setLayoutManager( new LinearLayoutManager( AdminSalesDetails.this, LinearLayoutManager.VERTICAL, false ) );
                                 aSales.notifyDataSetChanged();
-                                btnFilter.setVisibility( View.GONE );
                             }
 
                         }

@@ -4,19 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryLight"
+    android:background="@drawable/backg"
     tools:context="com.example.admin.skolonetapp.Activity.SplashActivity">
 
    <!-- <ImageView
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:src="@drawable/logo1"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
         android:layout_centerVertical="true"
         android:layout_marginBottom="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"/>-->
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        />-->
     <TextView
         android:id="@+id/txtNoRecords"
         android:layout_width="wrap_content"
@@ -34,9 +35,11 @@
         android:layout_height="wrap_content"
         android:textSize="25sp"
         android:text="Retry"
-        android:visibility="gone"
+        android:textColor="@color/colorText"
+        android:background="@color/colorPrimary"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:visibility="gone"
         android:layout_margin="30dp"/>
 
 

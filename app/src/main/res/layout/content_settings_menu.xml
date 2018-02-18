@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/c1"
+        android:layout_below="@+id/toolbar">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="200dp"
+            android:padding="@dimen/margin_10dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_home_black_24dp">
+
+        </ImageView>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/c1"
+        android:layout_marginTop="5dp"
+
+        android:background="@color/colorDivider"
+        android:id="@+id/c2">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_10dp"
+                android:text="Arpit Shah"
+                android:paddingLeft="@dimen/margin_10dp"
+                android:textSize="@dimen/margin_15dp"
+                android:id="@+id/Name"/>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Designation"
+                android:layout_margin="@dimen/margin_10dp"
+                android:text="Director"
+                android:paddingLeft="@dimen/margin_10dp"
+                android:textSize="@dimen/margin_15dp"
+                android:layout_below="@+id/Name"
+                />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Area"
+                android:layout_margin="@dimen/margin_10dp"
+                android:text="Gurukul"
+                android:layout_below="@+id/Designation"
+                android:paddingLeft="@dimen/margin_10dp"
+                android:textSize="@dimen/margin_15dp"
+                />
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/EmailId"
+                android:layout_below="@+id/Area"
+                android:layout_margin="@dimen/margin_10dp"
+                android:text="shaharpit26595@gmail.com"
+                android:paddingLeft="@dimen/margin_10dp"
+                android:textSize="@dimen/margin_15dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/MobileNo"
+                android:layout_toRightOf="@+id/EmailId"
+                android:layout_below="@+id/Area"
+                android:layout_margin="@dimen/margin_10dp"
+                android:text="9913658651"
+android:textAlignment="gravity"
+                android:gravity="right"
+                android:paddingLeft="@dimen/margin_10dp"
+                android:textSize="@dimen/margin_15dp"
+                />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/c2"
+        android:layout_marginTop="5dp"
+
+        android:background="@color/colorDivider"
+        android:id="@+id/c3">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true">
+
+
+
+            <Button
+                android:id="@+id/changepass"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_10dp"
+                android:background="@color/colorText"
+                android:drawableLeft="@drawable/ic_create_black_24dp"
+                android:gravity="left|center"
+                android:text="     Change Password"
+                android:textAlignment="gravity"
+                tools:ignore="NotSibling" />
+
+            <Button
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/changepass"
+                android:layout_margin="@dimen/margin_10dp"
+                android:background="@color/colorText"
+                android:drawableLeft="@drawable/ic_logoutblack"
+                android:gravity="left|center"
+                android:text="     Log Out"
+                android:textAlignment="gravity"
+                tools:ignore="NotSibling" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

@@ -4,108 +4,123 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.admin.skolonetapp.Activity.School_ClassisActivity">
+    tools:context="com.example.admin.skolonetapp.Activity.ViewLeadActivity">
 
-    <RelativeLayout
-        android:id="@+id/RelativeSchool"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:minHeight="?attr/actionBarSize">
-
-        <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/ic_close_black_24dp" />
-
-        <TextView
-            android:id="@+id/txtForm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            android:text="@string/app_name"
-            android:textColor="@color/colorText"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnYes"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ic_check_black_24dp" />
-
-    </RelativeLayout>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/app_toolbar_sales"></include>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/RelativeSchool">
+        android:layout_below="@+id/toolbar">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/roundshape">
+                android:background="@drawable/roundshape"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/roundshape"
-                    android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/edtSchoolOrganization"
+                <TextView
+                    android:id="@+id/edtSankulName"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_margin="10dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:background="@drawable/edt_border"
+                    android:hint="Enter Sankul Name"
+                    android:padding="5dp"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:id="@+id/edtPartyShopName"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="10dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:background="@drawable/edt_border"
+                    android:hint="Enter Shop Name"
+                    android:padding="5dp"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:id="@+id/edtPartyDistributorName"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="10dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:background="@drawable/edt_border"
+                    android:hint="Enter Distributor Name"
+                    android:padding="5dp"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:id="@+id/edtPartyType"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="10dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:background="@drawable/edt_border"
+                    android:hint="Enter Type"
+                    android:padding="5dp"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:id="@+id/edtSankulOrganization"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="10dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorPrimaryText"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Organization Name"
                     android:padding="5dp"
                     android:singleLine="true" />
 
-                <EditText
-                    android:id="@+id/edtSchoolPartyName"
+                <TextView
+                    android:id="@+id/edtSankulPartyName"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtSchoolOrganization"
                     android:layout_margin="10dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorPrimaryText"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Party Name"
                     android:padding="5dp"
                     android:singleLine="true" />
 
-                <EditText
-                    android:id="@+id/edtSchoolDesignation"
+                <TextView
+                    android:id="@+id/edtSankulDesignation"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtSchoolPartyName"
                     android:layout_margin="10dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorPrimaryText"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Designation"
                     android:padding="5dp"
+
+
                     android:singleLine="true" />
 
-                <EditText
-                    android:id="@+id/edtSchoolContactNumber"
+                <TextView
+                    android:id="@+id/edtSankulContactNumber"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtSchoolDesignation"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorPrimaryText"
                     android:hint="Enter Contact Number"
-                    android:inputType="number"
                     android:padding="5dp"
                     android:singleLine="true" />
                 <com.androidbuts.multispinnerfilter.SingleSpinner
@@ -113,35 +128,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_margin="10dp"
-                    android:layout_below="@id/edtSchoolContactNumber"
+                    android:clickable="false"
+                    android:layout_below="@id/edtSankulContactNumber"
                     android:paddingLeft="10dp"
-                    app:hintText="Select Board"
+                    app:hintText="Select Board for english medium"
                     android:background="@drawable/edt_border"
                     android:spinnerMode="dialog"/>
-
                 <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
                     android:id="@+id/spinnerSchoolMedium"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_below="@id/spinnerSchoolBoardEnglish"
                     app:hintText="Select Medium"
+                    android:clickable="false"
                     android:paddingLeft="10dp"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:spinnerMode="dialog"/>
 
 
-
-
-
                 <RelativeLayout
                     android:id="@+id/r1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_below="@+id/spinnerSchoolMedium"
-                    android:visibility="gone"
 
                     >
 
@@ -152,19 +163,20 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:paddingLeft="10dp"
+
                         android:layout_alignTop="@+id/edtSchoolAverageStudentEnglish"
                         android:layout_marginEnd="162dp"
                         android:layout_marginRight="152dp"
                         android:background="@drawable/edt_border"
+                        android:clickable="false"
                         android:spinnerMode="dialog"
                         app:hintText="Select Standard for english medium"
                         tools:ignore="NotSibling" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/edtSchoolAverageStudentEnglish"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:inputType="number"
                         android:paddingLeft="10dp"
                         android:textSize="16dp"
                         android:textColor="@color/colorPrimaryText"
@@ -178,17 +190,15 @@
                         android:padding="5dp"
                         android:singleLine="true"
                         tools:ignore="NotSibling" />
-
                 </RelativeLayout>
+
 
                 <RelativeLayout
                     android:id="@+id/r2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_below="@+id/r1"
-                    android:visibility="gone"
 
                     >
 
@@ -203,17 +213,17 @@
                         android:layout_marginEnd="162dp"
                         android:layout_marginRight="152dp"
                         android:background="@drawable/edt_border"
+                        android:clickable="false"
                         android:spinnerMode="dialog"
                         app:hintText="Select Standard for english medium"
                         tools:ignore="NotSibling" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/edtSchoolAverageStudentHindi"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:paddingLeft="10dp"
                         android:textSize="16dp"
-                        android:inputType="number"
                         android:textColor="@color/colorPrimaryText"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
@@ -228,14 +238,14 @@
                 </RelativeLayout>
 
 
+
+
                 <RelativeLayout
                     android:id="@+id/r3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_below="@+id/r2"
-                    android:visibility="gone"
 
                     >
 
@@ -250,15 +260,15 @@
                         android:layout_marginEnd="162dp"
                         android:layout_marginRight="152dp"
                         android:background="@drawable/edt_border"
+                        android:clickable="false"
                         android:spinnerMode="dialog"
                         app:hintText="Select Standard for english medium"
                         tools:ignore="NotSibling" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/edtSchoolAverageStudentGujarati"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:inputType="number"
                         android:paddingLeft="10dp"
                         android:textSize="16dp"
                         android:textColor="@color/colorPrimaryText"
@@ -275,62 +285,68 @@
                 </RelativeLayout>
 
 
-                <EditText
-                    android:id="@+id/edtSchoolAddress1"
+                <TextView
+                    android:id="@+id/edtSankulAddress1"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/r3"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Flat No,Colony Number/Society"
                     android:padding="5dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorPrimaryText"
                     android:singleLine="true" />
-                <EditText
-                    android:id="@+id/edtSchoolAddress2"
+
+                <TextView
+                    android:id="@+id/edtSankulAddress2"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtSchoolAddress1"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Street Name"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorPrimaryText"
                     android:padding="5dp"
                     android:singleLine="true" />
 
-                <EditText
-                    android:id="@+id/edtSchoolCity"
+                <TextView
+                    android:id="@+id/edtSankulCity"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtSchoolAddress2"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter City Name"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorPrimaryText"
                     android:padding="5dp"
                     android:singleLine="true" />
 
-                <EditText
-                    android:id="@+id/edtSchoolState"
+                <TextView
+                    android:id="@+id/edtSankulState"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtSchoolCity"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter State Name"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorPrimaryText"
                     android:padding="5dp"
                     android:singleLine="true" />
 
-                <EditText
-                    android:id="@+id/edtSchoolRemark"
+                <TextView
+                    android:id="@+id/edtSankulRemark"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtSchoolState"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorPrimaryText"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Remark"
                     android:padding="5dp"
                     android:singleLine="true" />
-                </LinearLayout>
-            </RelativeLayout>
+
+
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
-
 </RelativeLayout>

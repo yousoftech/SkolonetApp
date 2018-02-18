@@ -1,65 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:id="@+id/relativeDelete"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_30dp"
-        android:background="#fb5c5c">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_20dp"
-            android:layout_centerVertical="true"
-            android:text="Close Lead"
-            android:textColor="#FFF"
-            android:textSize="@dimen/text_15sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnClose"
-            android:layout_width="@dimen/margin_25dp"
-            android:layout_height="@dimen/margin_25dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/margin_10dp"
-            android:background="@drawable/ic_close_black_24dp" />
-
-    </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/imgDelete"
-        android:layout_width="@dimen/margin_80dp"
-        android:layout_height="@dimen/margin_80dp"
-        android:layout_below="@+id/relativeDelete"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/margin_30dp"
-        android:layout_marginTop="@dimen/margin_30dp"
-        android:src="@drawable/delete" />
-
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView
-        android:id="@+id/txtDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Are you sure want to close this lead.?"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/imgDelete"
-        android:textColor="#fb5c5c"/>
-
-    <Button
-
-        android:id="@+id/btnDelete"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_30dp"
-        android:text="DELETE"
-        android:layout_below="@+id/txtDelete"
-        android:textColor="#FFF"
-        android:layout_margin="@dimen/margin_20dp"
-        android:background="@drawable/button_round"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/header"
+        android:layout_margin="@dimen/margin_10dp"
+        android:padding="@dimen/margin_10dp"
+        android:gravity="center"
+        android:text="Add Reason"
+        android:textSize="@dimen/margin_25dp"
+        />
+
+    <com.androidbuts.multispinnerfilter.SingleSpinner
+        android:id="@+id/r1"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="10dp"
+        android:paddingLeft="10dp"
+        android:layout_below="@+id/header"
+        app:hintText="Select Reason"
+        android:background="@drawable/edt_border"
+        android:spinnerMode="dialog"/>
+
+   <!-- <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="10"
+        android:hint="Enter reason"
+        android:layout_below="@+id/r1"
+        android:layout_margin="@dimen/margin_10dp"
+        android:padding="@dimen/margin_25dp"
+        android:id="@+id/reason"/> -->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Close Lead"
+        android:id="@+id/btnDelete"
+        android:layout_margin="@dimen/margin_10dp"
+        android:padding="@dimen/margin_25dp"
+        android:background="@color/colorPrimary"
+        android:textColor="#fff"
+        android:layout_below="@+id/reason"/>
 
 
 </RelativeLayout>

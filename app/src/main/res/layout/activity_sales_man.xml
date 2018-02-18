@@ -19,9 +19,30 @@
             android:id="@+id/spinnerFilter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_10dp"></Spinner>
+            android:layout_margin="@dimen/margin_10dp"
+            android:spinnerMode="dialog"
+            ></Spinner>
 
-    </RelativeLayout>
+        <Spinner
+            android:id="@+id/spinnerRatings"
+            android:layout_width="150dp"
+            android:layout_below="@+id/spinnerFilter"
+            android:layout_margin="@dimen/margin_10dp"
+
+            android:layout_height="wrap_content"
+            android:spinnerMode="dialog"></Spinner>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:id="@+id/btnSearch"
+            android:layout_below="@id/spinnerFilter"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorText"
+            android:layout_toRightOf="@+id/spinnerRatings"/>
+
+
+     </RelativeLayout>
 
 
     <android.support.v7.widget.RecyclerView

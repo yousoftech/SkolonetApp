@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -32,6 +33,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -57,9 +60,11 @@ import com.example.admin.skolonetapp.Activity.School_ClassisActivity;
 import com.example.admin.skolonetapp.Adapter.adapterAdminSales;
 import com.example.admin.skolonetapp.Adapter.adapterSales;
 import com.example.admin.skolonetapp.Adapter.adaptercomment;
+import com.example.admin.skolonetapp.Adapter.partyTypeAdapter;
 import com.example.admin.skolonetapp.Pojo.Sales;
 import com.example.admin.skolonetapp.Pojo.SalesList;
 import com.example.admin.skolonetapp.Pojo.comment;
+import com.example.admin.skolonetapp.Pojo.party;
 import com.example.admin.skolonetapp.R;
 import com.example.admin.skolonetapp.Util.ConnectionDetector;
 import com.example.admin.skolonetapp.Util.Constant;
@@ -89,11 +94,16 @@ public class SalesFragment extends Fragment implements LocationResult {
     Spinner spinner;
     TextView txtTitle;
     Toolbar toolbar;
-    Button btnLogout, btnFilter;
+    Button btnLogout;
     String from, addtLocation, latlong;
     String firstName, lastName, Userid;
-    int salesId;
+      String ratingval;
+    double ratingTo=5.0,ratingFrom=0.0;
+    int salesId=-1;
     SalesList salesList;
+    Sales bindSalesData;
+    Sales[] bindListSales = new Sales[6];
+Button serach;
     SharedPreferences preferences;
     ProgressDialog progressDialog;
     ConnectionDetector detector;
@@ -109,11 +119,12 @@ public class SalesFragment extends Fragment implements LocationResult {
     boolean doubleBackToExitPressedOnce = false;
     TextView txtRecords;
     RelativeLayout relativeFilter;
-    Spinner spinnerFliter;
+    Spinner spinnerFliter,spinnerPriority;
     final List<KeyPairBoolData> listArrayStd = new ArrayList<>();
     final List<KeyPairBoolData> listArrayMedium = new ArrayList<>();
     final List<KeyPairBoolData> listArrayBoard = new ArrayList<>();
     String strMedium1 =null;
+    RadioButton optSchool,optClasses,optSankul,optParty,optOthers;
 
     private static final String[] INITIAL_PERMS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -132,6 +143,7 @@ public class SalesFragment extends Fragment implements LocationResult {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -146,15 +158,15 @@ public class SalesFragment extends Fragment implements LocationResult {
         preferences = getContext().getSharedPreferences( PREFS_NAME, MODE_PRIVATE );
         txtTitle = (TextView)view.findViewById( R.id.txtTitle );
         btnLogout = (Button) view.findViewById( R.id.btnLogout );
-        btnFilter = (Button) view.findViewById( R.id.btnFilter );
         relativeFilter = (RelativeLayout) view.findViewById( R.id.RelativeFilter );
         spinnerFliter = (Spinner) view.findViewById( R.id.spinnerFilter );
+        spinnerPriority = (Spinner)view.findViewById( R.id.spinnerRatings );
         firstName = preferences.getString( "firstName", null );
         lastName = preferences.getString( "lastName", null );
         Userid = preferences.getString( "LoggedUser", null );
         recyclerView = (RecyclerView) view.findViewById( R.id.recyclerSales );
         txtRecords = (TextView) view.findViewById( R.id.txtNoRecords );
-        btnFilter = (Button) view.findViewById( R.id.btnFilter );
+        serach = (Button)view.findViewById( R.id.btnSearch );
         event = new ArrayList<Sales>();
         myLocation = new MyLocation();
         NotificationManager manager;
@@ -165,7 +177,6 @@ public class SalesFragment extends Fragment implements LocationResult {
 
 
       //  Log.d( "asdv" ,bundle+"" );
-
 
        /*if (!bundle.getString("total").equalsIgnoreCase( "" ))
         {
@@ -179,28 +190,125 @@ public class SalesFragment extends Fragment implements LocationResult {
         manager = (NotificationManager)getContext().getSystemService( NOTIFICATION_SERVICE );
 
 
+        databind();
 
-        spinnerFliter.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
+        spinnerPriority.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ratingval   =  spinnerPriority.getSelectedItem().toString();
+               if(ratingval == "5")
+               {
+                   ratingTo = 5.0;
+                   ratingFrom = 4.5;
+               //    detailFrom(salesId);
+
+               }
+                if(ratingval == "4")
+                {
+                    ratingTo = 4.0;
+                    ratingFrom = 3.5;
+              //      detailFrom(salesId);
+
+                }
+                if(ratingval == "3")
+                {
+                    ratingTo = 3.0;
+                    ratingFrom = 2.5;
+                //    detailFrom(salesId);
+
+                }
+                if(ratingval == "2")
+                {
+                    ratingTo = 2.0;
+                    ratingFrom = 1.5;
+                  //  detailFrom(salesId);
+
+                }
+                if(ratingval == "1")
+                {
+                    ratingTo = 1.0;
+                    ratingFrom = 0.5;
+              //      detailFrom(salesId);
+
+                }
+                if(ratingval == "0")
+                {
+                    ratingTo = 0.0;
+                    ratingFrom = 0.0;
+                //    detailFrom(salesId);
+
+                }
+                if (ratingval =="Select Priority")
+                {
+                   ratingTo = 5.0;
+                   ratingFrom = 0.0;
+               //     detailFrom(salesId);
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        } );
+
+
+       spinnerFliter.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                event.clear();
-                aSales.notifyDataSetChanged();
-                from = spinnerFliter.getSelectedItem().toString();
-                salesList = arraySales.get( i );
-                salesId = salesList.getSalesId();
-                Log.d( "asdassadasdasd", salesId + " " + from );
 
-                if (from == "Select Type") {
+            //    aSales.notifyDataSetChanged();
+                from = spinnerFliter.getSelectedItem().toString();
+              //  salesList = arraySales.get( i );
+              //  salesId = salesList.getSalesId();
+                Log.d( "asdassadasdasd", salesId + " " + from );
+                if (from == "Select Party") {
                     salesId = -1;
                 }
-                detailFrom( salesId );
+                if (from == "School") {
+                    salesId = 1;
+               //     detailFrom( salesId );
+
+                }
+
+                if (from == "Classes") {
+                    salesId = 2;
+               //     detailFrom( salesId );
+
+                }
+                if (from == "Sankul") {
+                    salesId = 3;
+              //      detailFrom( salesId );
+
+                }
+                if (from == "Party") {
+                    salesId = 4;
+                  //  detailFrom( salesId );
+
+                }
+                if (from == "Others") {
+                    salesId = 5;
+                 //   detailFrom( salesId );
+
+                }
+
+
+
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        } );
+        serach.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                event.clear();
+                detailFrom( salesId );
             }
         } );
 
@@ -219,17 +327,72 @@ public class SalesFragment extends Fragment implements LocationResult {
                         showSettingsAlert();
                     }
                 }
-                std();
+              //  std();
                 final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder( getContext() );
                 final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService( getContext().LAYOUT_INFLATER_SERVICE );
                 final View dialogView = inflater.inflate( R.layout.app_choose, null );
                 dialogBuilder.setView( dialogView );
                 final AlertDialog a = dialogBuilder.create();
-                spinner = (Spinner) dialogView.findViewById( R.id.spinnerForm );
 
+                optClasses =(RadioButton)dialogView.findViewById( R.id.Classes );
+                optOthers =(RadioButton)dialogView.findViewById( R.id.Others );
+                optParty =(RadioButton)dialogView.findViewById( R.id.Party );
+                optSankul =(RadioButton)dialogView.findViewById( R.id.Sankul );
+                optSchool =(RadioButton)dialogView.findViewById( R.id.School );
 
+                optClasses.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        Intent intent = new Intent( getActivity(), School_ClassisActivity.class );
+                        intent.putExtra( "fromName", "Classes" );
+                        intent.putExtra( "fromId", 2 );
+                        startActivity( intent );
+                     //   finish();
+                    }
+                } );
 
-                spinner.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
+                optOthers.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        Intent intent = new Intent( getActivity(), OtherActivity.class );
+                        intent.putExtra( "fromName", "Others" );
+                        intent.putExtra( "fromId", 5 );
+                        startActivity( intent );
+                     //   finish();
+                    }
+                } );
+                optParty.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        Intent intent = new Intent( getActivity(), PartyActivity.class );
+                        intent.putExtra( "fromName", "Party" );
+                        intent.putExtra( "fromId", 4 );
+                        startActivity( intent );
+                       // finish();
+                    }
+                } );
+                optSankul.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        Intent intent = new Intent( getActivity(), SankulActivity.class );
+                        intent.putExtra( "fromName", "Sankul" );
+                        intent.putExtra( "fromId", 3 );
+                        startActivity( intent );
+                      //  finish();
+                    }
+                } );
+                optSchool.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        Intent intent = new Intent( getActivity(), School_ClassisActivity.class );
+                        intent.putExtra( "fromName", "School" );
+                        intent.putExtra( "fromId", 1 );
+                        startActivity( intent );
+                     //   finish();
+                    }
+                } );
+
+              /*  spinner.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         from = spinner.getSelectedItem().toString();
@@ -237,34 +400,35 @@ public class SalesFragment extends Fragment implements LocationResult {
                         salesId = salesList.getSalesId();
 
                         if (from.equalsIgnoreCase( "School" )) {
-                            Intent intent = new Intent( getContext(), School_ClassisActivity.class );
+                            Intent intent = new Intent( SalesMan.this, School_ClassisActivity.class );
                             intent.putExtra( "fromName", from );
                             intent.putExtra( "fromId", salesId );
                             startActivity( intent );
+                            finish();
                         } else if (from.equalsIgnoreCase( "Classes" )) {
-                            Intent intent = new Intent( getContext(), School_ClassisActivity.class );
+                            Intent intent = new Intent( SalesMan.this, School_ClassisActivity.class );
                             intent.putExtra( "fromName", from );
                             intent.putExtra( "fromId", salesId );
                             startActivity( intent );
-                        //    finish();
+                            finish();
                         } else if (from.equalsIgnoreCase( "Sankul" )) {
-                            Intent intent = new Intent( getContext(), SankulActivity.class );
+                            Intent intent = new Intent( SalesMan.this, SankulActivity.class );
                             intent.putExtra( "fromName", from );
                             intent.putExtra( "fromId", salesId );
                             startActivity( intent );
-                         //   finish();
+                            finish();
                         } else if (from.equalsIgnoreCase( "Party" )) {
-                            Intent intent = new Intent( getContext(), PartyActivity.class );
+                            Intent intent = new Intent( SalesMan.this, PartyActivity.class );
                             intent.putExtra( "fromName", from );
                             intent.putExtra( "fromId", salesId );
                             startActivity( intent );
-                        //    finish();
+                            finish();
                         } else if (from.equalsIgnoreCase( "Others" )) {
-                            Intent intent = new Intent( getContext(), OtherActivity.class );
+                            Intent intent = new Intent( SalesMan.this, OtherActivity.class );
                             intent.putExtra( "fromName", from );
                             intent.putExtra( "fromId", salesId );
                             startActivity( intent );
-                         //   finish();
+                            finish();
                         }
                     }
 
@@ -272,11 +436,12 @@ public class SalesFragment extends Fragment implements LocationResult {
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
                     }
-                } );
+                } );*/
                 a.show();
             }
         } );
-        detailFrom( -1 );
+   //
+            detailFrom( salesId );
         return  view;
 
     }
@@ -284,7 +449,7 @@ public class SalesFragment extends Fragment implements LocationResult {
 
 
 
-    public void std() {
+  /* public void std() {
 
         if (detector.isConnectingToInternet()) {
 
@@ -379,13 +544,13 @@ public class SalesFragment extends Fragment implements LocationResult {
             Toast.makeText( getContext(), "Please check your internet connection before verification..!", Toast.LENGTH_LONG ).show();
         }
     }
-
+*/
     public void std1() {
 
         if (detector.isConnectingToInternet()) {
 
             progressDialog = new ProgressDialog( getContext() );
-            progressDialog.setCancelable( false );
+            progressDialog.setCancelable( true );
             progressDialog.setMessage( "Loading..." );
             progressDialog.show();
             RequestQueue requestQueue = Volley.newRequestQueue( getContext() );
@@ -477,7 +642,6 @@ public class SalesFragment extends Fragment implements LocationResult {
 
     public void detailFrom(final int typeId) {
         if (detector.isConnectingToInternet()) {
-
             progressDialog = new ProgressDialog( getContext() );
             progressDialog.setCancelable( false );
             progressDialog.setMessage( "Loading..." );
@@ -490,6 +654,7 @@ public class SalesFragment extends Fragment implements LocationResult {
                     Log.d( "yatra", response.toString() );
                     try {
                         boolean code = response.getBoolean( "status" );
+
                         if (code == true) {
                             progressDialog.dismiss();
                             JSONArray array = response.getJSONArray( "data" );
@@ -502,6 +667,8 @@ public class SalesFragment extends Fragment implements LocationResult {
 
                                     String partyInfoId = obj.getString( "partyInfoId" );
                                     String iPartyTypeName = obj.getString( "strPartyType" );
+                                    String strDistributorName = obj.getString( "distubitorName" );
+                                    String strOrganisationName = obj.getString( "organisationName" );
                                     String shopName = obj.getString( "shopName" );
                                     String partyName = obj.getString( "partyName" );
                                     String strAddress1 = obj.getString( "addressLine1" );
@@ -530,20 +697,28 @@ public class SalesFragment extends Fragment implements LocationResult {
                                     String longitude = obj.getString( "longitude" );
                                     double priority = obj.getDouble( "priority" );
                                     String partyDate = convert( partyDate1 );
-
+                                    String ContactNo = obj.getString( "contactNo" );
                                     int ipartTypeId = obj.getInt( "iPartyTypeId" );
 
-                                    if (ipartTypeId == typeId) {
+                                    if (ipartTypeId == typeId && priority >=  ratingFrom  && priority <=ratingTo) {
                                         sales.setPartyInfoId( partyInfoId );
                                         sales.setStrPartyType( iPartyTypeName );
                                         sales.setLocation( "Address : " + strAddress );
                                         sales.setDatetimeCreated( partyDate.toString() );
+                                        sales.setContactNo( ContactNo );
+
                                         //  sales.setStrLatitude( "Medium : " + strMedium );
                                         //  sales.setStrLongitude( "Longitude : " + longitude );
                                         sales.setReminderDate( reminderDate );
                                         sales.setPriority( priority );
                                         if (partyName != "null") {
                                             sales.setPartyName( partyName );
+                                        } else {
+                                            sales.setDistubitorName( strDistributorName );
+
+                                        }
+                                        if (strOrganisationName != "null") {
+                                            sales.setOrganisationName( strOrganisationName );
                                         } else {
                                             sales.setShopName( shopName );
 
@@ -557,11 +732,13 @@ public class SalesFragment extends Fragment implements LocationResult {
                                         recyclerView.setVisibility( View.GONE );
 
                                     }
-                                    if (typeId == -1) {
+                                    if (typeId == -1  &&  priority >=  ratingFrom  && priority <=ratingTo) {
                                         sales.setPartyInfoId( partyInfoId );
                                         sales.setStrPartyType( iPartyTypeName );
                                         sales.setLocation( "Address : " + strAddress );
                                         sales.setDatetimeCreated( partyDate.toString() );
+                                        sales.setContactNo( ContactNo );
+
                                         // sales.setStrLatitude( "Medium : " + strMedium );
                                         //sales.setStrLongitude( "Longitude : " + longitude );
                                         sales.setPriority( priority );
@@ -601,6 +778,12 @@ public class SalesFragment extends Fragment implements LocationResult {
                                         }*/
                                         if (partyName != "null") {
                                             sales.setPartyName( partyName );
+                                        } else {
+                                            sales.setDistubitorName( strDistributorName );
+
+                                        }
+                                        if (strOrganisationName != "null") {
+                                            sales.setOrganisationName( strOrganisationName );
                                         } else {
                                             sales.setShopName( shopName );
 
@@ -669,6 +852,7 @@ public class SalesFragment extends Fragment implements LocationResult {
         } else {
             Toast.makeText( getContext(), "Please check your internet connection before verification..!", Toast.LENGTH_LONG ).show();
         }
+
     }
 
     private boolean canAccessLocation() {
@@ -705,7 +889,7 @@ public class SalesFragment extends Fragment implements LocationResult {
         alertDialog.setTitle( "SETTINGS" );
         alertDialog.setMessage( "Enable Location Provider! Go to settings menu?" );
         alertDialog.setPositiveButton( "Settings",
-                new DialogInterface.OnClickListener() {
+                new OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(
                                 Settings.ACTION_LOCATION_SOURCE_SETTINGS );
@@ -713,7 +897,7 @@ public class SalesFragment extends Fragment implements LocationResult {
                     }
                 } );
         alertDialog.setNegativeButton( "Cancel",
-                new DialogInterface.OnClickListener() {
+                new OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
@@ -908,6 +1092,39 @@ public class SalesFragment extends Fragment implements LocationResult {
         catch (Exception e){
             return null;
         }
+    }
+    public void databind(){
+
+        String[] party = {
+                "Select Party",
+                "School",
+                "Classes",
+                "Sankul",
+                "Party",
+                "Others",
+                };
+
+        ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(getContext(),
+                android.R.layout.simple_selectable_list_item,party);
+
+
+        spinnerFliter.setAdapter(spinnerArrayAdapter);
+
+        String[] priority = {
+                "Select Priority",
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+        };
+        ArrayAdapter spinnerPriorityArrayAdapter = new ArrayAdapter(getContext(),
+                android.R.layout.simple_selectable_list_item,priority);
+
+
+        spinnerPriority.setAdapter(spinnerPriorityArrayAdapter);
+
     }
 
 }

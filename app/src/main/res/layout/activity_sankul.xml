@@ -13,6 +13,8 @@
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize">
 
+
+
         <Button
             android:id="@+id/btnSankulCancel"
             android:layout_width="30dp"
@@ -54,10 +56,17 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary">
 
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/roundshape">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/roundshape"
+                    android:orientation="vertical">
 
                 <EditText
                     android:id="@+id/edtSankulName"
@@ -115,140 +124,190 @@
                     android:padding="5dp"
                     android:singleLine="true" />
 
-                <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
-                    android:id="@+id/spinnerSchoolMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_below="@id/edtSankulContactNumber"
-                    app:hintText="Select Medium"
-                    android:paddingLeft="10dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/edt_border"
-                    android:spinnerMode="dialog"/>
+
+
 
                 <com.androidbuts.multispinnerfilter.SingleSpinner
                     android:id="@+id/spinnerSchoolBoardEnglish"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_margin="10dp"
-                    android:layout_below="@id/spinnerSchoolMedium"
+                    android:layout_below="@id/edtSankulContactNumber"
                     android:paddingLeft="10dp"
                     app:hintText="Select Board"
-                    android:visibility="gone"
                     android:background="@drawable/edt_border"
                     android:spinnerMode="dialog"/>
 
-
-
                 <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
-                    android:id="@+id/spinnerSchoolStandardEnglish"
+                    android:id="@+id/spinnerSchoolMedium"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_below="@id/spinnerSchoolBoardEnglish"
-                    android:layout_margin="10dp"
-                    app:hintText="Select Standard"
-                    android:background="@drawable/edt_border"
-                    android:visibility="gone"
-
-                    android:paddingLeft="10dp"
-
-                    android:spinnerMode="dialog"/>
-                <EditText
-                    android:id="@+id/edtSchoolAverageStudentEnglish"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/spinnerSchoolStandardEnglish"
-                    android:visibility="gone"
-
-                    android:layout_margin="10dp"
-                    android:background="@drawable/edt_border"
-                    android:hint="Enter Average Student Of School for English Medium"
-                    android:padding="5dp"
-                    android:singleLine="true" />
-                <com.androidbuts.multispinnerfilter.SingleSpinner
-                    android:id="@+id/spinnerSchoolBoardHindi"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_below="@id/edtSchoolAverageStudentEnglish"
-                    android:visibility="gone"
-
-                    app:hintText="Select Board"
-                    android:paddingLeft="10dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/edt_border"
-                    android:spinnerMode="dialog"/>
-                <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
-                    android:id="@+id/spinnerSchoolStandardHindi"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_below="@id/spinnerSchoolBoardHindi"
-                    android:visibility="gone"
-
-                    android:layout_margin="10dp"
-                    app:hintText="Select Standard"
-                    android:background="@drawable/edt_border"
-                    android:paddingLeft="10dp"
-                    android:spinnerMode="dialog"/>
-                <EditText
-                    android:id="@+id/edtSchoolAverageStudentHindi"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/spinnerSchoolStandardHindi"
-                    android:visibility="gone"
-
-                    android:layout_margin="10dp"
-                    android:background="@drawable/edt_border"
-                    android:hint="Enter Average Student Of School for Hindi Medium"
-                    android:padding="5dp"
-                    android:singleLine="true" />
-
-                <com.androidbuts.multispinnerfilter.SingleSpinner
-                    android:id="@+id/spinnerSchoolBoardGujarati"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_below="@id/edtSchoolAverageStudentHindi"
-                    android:visibility="gone"
-                    app:hintText="Select Board"
+                    app:hintText="Select Medium"
                     android:paddingLeft="10dp"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:spinnerMode="dialog"/>
 
-                <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
-                    android:id="@+id/spinnerSchoolStandardGujarati"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_below="@id/spinnerSchoolBoardGujarati"
-                    android:visibility="gone"
 
-                    android:layout_margin="10dp"
-                    app:hintText="Select Standard"
-                    android:background="@drawable/edt_border"
-                    android:paddingLeft="10dp"
-                    android:spinnerMode="dialog"/>
-                <EditText
-                    android:id="@+id/edtSchoolAverageStudentGujarati"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/spinnerSchoolStandardGujarati"
-                    android:visibility="gone"
 
-                    android:layout_margin="10dp"
-                    android:background="@drawable/edt_border"
-                    android:hint="Enter Average Student Of School for Gujarati Medium"
-                    android:padding="5dp"
-                    android:singleLine="true" />
+                    <RelativeLayout
+                        android:id="@+id/r1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_below="@+id/spinnerSchoolMedium"
 
-                <EditText
+                        >
+
+                        <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
+                            android:id="@+id/spinnerSchoolStandardEnglish"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:paddingLeft="10dp"
+                            android:layout_alignTop="@+id/edtSchoolAverageStudentEnglish"
+                            android:layout_marginEnd="162dp"
+                            android:layout_marginRight="152dp"
+                            android:background="@drawable/edt_border"
+                            android:spinnerMode="dialog"
+                            app:hintText="Select Standard for english medium"
+                            tools:ignore="NotSibling" />
+
+                        <EditText
+                            android:id="@+id/edtSchoolAverageStudentEnglish"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:paddingLeft="10dp"
+                            android:textSize="16dp"
+                            android:inputType="number"
+                            android:textColor="@color/colorPrimaryText"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="12dp"
+                            android:layout_marginRight="12dp"
+                            android:background="@drawable/edt_border"
+                            android:hint="Averagge Students"
+                            android:padding="5dp"
+                            android:singleLine="true"
+                            tools:ignore="NotSibling" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/r2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="gone"
+                        android:layout_below="@+id/r1"
+
+                        >
+
+                        <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
+                            android:id="@+id/spinnerSchoolStandardHindi"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:paddingLeft="10dp"
+                            android:layout_alignTop="@+id/edtSchoolAverageStudentEnglish"
+                            android:layout_marginEnd="162dp"
+                            android:layout_marginRight="152dp"
+                            android:background="@drawable/edt_border"
+                            android:spinnerMode="dialog"
+                            app:hintText="Select Standard for english medium"
+                            tools:ignore="NotSibling" />
+
+                        <EditText
+                            android:id="@+id/edtSchoolAverageStudentHindi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:paddingLeft="10dp"
+                            android:textSize="16dp"
+                            android:inputType="number"
+                            android:textColor="@color/colorPrimaryText"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="12dp"
+                            android:layout_marginRight="12dp"
+                            android:background="@drawable/edt_border"
+                            android:hint="Averagge Students"
+                            android:padding="5dp"
+                            android:singleLine="true"
+                            tools:ignore="NotSibling" />
+                    </RelativeLayout>
+
+
+
+
+
+
+                    <RelativeLayout
+                        android:id="@+id/r3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:visibility="gone"
+                        android:layout_below="@+id/r2"
+
+                        >
+
+                        <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
+                            android:id="@+id/spinnerSchoolStandardGujarati"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:paddingLeft="10dp"
+                            android:layout_alignTop="@+id/edtSchoolAverageStudentEnglish"
+                            android:layout_marginEnd="162dp"
+                            android:layout_marginRight="152dp"
+                            android:background="@drawable/edt_border"
+                            android:spinnerMode="dialog"
+                            app:hintText="Select Standard for english medium"
+                            tools:ignore="NotSibling" />
+
+                        <EditText
+                            android:id="@+id/edtSchoolAverageStudentGujarati"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:paddingLeft="10dp"
+                            android:textSize="16dp"
+                            android:textColor="@color/colorPrimaryText"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="12dp"
+                            android:layout_marginRight="12dp"
+                            android:background="@drawable/edt_border"
+                            android:hint="Averagge Students"
+                            android:padding="5dp"
+                            android:singleLine="true"
+                            android:inputType="number"
+                            tools:ignore="NotSibling" />
+                    </RelativeLayout>
+
+
+
+                    <EditText
                     android:id="@+id/edtSankulAddress1"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/edtSchoolAverageStudentGujarati"
+                    android:layout_below="@+id/r3"
                     android:layout_margin="10dp"
                     android:background="@drawable/edt_border"
                     android:hint="Enter Flat No,Colony Number/Society"
                     android:padding="5dp"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                        android:inputType="number"/>
 
                 <EditText
                     android:id="@+id/edtSankulAddress2"
@@ -293,6 +352,7 @@
                     android:hint="Enter Remark"
                     android:padding="5dp"
                     android:singleLine="true" />
+                </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>

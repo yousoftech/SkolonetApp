@@ -42,7 +42,7 @@ public class HomeScreen extends AppCompatActivity {
     ProgressDialog progressDialog;
     ConnectionDetector detector;
     Button btnSales,btnTask,btnFilter,btnCloseLead,btnComment;
-    Button btnLogout;
+    Button btnLogout,btnSettings;
     TextView txtTitle;
     boolean doubleBackToExitPressedOnce = false;
     private Toolbar toolbar;
@@ -59,7 +59,7 @@ public class HomeScreen extends AppCompatActivity {
         lastName = preferences.getString( "lastName", null );
         Userid = preferences.getString( "LoggedUser", null );
         btnLogout = (Button) findViewById( R.id.btnLogout );
-
+btnSettings = (Button)findViewById( R.id.btnSettings );
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -74,6 +74,15 @@ public class HomeScreen extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        btnSettings.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent( getApplicationContext(),settingsMenu.class );
+              //  finish();
+                startActivity( i );
+            }
+        } );
     }
 
     private void setupViewPager(ViewPager viewPager) {

@@ -76,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
         if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},

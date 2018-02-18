@@ -76,7 +76,7 @@ public class CloseLead extends AppCompatActivity{
     Spinner spinner;
     TextView txtTitle;
     Toolbar toolbar;
-    Button btnLogout, btnFilter;
+    Button btnLogout;
     String from, addtLocation, latlong;
     String firstName, lastName, Userid;
     int salesId;
@@ -121,7 +121,6 @@ public class CloseLead extends AppCompatActivity{
         preferences = getSharedPreferences( PREFS_NAME, MODE_PRIVATE );
         txtTitle = (TextView) findViewById( R.id.txtTitle );
         btnLogout = (Button) findViewById( R.id.btnLogout );
-        btnFilter = (Button) findViewById( R.id.btnFilter );
         relativeFilter = (RelativeLayout) findViewById( R.id.RelativeFilter );
         spinnerFliter = (Spinner) findViewById( R.id.spinnerFilter );
         firstName = preferences.getString( "firstName", null );
@@ -130,11 +129,9 @@ public class CloseLead extends AppCompatActivity{
         setupToolbar( "" + firstName + " " + lastName );
         recyclerView = (RecyclerView) findViewById( R.id.recyclerSales );
         txtRecords = (TextView) findViewById( R.id.txtNoRecords );
-        btnFilter = (Button) findViewById( R.id.btnFilter );
         event = new ArrayList<Sales>();
         NotificationManager manager;
         Notification myNotication;
-btnFilter.setVisibility( View.GONE );
         //  recyclerView.destroyDrawingCache();
         Bundle bundle = getIntent().getExtras();
 
@@ -264,35 +261,35 @@ btnFilter.setVisibility( View.GONE );
 
                                     double priority = obj.getDouble( "priority" );
                                     String partyDate = convert( partyDate1 );
-
+                                    String ContactNo = obj.getString( "contactNo" );
+                                    String strDistributorName = obj.getString( "distubitorName" );
+                                    String strOrganisationName = obj.getString( "organisationName" );
                                     int ipartTypeId = obj.getInt( "iPartyTypeId" );
 
 
 
-                                        sales.setPartyInfoId( partyInfoId );
-                                        sales.setStrPartyType( iPartyTypeName );
-                                        sales.setLocation( "Address : " + strAddress );
-                                        sales.setDatetimeCreated( partyDate.toString() );
-                                        // sales.setStrLatitude( "Medium : " + strMedium );
-                                        //sales.setStrLongitude( "Longitude : " + longitude );
-                                        sales.setPriority( priority );
-                                        String reminderDate1 = obj.getString( "reminderDate" );
-                                        sales.setReminderDate( reminderDate1 );
+                                    sales.setPartyInfoId( partyInfoId );
+                                    sales.setStrPartyType( iPartyTypeName );
+                                    sales.setLocation( "Address : " + strAddress );
+                                    sales.setDatetimeCreated( partyDate.toString() );
+                                    sales.setContactNo( ContactNo );
 
-                                        Calendar c1 = Calendar.getInstance();
-                                        SimpleDateFormat df1 = new SimpleDateFormat( "d/M/yyyy" );
-                                        String formattedDate1 = df1.format( c1.getTime() );
+                                    //  sales.setStrLatitude( "Medium : " + strMedium );
+                                    //  sales.setStrLongitude( "Longitude : " + longitude );
+                                    sales.setReminderDate( reminderDate );
+                                    sales.setPriority( priority );
+                                    if (partyName != "null") {
+                                        sales.setPartyName( partyName );
+                                    } else {
+                                        sales.setDistubitorName( strDistributorName );
 
-                                        //  Date date1=format.parse(reminderDate1);
+                                    }
+                                    if (strOrganisationName != "null") {
+                                        sales.setOrganisationName( strOrganisationName );
+                                    } else {
+                                        sales.setShopName( shopName );
 
-                                        //reminderDate1 = df1.format( reminderDate1 );
-
-                                        if (partyName != "null") {
-                                            sales.setPartyName( partyName );
-                                        } else {
-                                            sales.setShopName( shopName );
-
-                                        }
+                                    }
                                         event.add( sales );
 
 
@@ -305,7 +302,6 @@ btnFilter.setVisibility( View.GONE );
                                         recyclerView.setAdapter( aSales );
                                         recyclerView.setLayoutManager( new LinearLayoutManager( CloseLead.this, LinearLayoutManager.VERTICAL, false ) );
                                         aSales.notifyDataSetChanged();
-                                        btnFilter.setVisibility( View.VISIBLE );
 
                                     }
                                     else{
@@ -315,7 +311,6 @@ btnFilter.setVisibility( View.GONE );
                                         recyclerView.setAdapter( aSales );
                                         recyclerView.setLayoutManager( new LinearLayoutManager( CloseLead.this, LinearLayoutManager.VERTICAL, false ) );
                                         aSales.notifyDataSetChanged();
-                                        btnFilter.setVisibility( View.GONE );
                                     }
                                     progressDialog.dismiss();
 
@@ -330,7 +325,6 @@ btnFilter.setVisibility( View.GONE );
                                 recyclerView.setAdapter( aSales );
                                 recyclerView.setLayoutManager( new LinearLayoutManager( CloseLead.this, LinearLayoutManager.VERTICAL, false ) );
                                 aSales.notifyDataSetChanged();
-                                btnFilter.setVisibility( View.GONE );
                             }
 
                         }

@@ -66,7 +66,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         mBuilder.setContentTitle( "Reminder Alert" );
         mBuilder.setVibrate( new long[]{1000, 1000, 1000, 1000, 1000} );
         mBuilder.setLights( Color.RED, 3000, 3000 );
-        Uri alarmSound = RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION );
+        Uri alarmSound = RingtoneManager.getDefaultUri( RingtoneManager.TYPE_ALARM );
         mBuilder.setSound( alarmSound );
         mBuilder.setContentText(partyName);
 

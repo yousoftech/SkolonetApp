@@ -29,6 +29,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -76,7 +78,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
     Spinner spinner;
     TextView txtTitle;
     Toolbar toolbar;
-    Button btnLogout, btnFilter;
+    Button btnLogout;
     String from, addtLocation, latlong;
     String firstName, lastName, Userid;
     int salesId;
@@ -97,6 +99,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
     TextView txtRecords;
     RelativeLayout relativeFilter;
     Spinner spinnerFliter;
+    RadioButton optSchool,optClasses,optSankul,optParty,optOthers;
     final List<KeyPairBoolData> listArrayStd = new ArrayList<>();
     final List<KeyPairBoolData> listArrayMedium = new ArrayList<>();
     final List<KeyPairBoolData> listArrayBoard = new ArrayList<>();
@@ -122,7 +125,6 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
         preferences = getSharedPreferences( PREFS_NAME, MODE_PRIVATE );
         txtTitle = (TextView) findViewById( R.id.txtTitle );
         btnLogout = (Button) findViewById( R.id.btnLogout );
-        btnFilter = (Button) findViewById( R.id.btnFilter );
         relativeFilter = (RelativeLayout) findViewById( R.id.RelativeFilter );
         spinnerFliter = (Spinner) findViewById( R.id.spinnerFilter );
         firstName = preferences.getString( "firstName", null );
@@ -131,7 +133,6 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
       //  setupToolbar( "" + firstName + " " + lastName );
         recyclerView = (RecyclerView) findViewById( R.id.recyclerSales );
         txtRecords = (TextView) findViewById( R.id.txtNoRecords );
-        btnFilter = (Button) findViewById( R.id.btnFilter );
         event = new ArrayList<Sales>();
         myLocation = new MyLocation();
         NotificationManager manager;
@@ -195,17 +196,74 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                         showSettingsAlert();
                     }
                 }
-                std();
+           //     std();
                 final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder( SalesMan.this );
                 final LayoutInflater inflater = (LayoutInflater) SalesMan.this.getSystemService( SalesMan.this.LAYOUT_INFLATER_SERVICE );
                 final View dialogView = inflater.inflate( R.layout.app_choose, null );
                 dialogBuilder.setView( dialogView );
                 final AlertDialog a = dialogBuilder.create();
-                spinner = (Spinner) dialogView.findViewById( R.id.spinnerForm );
+               // spinner = (Spinner) dialogView.findViewById( R.id.spinnerForm );
+
+                optClasses =(RadioButton)dialogView.findViewById( R.id.Classes );
+                optOthers =(RadioButton)dialogView.findViewById( R.id.Others );
+                optParty =(RadioButton)dialogView.findViewById( R.id.Party );
+                optSankul =(RadioButton)dialogView.findViewById( R.id.Sankul );
+                optSchool =(RadioButton)dialogView.findViewById( R.id.School );
+
+                optClasses.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        Intent intent = new Intent( SalesMan.this, School_ClassisActivity.class );
+                        intent.putExtra( "fromName", "Classes" );
+                        intent.putExtra( "fromId", 2 );
+                        startActivity( intent );
+                        finish();
+                    }
+                } );
+
+                optOthers.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        Intent intent = new Intent( SalesMan.this, OtherActivity.class );
+                        intent.putExtra( "fromName", "Others" );
+                        intent.putExtra( "fromId", 5 );
+                        startActivity( intent );
+                        finish();
+                    }
+                } );
+                optParty.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        Intent intent = new Intent( SalesMan.this, PartyActivity.class );
+                        intent.putExtra( "fromName", "Party" );
+                        intent.putExtra( "fromId", 4 );
+                        startActivity( intent );
+                        finish();
+                    }
+                } );
+                optSankul.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        Intent intent = new Intent( SalesMan.this, SankulActivity.class );
+                        intent.putExtra( "fromName", "Sankul" );
+                        intent.putExtra( "fromId", 3 );
+                        startActivity( intent );
+                        finish();
+                    }
+                } );
+                optSchool.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        Intent intent = new Intent( SalesMan.this, School_ClassisActivity.class );
+                        intent.putExtra( "fromName", "Classes" );
+                        intent.putExtra( "fromId", 1 );
+                        startActivity( intent );
+                        finish();
+                    }
+                } );
 
 
-
-                spinner.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
+              /*  spinner.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         from = spinner.getSelectedItem().toString();
@@ -249,7 +307,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
                     }
-                } );
+                } );*/
                 a.show();
             }
         } );
@@ -549,8 +607,7 @@ public class SalesMan extends AppCompatActivity implements LocationResult {
                                     String latitude = obj.getString( "latitude" );
                                     String longitude = obj.getString( "longitude" );
                                     double priority = obj.getDouble( "priority" );
-String partyDate = convert( partyDate1 );
-
+                                    String partyDate = convert( partyDate1 );
                                     int ipartTypeId = obj.getInt( "iPartyTypeId" );
 
                                     if (ipartTypeId == typeId) {
@@ -637,7 +694,6 @@ String partyDate = convert( partyDate1 );
                                         recyclerView.setAdapter( aSales );
                                         recyclerView.setLayoutManager( new LinearLayoutManager( SalesMan.this, LinearLayoutManager.VERTICAL, false ) );
                                         aSales.notifyDataSetChanged();
-                                  //      btnFilter.setVisibility( View.VISIBLE );
 
                                     }
                                     else{
@@ -647,7 +703,6 @@ String partyDate = convert( partyDate1 );
                                         recyclerView.setAdapter( aSales );
                                         recyclerView.setLayoutManager( new LinearLayoutManager( SalesMan.this, LinearLayoutManager.VERTICAL, false ) );
                                         aSales.notifyDataSetChanged();
-                                      //  btnFilter.setVisibility( View.GONE );
                                     }
                                     progressDialog.dismiss();
 
@@ -662,7 +717,6 @@ String partyDate = convert( partyDate1 );
                                 recyclerView.setAdapter( aSales );
                                 recyclerView.setLayoutManager( new LinearLayoutManager( SalesMan.this, LinearLayoutManager.VERTICAL, false ) );
                                 aSales.notifyDataSetChanged();
-                             //   btnFilter.setVisibility( View.GONE );
                             }
 
                         }

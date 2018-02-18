@@ -8,6 +8,34 @@ public class Sales {
     public String PartyInfoId;
     public String reminderDate;
 
+    public String getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(String taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    public String getTaskReason() {
+        return taskReason;
+    }
+
+    public void setTaskReason(String taskReason) {
+        this.taskReason = taskReason;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+    public String taskId;
+    public String taskStatus;
+    public String taskReason;
+
     public String getStrTaskName() {
         return strTaskName;
     }

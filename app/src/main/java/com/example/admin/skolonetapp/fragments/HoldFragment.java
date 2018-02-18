@@ -130,11 +130,9 @@ public class HoldFragment extends Fragment {
 
         txtTitle = (TextView)view.findViewById( R.id.txtTitle );
         btnLogout = (Button)view.findViewById( R.id.btnLogout );
-        btnFilter = (Button)view.findViewById( R.id.btnFilter );
 
         recyclerView = (RecyclerView)view.findViewById( R.id.recyclerSales );
         txtRecords = (TextView)view.findViewById( R.id.txtNoRecords );
-        btnFilter = (Button)view.findViewById( R.id.btnFilter );
         event = new ArrayList<Sales>();
 
 
@@ -186,6 +184,9 @@ public class HoldFragment extends Fragment {
 
                                     double priority = obj.getDouble( "priority" );
                                     String partyDate = convert( partyDate1 );
+                                    String ContactNo = obj.getString( "contactNo" );
+                                    String strDistributorName = obj.getString( "distubitorName" );
+                                    String strOrganisationName = obj.getString( "organisationName" );
 
                                     int ipartTypeId = obj.getInt( "iPartyTypeId" );
 
@@ -195,12 +196,24 @@ public class HoldFragment extends Fragment {
                                     sales.setStrPartyType( iPartyTypeName );
                                     sales.setLocation( "Address : " + strAddress );
                                     sales.setDatetimeCreated( partyDate.toString() );
-                                    // sales.setStrLatitude( "Medium : " + strMedium );
-                                    //sales.setStrLongitude( "Longitude : " + longitude );
-                                    sales.setPriority( priority );
-                                    String reminderDate1 = obj.getString( "reminderDate" );
-                                    sales.setReminderDate( reminderDate1 );
+                                    sales.setContactNo( ContactNo );
 
+                                    //  sales.setStrLatitude( "Medium : " + strMedium );
+                                    //  sales.setStrLongitude( "Longitude : " + longitude );
+                                    sales.setReminderDate( reminderDate );
+                                    sales.setPriority( priority );
+                                    if (partyName != "null") {
+                                        sales.setPartyName( partyName );
+                                    } else {
+                                        sales.setDistubitorName( strDistributorName );
+
+                                    }
+                                    if (strOrganisationName != "null") {
+                                        sales.setOrganisationName( strOrganisationName );
+                                    } else {
+                                        sales.setShopName( shopName );
+
+                                    }
                                     Calendar c1 = Calendar.getInstance();
                                     SimpleDateFormat df1 = new SimpleDateFormat( "d/M/yyyy" );
                                     String formattedDate1 = df1.format( c1.getTime() );
@@ -209,12 +222,7 @@ public class HoldFragment extends Fragment {
 
                                     //reminderDate1 = df1.format( reminderDate1 );
 
-                                    if (partyName != "null") {
-                                        sales.setPartyName( partyName );
-                                    } else {
-                                        sales.setShopName( shopName );
 
-                                    }
                                     event.add( sales );
 
 
